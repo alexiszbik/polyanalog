@@ -152,62 +152,45 @@ void PolySynth::setGlide(float glide) {
     }
 }
 
-void PolySynth::setOperatorRatio(int operatorId, float ratio) {
+void PolySynth::setWaveform(uint8_t waveformIndex, uint8_t oscIndex) {
     for (auto v : voices)
     {
-        v->setOperatorRatio(operatorId, ratio);
+        v->setWaveform(waveformIndex, oscIndex);
     }
 }
 
-
-void PolySynth::setOperatorFixFreq(int operatorId, float fixFreq) {
+void PolySynth::setOctave(int8_t octave) {
     for (auto v : voices)
     {
-        v->setOperatorFixFrequency(operatorId, fixFreq);
+        v->setOctave(octave);
     }
 }
 
-void PolySynth::setOperatorAmount(int operatorId, float amount) {
+void PolySynth::setOscBTune(uint8_t tuneIndex) {
     for (auto v : voices)
     {
-        v->setOperatorAmount(operatorId, amount);
+        v->setOscBTune(tuneIndex);
     }
 }
 
-void PolySynth::setOperatorMode(int operatorId, bool mode) {
+void PolySynth::setOscBPW(float pw) {
     for (auto v : voices)
     {
-        v->setOperatorMode(operatorId, mode);
+        v->setOscBPW(pw);
     }
 }
 
-void PolySynth::setOperatorADSR(int operatorId, float attack, float decay, float sustain, float release) {
+void PolySynth::setOscMix(float mix) {
     for (auto v : voices)
     {
-        v->setOperatorADSR(operatorId, attack, decay, sustain, release);
+        v->setOscMix(mix);
     }
 }
 
-void PolySynth::setFeedback(float feedbackAmount) {
-    feedbackAmount = clamp01(feedbackAmount);
+void PolySynth::setADSR(float attack, float decay, float sustain, float release) {
     for (auto v : voices)
     {
-        v->setFeedback(feedbackAmount);
-    }
-}
-
-void PolySynth::setAlgorithm(int algorithmIndex) {
-    for (auto v : voices)
-    {
-        v->setAlgorithm(algorithmIndex);
-    }
-}
-
-void PolySynth::setBrightness(float brightness) {
-    brightness = clamp01(brightness);
-    for (auto v : voices)
-    {
-        v->setBrightness(brightness);
+        v->setADSR(attack, decay, sustain, release);
     }
 }
 
@@ -215,6 +198,25 @@ void PolySynth::setEnvParameters(float attack, float decay, float amount) {
     for (auto v : voices)
     {
         v->setEnvParameters(attack, decay, amount);
+    }
+}
+
+void PolySynth::setFilterMidiFreq(float freq) {
+    for (auto v : voices)
+    {
+        v->setFilterMidiFreq(freq);
+    }
+}
+void PolySynth::setFilterRes(float res) {
+    for (auto v : voices)
+    {
+        v->setFilterRes(res);
+    }
+}
+void PolySynth::setFilterEnv(float env) {
+    for (auto v : voices)
+    {
+        v->setFilterEnv(env);
     }
 }
 

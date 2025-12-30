@@ -8,14 +8,14 @@
   ==============================================================================
 */
 
-#include "PolyFMCore.h"
+#include "PolyAnalogCore.h"
 #include "DaisyYMNK/Helpers/StrConverters.h"
 
 bool isBetweenParameterIndex(int x, int a, int b) {
     return x >= a && x <= b;
 }
 
-PolyFMCore::PolyFMCore()
+PolyAnalogCore::PolyAnalogCore()
 : ModuleCore(&polyFm,
      {
         {MuxKnob_1,                 kKnob,      HIDPin(0,0),    "MuxKnob_1"},
@@ -36,12 +36,8 @@ PolyFMCore::PolyFMCore()
         {MuxKnob_16,                kKnob,      HIDPin(0,15),   "MuxKnob_16"},
     
         {KnobVolume,                kKnob,      16,             "Volume"},
-        {KnobTimeRatio,             kKnob,      17,             "TimeRatio"},
-        {KnobBrightness,            kKnob,      18,             "Brightness"},
     
         {ButtonSave,                kButton,    5,              "Button Save"},
-        {ButtonPreviousOperator,    kButton,    6,              "Previous Map"},
-        {ButtonNextOperator,        kButton,    7,              "Next Map"},
         {ButtonPreviousPreset,      kButton,    8,              "Previous Preset"},
         {ButtonNextPreset,          kButton,    9,              "Next Preset"},
 
@@ -53,36 +49,18 @@ PolyFMCore::PolyFMCore()
     needsResetDisplay = true;
 }
 
-void PolyFMCore::lockAllKnobs() {
-    for (auto knob = (int)MuxKnob_1; knob <= (int)KnobBrightness; knob++) {
+void PolyAnalogCore::lockAllKnobs() {
+    for (auto knob = (int)MuxKnob_1; knob <= (int)KnobVolume; knob++) {
         lockHID(knob);
     }
 }
 
-void PolyFMCore::loadPreset(const float* values) {
+void PolyAnalogCore::loadPreset(const float* values) {
     dspKernel->loadPreset(values);
     lockAllKnobs();
 }
 
-int PolyFMCore::getCurrentPage() {
-    return currentPage.get();
-}
-
-void PolyFMCore::changeCurrentPage(bool increment) {
-    if (increment) {
-        currentPage.increment();
-    } else {
-        currentPage.decrement();
-    }
-    
-#if defined _SIMULATOR_ //TODO : move this into a display simulator
-    std::cout << currentPage.get() << std::endl;
-#endif
-    lockAllKnobs();
-    displayPageOnScreen();
-}
-
-void PolyFMCore::changeCurrentPreset(bool increment) {
+void PolyAnalogCore::changeCurrentPreset(bool increment) {
     if (increment) {
         currentPreset.increment();
     } else {
@@ -98,7 +76,7 @@ void PolyFMCore::changeCurrentPreset(bool increment) {
     needsResetDisplay = true;
 }
 
-void PolyFMCore::saveCurrentPreset() {
+void PolyAnalogCore::saveCurrentPreset() {
     float pData[MAX_PRESET_SIZE];
     auto allParam = getAllParameters();
     uint8_t k = 0;
@@ -115,18 +93,7 @@ void PolyFMCore::saveCurrentPreset() {
     needsResetDisplay = true;
 }
 
-void PolyFMCore::displayPageOnScreen() {
-    int pageIdx = currentPage.get();
-    const char* pageName = "OP A / OP B";
-    if (pageIdx == 1) {
-        pageName = "OP C / OP D";
-    } else if (pageIdx == 2) {
-        pageName = "Globals";
-    }
-    displayManager->WriteLine(0, pageName);
-}
-
-void PolyFMCore::displayValuesOnScreen() {
+void PolyAnalogCore::displayValuesOnScreen() {
     
     if (!needsToUpdateValue) {
         return;
@@ -134,45 +101,16 @@ void PolyFMCore::displayValuesOnScreen() {
     
     if (lastParam) {
         
-        if (lastParamIndex == PolyFMDSP::LfoDestinationA) {
+        if (lastParamIndex == PolyAnalogDSP::LfoDestinationA) {
             const char* destName = polyFm.getLfoDestName(0);
             displayManager->WriteLine(2, destName);
             
-        } else if (lastParamIndex == PolyFMDSP::LfoDestinationB) {
+        } else if (lastParamIndex == PolyAnalogDSP::LfoDestinationB) {
             const char* destName = polyFm.getLfoDestName(1);
             displayManager->WriteLine(2, destName);
             
-        }
-        else if (paramA >= 0) {
-            int pos = 0;
-            static constexpr uint8_t cSize = 3;
-            
-            float valueA = dspKernel->getParameter(paramA)->getUIValue();
-            floatToCStringPct3(valueA, numCharBuffer);
-            
-            memcpy(fullNumCharBuffer + pos, numCharBuffer, cSize);
-            pos += cSize;
-        
-            fullNumCharBuffer[pos++] = ' ';
-            
-            for (uint8_t o = 1; o < 4; o++) {
-                int param = polyFm.getOpParam(o, paramA);
-                float val = dspKernel->getParameter(param)->getUIValue();
-                floatToCStringPct3(val, numCharBuffer);
-                
-                memcpy(fullNumCharBuffer + pos, numCharBuffer, cSize);
-                pos += cSize;
-            
-                if (o < 3) {
-                    fullNumCharBuffer[pos++] = ' ';
-                }
-            }
-            
-            fullNumCharBuffer[pos] = '\0';
-            
-            displayManager->WriteLine(2, fullNumCharBuffer);
-         
         } else {
+        
             float value = lastParam->getUIValue();
             floatToCString2(value, numCharBuffer);
             
@@ -184,27 +122,21 @@ void PolyFMCore::displayValuesOnScreen() {
 }
 
 //Well we should make a loop again
-void PolyFMCore::displayLastParameterOnScreen() {
+void PolyAnalogCore::displayLastParameterOnScreen() {
     lastParamIndex = dspKernel->getLastChangedParameterIndex();
     Parameter* lastChanged = dspKernel->getParameter(lastParamIndex);
-    
-    if (needsResetDisplay) {
-        needsResetDisplay = false;
-        displayPageOnScreen();
-    }
     
     if (lastChanged && lastChanged != lastParam) {
         const char* name = lastChanged->getName();
         lastParam = lastChanged;
         displayManager->WriteLine(1, name);
-        paramA = polyFm.getOpParameterForA(lastParamIndex);
     }
     
     needsToUpdateValue = true;
 
 }
 
-void PolyFMCore::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
+void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
     ModuleCore::processMIDI(messageType, channel, dataA, dataB);
     if (midiChannel == -1 || midiChannel == channel) { // Maybe do something better
         if (messageType == kNoteOn) {
@@ -215,17 +147,9 @@ void PolyFMCore::processMIDI(MIDIMessageType messageType, int channel, int dataA
     }
 }
 
-void PolyFMCore::updateHIDValue(unsigned int index, float value) {
+void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
 
-    auto currentOpMap = &pages.at(currentPage.get());
     switch (index) {
-        case ButtonPreviousOperator:
-            changeCurrentPage(false);
-            break;
-            
-        case ButtonNextOperator:
-            changeCurrentPage(true);
-            break;
             
         case ButtonSave:
             saveCurrentPreset();
@@ -244,11 +168,11 @@ void PolyFMCore::updateHIDValue(unsigned int index, float value) {
             break;
             
         default:
-            if (isBetweenParameterIndex(index, MuxKnob_1, MuxKnob_16)) {
+            /*if (isBetweenParameterIndex(index, MuxKnob_1, MuxKnob_16)) {
                 dspKernel->setParameterValue(currentOpMap->at(index - MuxKnob_1), value);
             } else {
                 dspKernel->setParameterValue(parameterMap.at(index - MuxKnob_16 - 1), value);
-            }
+            }*/
             displayLastParameterOnScreen();
             
             break;

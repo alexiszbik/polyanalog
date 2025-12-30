@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    PolyFMCore.h
+    PolyAnalogCore.h
     Created: 19 Jan 2024 10:00:43am
     Author:  Alexis ZBIK
 
@@ -12,19 +12,19 @@
 
 #include "DaisyYMNK/DSP/DSP.h"
 #include "DaisyYMNK/Helpers/BoundedInt.h"
-#include "PolyFMDSP.h"
+#include "PolyAnalogDSP.h"
 
 #define DSP_PARAM_OP(_name) \
-PolyFMDSP::Coarse##_name, \
-PolyFMDSP::Fine##_name, \
-PolyFMDSP::Mode##_name, \
-PolyFMDSP::Amount##_name, \
-PolyFMDSP::Attack##_name, \
-PolyFMDSP::Decay##_name, \
-PolyFMDSP::Sustain##_name, \
-PolyFMDSP::Release##_name
+PolyAnalogDSP::Coarse##_name, \
+PolyAnalogDSP::Fine##_name, \
+PolyAnalogDSP::Mode##_name, \
+PolyAnalogDSP::Amount##_name, \
+PolyAnalogDSP::Attack##_name, \
+PolyAnalogDSP::Decay##_name, \
+PolyAnalogDSP::Sustain##_name, \
+PolyAnalogDSP::Release##_name
 
-class PolyFMCore : public ModuleCore {
+class PolyAnalogCore : public ModuleCore {
 public:
     enum {
         MuxKnob_1 = 0,
@@ -45,19 +45,15 @@ public:
         MuxKnob_16,
         
         KnobVolume,
-        KnobTimeRatio,
-        KnobBrightness,
         
         ButtonSave,
-        ButtonPreviousOperator,
-        ButtonNextOperator,
         ButtonPreviousPreset,
         ButtonNextPreset,
         
         MidiLed
     };
 public:
-    PolyFMCore();
+    PolyAnalogCore();
 
     int getCurrentPage();
     void loadPreset(const float* values);
@@ -69,35 +65,19 @@ protected:
     
 private:
     void lockAllKnobs();
-    void changeCurrentPage(bool increment);
     void changeCurrentPreset(bool increment);
     void saveCurrentPreset();
     
     void displayLastParameterOnScreen();
-    void displayPageOnScreen();
     
 public:
     void displayValuesOnScreen();
     
 private:
     vector<int> parameterMap = {
-        PolyFMDSP::Volume,
-        PolyFMDSP::TimeRatio,
-        PolyFMDSP::Brightness,
+        PolyAnalogDSP::Volume
     };
-    
-    vector<vector<int>> pages = {
-        {DSP_PARAM_OP(A), DSP_PARAM_OP(B)},
-        {DSP_PARAM_OP(C), DSP_PARAM_OP(D)},
-        {
-            PolyFMDSP::PlayMode, PolyFMDSP::Glide,    PolyFMDSP::Algorithm,  PolyFMDSP::Feedback,
-            PolyFMDSP::LfoTypeA, PolyFMDSP::LfoRateA, PolyFMDSP::LfoAmountA, PolyFMDSP::LfoDestinationA,
-            PolyFMDSP::LfoTypeB, PolyFMDSP::LfoRateB, PolyFMDSP::LfoAmountB, PolyFMDSP::LfoDestinationB,
-            PolyFMDSP::EnvAttack, PolyFMDSP::EnvDecay, PolyFMDSP::EnvAmount, PolyFMDSP::EnvDestination
-        }
-    };
-    
-    BoundedInt<0,2> currentPage = 0;
+
     BoundedInt<0,15> currentPreset = 0;
     
     char numCharBuffer[4];
@@ -105,10 +85,9 @@ private:
     
     ydaisy::Parameter* lastParam = nullptr;
     int lastParamIndex = 0;
-    int paramA = 0;
     bool needsToUpdateValue = false;
     
     bool needsResetDisplay = false;
     
-    PolyFMDSP polyFm;
+    PolyAnalogDSP polyFm;
 };

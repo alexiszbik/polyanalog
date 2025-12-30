@@ -13,7 +13,6 @@
 #include "DaisyYMNK/DSP/DSP.h"
 #include "DaisyYMNK/Common/Common.h"
 #include "daisysp.h"
-#include "FmAlgorithm.h"
 
 using namespace ydaisy;
 using namespace std;
@@ -22,43 +21,25 @@ using namespace daisysp;
 //using namespace ydaisy;
 
 class SynthVoice {
-private:
-    
-    struct Operator {
-        Adsr adsr;
-        float ratio = 1;
-        float amount = 1;
-        float phase = 0;
-        float fixFreq = 1000;
-        bool useFixedFreq = false;
-    };
-    
 public:
     void init(double sampleRate);
     
     void prepare();
-    void processPhase(Operator* op);
     
     void setGlide(float glide);
     
-    void setOperatorRatio(int operatorId, float ratio);
-    void setOperatorAmount(int operatorId, float amount);
-    void setOperatorMode(int operatorId, bool mode);
-    void setOperatorFixFrequency(int operatorId, float fixedFreq);
-    void setOperatorADSR(int operatorId, float attack, float decay, float sustain, float release);
+    void setADSR(float attack, float decay, float sustain, float release);
     
-    inline void setFeedback(float feedbackAmount) noexcept {
-        this->feedbackAmount = feedbackAmount;
-    }
-
-    inline void setAlgorithm(int index) noexcept {
-        this->selectedAlgorithm = index;
-    }
-
-    inline void setBrightness(float brightness) noexcept {
-        this->brightness = brightness;
-    }
-
+    void setWaveform(uint8_t waveformIndex, uint8_t oscIdx);
+    void setOctave(int8_t octave);
+    void setOscBTune(uint8_t tuneIndex);
+    void setOscBPW(float pw);
+    void setOscMix(float mix);
+    void setFilterMidiFreq(float freq);
+    void setFilterRes(float res);
+    void setFilterEnv(float env);
+    
+    
     void setEnvParameters(float attack, float decay, float amount);
     
     void setNoteOn(Note note);
@@ -72,7 +53,7 @@ public:
     }
     
     inline bool isPlaying() noexcept {
-        return gate || op[0].adsr.IsRunning();
+        return gate || adsr.IsRunning();
     }
     
 private:
@@ -80,6 +61,12 @@ private:
     void setGate(bool gate);
     
 public:
+    static const uint8_t wfCount = 3;
+    static const uint8_t btuneCount = 9;
+    
+    static const uint8_t wf[];
+    static const int8_t btune[];
+    
     unsigned long noteTimeStamp; //TO REWRITE
     float pitchMod = 0; //TO REWRITE
     
@@ -87,44 +74,33 @@ public:
     static const int kOperatorCount = 4;
     
 private:
+    int8_t octave;
+    
     double sampleRate;
+    float halfSr;
     
     float glide = 0;
     
-    float opOut[kOperatorCount] = {0,0,0,0};
+    float tune = 0;
+    float pw = 0.5;
+    float mix = 0.5;
+    
+    float filterMidiFreq = 800;
+    float filterRes = 0.5;
+    float filterEnv = 0.25;
 
     SmoothValue pitch;
     bool gate = false;
 
-    Operator op[kOperatorCount];
     AttackDecay env;
     float envAmount = 0;
     
-    float phaseInc = 0;
-    float freq = 0;
-    float feedback = 0;
-    float feedbackAmount = 0;
-    float brightness = 0;
+    static const uint8_t oscCount = 2;
     
-    //THIS COULD BE STATIC
-    FmAlgorithm algorithms[kAlgorithmCount] = {
-        FmAlgorithm({0}, {1}, {2}, {3}, 3),
-        FmAlgorithm({0}, {1}, {2,3}, {}, 3),
-        FmAlgorithm({0}, {1,3}, {2}, {}, 2),
-        FmAlgorithm({0}, {1,2}, {3}, {3}, 3),
-        FmAlgorithm({0, 1}, {2}, {2}, {3}, 3),
-        FmAlgorithm({0, 1}, {}, {2}, {3}, 3),
-        FmAlgorithm({0}, {1, 2, 3}, {}, {}, 3),
-        FmAlgorithm({0, 1}, {2}, {3}, {}, 3),
-        FmAlgorithm({0, 1, 2}, {3}, {3}, {3}, 3),
-        FmAlgorithm({0, 1, 2}, {}, {}, {3}, 3),
-        FmAlgorithm({0, 1, 2, 3}, {}, {}, {}, 3)
-    };
+    float freq[oscCount] = {0, 0};
     
-    FmAlgorithm* alg; //currentAlgorithm
-    
-    float factor[4];
-    
-    int selectedAlgorithm = 0;
-    
+    Adsr adsr;
+    Oscillator oscs[oscCount];
+    BiquadFilter filter;
+ 
 };

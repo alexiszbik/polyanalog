@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="CBOG0M" name="PolyFM" projectType="guiapp" useAppConfig="0"
+<JUCERPROJECT id="CBOG0M" name="PolyAnalog" projectType="guiapp" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
-  <MAINGROUP id="tOCiWl" name="PolyFM">
+  <MAINGROUP id="tOCiWl" name="PolyAnalog">
     <GROUP id="{C0779C41-2005-DAFC-CC4D-A1C1121014A9}" name="DaisyYMNK">
       <FILE id="jR98hB" name="DaisyYMNK.h" compile="0" resource="0" file="../DaisyYMNK/DaisyYMNK.h"/>
       <GROUP id="{0877EE75-A40A-8042-8EA9-3DD8866AC98A}" name="Common">
@@ -11,6 +11,9 @@
         <FILE id="SrZHms" name="Note.h" compile="0" resource="0" file="../DaisyYMNK/Common/Note.h"/>
       </GROUP>
       <GROUP id="{85E853C6-2AC9-9BC6-FAFF-5AD0B94AE8F2}" name="DSP">
+        <GROUP id="{5B231753-09CD-6AD5-7705-FAEBE033A361}" name="Filters">
+          <FILE id="YCFhvY" name="BiquadFilter.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Filters/BiquadFilter.h"/>
+        </GROUP>
         <GROUP id="{97D7E1C4-055D-815C-2770-ABC3C85BA847}" name="Env">
           <FILE id="kV64tO" name="AttackDecay.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Env/AttackDecay.h"/>
         </GROUP>
@@ -193,11 +196,13 @@
     <GROUP id="{391843D2-BB38-4C2E-5760-1007496762CE}" name="Source">
       <FILE id="MecHWe" name="Lfo.cpp" compile="1" resource="0" file="../Source/Lfo.cpp"/>
       <FILE id="ZvyNKV" name="Lfo.h" compile="0" resource="0" file="../Source/Lfo.h"/>
-      <FILE id="RaVGXc" name="FmAlgorithm.h" compile="0" resource="0" file="../Source/FmAlgorithm.h"/>
-      <FILE id="FWN2rj" name="PolyFMCore.cpp" compile="1" resource="0" file="../Source/PolyFMCore.cpp"/>
-      <FILE id="K24o6e" name="PolyFMCore.h" compile="0" resource="0" file="../Source/PolyFMCore.h"/>
-      <FILE id="TRkhn8" name="PolyFMDSP.cpp" compile="1" resource="0" file="../Source/PolyFMDSP.cpp"/>
-      <FILE id="TAwUPC" name="PolyFMDSP.h" compile="0" resource="0" file="../Source/PolyFMDSP.h"/>
+      <FILE id="FtWBzC" name="PolyAnalogCore.cpp" compile="1" resource="0"
+            file="../Source/PolyAnalogCore.cpp"/>
+      <FILE id="l1wJh9" name="PolyAnalogCore.h" compile="0" resource="0"
+            file="../Source/PolyAnalogCore.h"/>
+      <FILE id="VPWLn7" name="PolyAnalogDSP.cpp" compile="1" resource="0"
+            file="../Source/PolyAnalogDSP.cpp"/>
+      <FILE id="vu2RGa" name="PolyAnalogDSP.h" compile="0" resource="0" file="../Source/PolyAnalogDSP.h"/>
       <FILE id="suwBIW" name="PolySynth.cpp" compile="1" resource="0" file="../Source/PolySynth.cpp"/>
       <FILE id="bQHqUp" name="PolySynth.h" compile="0" resource="0" file="../Source/PolySynth.h"/>
       <FILE id="bV6UtO" name="SynthVoice.cpp" compile="1" resource="0" file="../Source/SynthVoice.cpp"/>

@@ -10,14 +10,31 @@
 
 #include "SynthVoice.h"
 
+const uint8_t SynthVoice::wf[] = {Oscillator::WAVE_TRI, Oscillator::WAVE_POLYBLEP_SAW, Oscillator::WAVE_POLYBLEP_SQUARE };
+
+const int8_t SynthVoice::btune[] = {-24, -17, -12, -5, 0, 7, 12, 19, 24};
+
 void SynthVoice::init(double sampleRate) {
-    phaseInc = (1/sampleRate);
-    for (int i = 0; i < kOperatorCount; i++) {
-        op[i].adsr.Init(sampleRate);
-    }
+
+    this->sampleRate = sampleRate;
+    
     pitch.setImmediate(60);
     env.Init(sampleRate);
-    this->sampleRate = sampleRate;
+
+    adsr.Init(sampleRate);
+    uint8_t k = oscCount;
+    while(k--) {
+        oscs[k].Init(sampleRate);
+        oscs[k].SetAmp(1);
+        
+        oscs[k].SetWaveform(wf[0]);
+        oscs[k].SetPw(0.5);
+    }
+    
+    filter.Init(sampleRate);
+    
+    halfSr = ftom(sampleRate/1.95f);
+
 }
 
 void SynthVoice::setPitch(int pitch) {
@@ -30,16 +47,15 @@ void SynthVoice::setGate(bool gate) {
 }
 
 void SynthVoice::setNoteOn(Note note) {
-    if (op[0].adsr.IsRunning() == false) { //In order to avoid clicks we should verify any output operators
-        for (int i = kOperatorCount - 1; i >= 0; i--) {
-            op[i].phase = 0;
+    if (adsr.IsRunning() == false) { //In order to avoid clicks we should verify any output operators
+        uint8_t k = oscCount;
+        while(k--) {
+            oscs[k].Reset();
         }
     }
     
     setPitch(note.pitch);
-    for (int i = 0; i < kOperatorCount; i++) {
-        op[i].adsr.Retrigger(false);
-    }
+    adsr.Retrigger(false);
     setGate(true);
     env.Retrig();
     noteTimeStamp = note.timeStamp;
@@ -49,38 +65,15 @@ void SynthVoice::setNoteOff() {
     setGate(false);
 }
 
-void SynthVoice::processPhase(Operator* op) {
-    float f = op->useFixedFreq ? op->fixFreq : freq;
-    op->phase += phaseInc * f * op->ratio;
-    //op->phase = fmod(op->phase, 1.0);
-    op->phase -= floorf(op->phase);
-}
-
 void SynthVoice::setGlide(float glide) {
     this->glide = glide;
 }
 
-void SynthVoice::setOperatorRatio(int operatorId, float ratio) {
-    op[operatorId].ratio = ratio;
-}
-
-void SynthVoice::setOperatorAmount(int operatorId, float amount) {
-    op[operatorId].amount = amount;
-}
-
-void SynthVoice::setOperatorMode(int operatorId, bool mode) {
-    op[operatorId].useFixedFreq = mode;
-}
-
-void SynthVoice::setOperatorFixFrequency(int operatorId, float fixFreq) {
-    op[operatorId].fixFreq = fixFreq;
-}
-
-void SynthVoice::setOperatorADSR(int operatorId, float attack, float decay, float sustain, float release) {
-    op[operatorId].adsr.SetAttackTime(attack);
-    op[operatorId].adsr.SetDecayTime(decay);
-    op[operatorId].adsr.SetSustainLevel(sustain);
-    op[operatorId].adsr.SetReleaseTime(release);
+void SynthVoice::setADSR(float attack, float decay, float sustain, float release) {
+   adsr.SetAttackTime(attack);
+   adsr.SetDecayTime(decay);
+   adsr.SetSustainLevel(sustain);
+   adsr.SetReleaseTime(release);
 }
 
 void SynthVoice::setEnvParameters(float attack, float decay, float amount) {
@@ -89,11 +82,40 @@ void SynthVoice::setEnvParameters(float attack, float decay, float amount) {
     envAmount = (48 * amount - 24);
 }
 
+void SynthVoice::setWaveform(uint8_t waveformIndex, uint8_t oscIdx) {
+    oscs[oscIdx].SetWaveform(wf[waveformIndex]);
+}
+
+void SynthVoice::setOctave(int8_t octave) {
+    this->octave = octave;
+}
+
+void SynthVoice::setOscBTune(uint8_t tuneIndex) {
+    this->tune = btune[tuneIndex];
+}
+
+void SynthVoice::setOscBPW(float pw) {
+    this->pw = pw;
+}
+
+void SynthVoice::setOscMix(float mix) {
+    this->mix = 1.f - (mix * mix);
+}
+
+void SynthVoice::setFilterMidiFreq(float freq) {
+    this->filterMidiFreq = freq;
+}
+
+void SynthVoice::setFilterRes(float res) {
+    this->filterRes = res;
+}
+
+void SynthVoice::setFilterEnv(float env) {
+    this->filterEnv = env;
+}
+
 void SynthVoice::prepare() {
-    alg = &algorithms[selectedAlgorithm];
-    for (uint8_t i = 0; i < 4; i++) {
-        factor[i] = alg->isOutput[i] ? 1.f : brightness;
-    }
+
 }
 
 float SynthVoice::process() {
@@ -102,43 +124,25 @@ float SynthVoice::process() {
     
     pitch.dezipperCheck(sampleRate * glide);
     
-    freq = mtof(pitch.getAndStep() + pitchMod + envPitch);
+    float mainPitch = pitch.getAndStep() + pitchMod + envPitch;
     
-    for (int i = kOperatorCount - 1; i >= 0; i--) {
-        Operator* o = &op[i];
-        processPhase(o);
-        
-        float modulator = 0;
-        
-        if (i == alg->feedbackOp) {
-            modulator = feedback * feedbackAmount;
-        } else {
-            if (alg->modulatorCount[i]) {
-                for (int index = 0; index < alg->modulatorCount[i]; index++) {
-                    modulator += opOut[alg->getModulator(i, index)];
-                }
-            }
-        }
-        
-        opOut[i] = cos((o->phase + modulator * 0.3333f) * PI_F * 2);
-        
-        float envOut = o->adsr.Process(gate);
-        
-        opOut[i] *= envOut*envOut;
-        
-        if (i == alg->feedbackOp) {
-            feedback = opOut[i];
-        }
-        
-        
-        
-        opOut[i] *= o->amount * factor[i];
+    freq[0] = mtof(mainPitch + octave*12.f);
+    freq[1] = mtof(mainPitch + tune);
+    
+    float envOut = adsr.Process(gate);
+    
+    oscs[1].SetPw(pw);
+    
+    uint8_t k = oscCount;
+    while(k--) {
+        oscs[k].SetFreq(freq[k]);
     }
+
+    float oscMix = ydaisy::dryWet(oscs[0].Process(), oscs[1].Process(), mix);
     
-    float out = 0;
-    for (auto& outputOpId : alg->outputOperators) {
-        out += opOut[outputOpId];
-    }
+    float fFreq = mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv, 132.f));
     
-    return out;
+    filter.SetLowpass(fFreq, filterRes);
+
+    return filter.Process(oscMix) * envOut * envOut;
 }

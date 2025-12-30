@@ -3,7 +3,7 @@
 #include <JuceHeader.h>
 #include "TestModuleComponent.h"
 
-#include "PolyFMCore.h"
+#include "PolyAnalogCore.h"
 
 
 //==============================================================================

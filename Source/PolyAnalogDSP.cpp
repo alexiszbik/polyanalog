@@ -1,24 +1,15 @@
 /*
   ==============================================================================
 
-    PolyFMDSP.cpp
+    PolyAnalogDSP.cpp
     Created: 8 Nov 2023 4:51:13pm
     Author:  Alexis ZBIK
 
   ==============================================================================
 */
 
-#include "PolyFMDSP.h"
+#include "PolyAnalogDSP.h"
 
-#define DECLARE_OPERATOR(_name, _label) \
-{Coarse##_name,  _label " Coarse",   false}, \
-{Fine##_name,    _label " Fine",     false}, \
-{Mode##_name,    _label " Mode",     false}, \
-{Attack##_name,  _label " Attack",   false}, \
-{Decay##_name,   _label " Decay",    false}, \
-{Sustain##_name, _label " Sustain",  false}, \
-{Release##_name, _label " Release",  false}, \
-{Amount##_name,  _label " Amount",   false}
 
 #define DECLARE_LFO(_name, _label) \
 {LfoType##_name,        _label " Lfo Type",        false}, \
@@ -26,20 +17,30 @@
 {LfoRate##_name,        _label " Lfo Rate",        false}, \
 {LfoAmount##_name,      _label " Lfo Amount",      false}
 
-PolyFMDSP::PolyFMDSP()
+PolyAnalogDSP::PolyAnalogDSP()
 : DSPKernel({
-    {PlayMode,      "Play Mode",     false},
-    {Glide,         "Glide",        false},
-    {Algorithm,     "Algorithm",    false},
-    {Feedback,      "Feedback",     false},
-    {TimeRatio,     "Time Ratio",    false},
-    {Brightness,    "Brightness",   false},
-    {Volume,        "Volume",       false},
+    {PlayMode,      "Play Mode"},
+    {Glide,         "Glide"},
     
-    DECLARE_OPERATOR(A,"A"),
-    DECLARE_OPERATOR(B,"B"),
-    DECLARE_OPERATOR(C,"C"),
-    DECLARE_OPERATOR(D,"D"),
+    {Volume,        "Volume"},
+    
+    {OscWaveformA,      "OscWaveformA"},
+    {OscOctaveA,        "OscOctaveA"},
+    
+    {OscWaveformB,    "OscWaveformB"},
+    {OscTuneB,        "OscTuneB"},
+    {OscPwB,        "OscPWB"},
+    
+    {OscMix,        "OscMix"},
+    
+    {FilterCutoff,     "FilterCutoff"},
+    {FilterRes,        "FilterRes"},
+    {FilterEnv,        "FilterEnv"},
+    
+    {Attack,        "Attack"},
+    {Decay,          "Decay"},
+    {Sustain,        "Sustain"},
+    {Release,        "Release"},
     
     DECLARE_LFO(A,"A"),
     DECLARE_LFO(B,"B"),
@@ -56,10 +57,10 @@ PolyFMDSP::PolyFMDSP()
 #endif
 }
 
-PolyFMDSP::~PolyFMDSP() {
+PolyAnalogDSP::~PolyAnalogDSP() {
 }
 
-void PolyFMDSP::init(int channelCount, double sampleRate) {
+void PolyAnalogDSP::init(int channelCount, double sampleRate) {
     DSPKernel::init(channelCount, sampleRate);
 
     synth.init(sampleRate);
@@ -70,7 +71,7 @@ void PolyFMDSP::init(int channelCount, double sampleRate) {
     }
 }
 
-void PolyFMDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
+void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
     DSPKernel::processMIDI(messageType, channel, dataA, dataB);
     
     switch (messageType) {
@@ -111,11 +112,44 @@ void PolyFMDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA,
     }
 }
 
-void PolyFMDSP::updateParameter(int index, float value) {
+void PolyAnalogDSP::updateParameter(int index, float value) {
     auto param = static_cast<Parameters>(index);
     switch (param) {
         case PlayMode :
             synth.setPolyMode(static_cast<PolySynth::EPolyMode>(valueMap(value, 0, 2)));
+            break;
+        case OscWaveformA :
+            synth.setWaveform(valueMap(value, 0, SynthVoice::wfCount - 1), 0);
+            break;
+        case OscOctaveA :
+            synth.setOctave(valueMap(value, -2, 2));
+            break;
+        case OscWaveformB :
+            synth.setWaveform(valueMap(value, 0, SynthVoice::wfCount - 1), 1);
+            break;
+        case OscTuneB :
+            synth.setOscBTune(valueMap(value, 0, SynthVoice::btuneCount - 1));
+            break;
+        case OscPwB :
+            synth.setOscBPW(value);
+            break;
+        case OscMix :
+            synth.setOscMix(value);
+            break;
+        case FilterCutoff :
+            synth.setFilterMidiFreq((value * 115.f) + 20.f);
+            break;
+        case FilterRes : {
+                constexpr float Qmin = 0.5f;
+                constexpr float Qmax = 6.0f;
+                float lnRatio = std::log(Qmax / Qmin); // calculé à la compile
+                
+                float qvalue = std::exp(value * lnRatio);
+                synth.setFilterRes(qvalue);
+            }
+            break;
+        case FilterEnv :
+            synth.setFilterEnv(value);
             break;
         case LfoDestinationA:
             lfo[0].setDestinationValue(value);
@@ -128,66 +162,24 @@ void PolyFMDSP::updateParameter(int index, float value) {
     }
 }
 
-int PolyFMDSP::getLfoParam(int lfoId, int aParam) {
+int PolyAnalogDSP::getLfoParam(int lfoId, int aParam) {
     static int lfoParamCount = (LfoAmountA - LfoTypeA) + 1;
     return (lfoId * lfoParamCount) + aParam;
 }
 
-int PolyFMDSP::getOpParam(int operatorId, int aParam) {
-    static int opParamCount = (AmountA - CoarseA) + 1;
-    return (operatorId * opParamCount) + aParam;
-}
-
-bool PolyFMDSP::isOpParameter(int index) {
-    return index >= CoarseA && index <= AmountD;
-}
-
-int PolyFMDSP::getOpParameterForA(int index) {
-    int op = getOperatorForIndex(index);
-    static int opParamCount = (AmountA - CoarseA) + 1;
-    if (op >= 0) {
-        return index - opParamCount*op;
-    }
-    return -1;
-}
-
-int PolyFMDSP::getOperatorForIndex(int index) {
-    if (index > AmountD) {
-        return -1;
-    }
-    uint8_t k = 3;
-    for (int opLast : {CoarseD, CoarseC, CoarseB, CoarseA}) {
-        if (index >= opLast) {
-            return k;
-        }
-        k--;
-    }
-    return -1;
-}
-
-float PolyFMDSP::opTimeValue(int operatorId, int aParam, bool applyTimeRatio, float min, float max) {
-    float val = getValue(getOpParam(operatorId, aParam));
-    val *= val;
-    if (applyTimeRatio) {
-        val += timeRatio * timeRatio;
-    }
-    return valueMap(val, min, max);
-}
-
-const char* PolyFMDSP::getLfoDestName(int lfoIdx) {
+const char* PolyAnalogDSP::getLfoDestName(int lfoIdx) {
     auto dest = lfo[lfoIdx].getDestination();
     return lfo[lfoIdx].destinationNames[dest];
 }
 
-float PolyFMDSP::getLfoBuffer(Lfo::LfoDest target, uint8_t frame, float multiplier) {
+float PolyAnalogDSP::getLfoBuffer(Lfo::LfoDest target, uint8_t frame, float multiplier) {
     return lfo[0].getBuffer(target, frame, multiplier) + lfo[1].getBuffer(target, frame, multiplier);
 }
 
-void PolyFMDSP::process(float** buf, int frameCount) {
+void PolyAnalogDSP::process(float** buf, int frameCount) {
     DSPKernel::process(buf, frameCount);
     
     synth.setGlide(getValue(Glide));
-    synth.setAlgorithm(valueMap(getValue(Algorithm), 0, SynthVoice::kAlgorithmCount - 1));
     
     uint8_t k = lfoCount;
     while (k--) {
@@ -195,10 +187,6 @@ void PolyFMDSP::process(float** buf, int frameCount) {
         lfo[k].setAmount(getValue(getLfoParam(k, LfoAmountA)));
         lfo[k].process(frameCount);
     }
-    
-    timeRatio = getValue(TimeRatio) + getLfoBuffer(Lfo::LfoDest_TimeRatio, 0);
-    timeRatio = clamp(timeRatio, 0.0f, 1.0f);
-    
     float envAttack = getValue(EnvAttack);
     float envDecay = getValue(EnvDecay);
     
@@ -207,32 +195,10 @@ void PolyFMDSP::process(float** buf, int frameCount) {
     
     synth.setEnvParameters(attack, decay, getValue(EnvAmount));
     
-    for (int i = 0; i < 4; i++) {
-        synth.setOperatorADSR(i,
-                              opTimeValue(i, AttackA, false),
-                              opTimeValue(i, DecayA, true),
-                              opTimeValue(i, SustainA, false, 0.001, 1),
-                              opTimeValue(i, ReleaseA, true));
-        
-        bool useFixedFreq = getValue(getOpParam(i, ModeA)) > 0.5f;
-        synth.setOperatorMode(i, useFixedFreq);
-        
-        if (useFixedFreq) {
-            float fixFreq = valueMap(getValue(getOpParam(i, CoarseA)), 10.f, 2000.f);
-
-            uint8_t idx = valueMap(getValue(getOpParam(i, FineA)), 0, 4);
-            float multiplier = multipliers[idx];
-            synth.setOperatorFixFreq(i, fixFreq * multiplier);
-        } else {
-            float ratio = valueMap(getValue(getOpParam(i, CoarseA)), 0, 16);
-            if (ratio == 0) {
-                ratio = 0.5;
-            }
-            
-            synth.setOperatorRatio(i, ratio * (getValue(getOpParam(i, FineA)) + 1));
-        }
-        synth.setOperatorAmount(i, getValue(getOpParam(i, AmountA)));
-    }
+    synth.setADSR(valueMapPow3(getValue(Attack), 0.002f, 6.f),
+                  valueMapPow3(getValue(Decay), 0.002f, 2.f),
+                  valueMap(getValue(Sustain), 0.f, 1.f),
+                  valueMapPow3(getValue(Release), 0.002, 16.f));
     
     synth.preprare();
     
@@ -240,18 +206,15 @@ void PolyFMDSP::process(float** buf, int frameCount) {
         //updateParameters(); // useless only for smoothed parameters
         
         float volume = getValue(Volume); 
-        synth.setFeedback(getValue(Feedback) + getLfoBuffer(Lfo::LfoDest_Feedback, i));
-        synth.setBrightness(getValue(Brightness) + getLfoBuffer(Lfo::LfoDest_Brightness, i));
-        
+
         //If we apply lfo to pitch
         synth.setTune(getLfoBuffer(Lfo::LfoDest_Pitch, i, 24));
         
         float out = synth.process() * volume;
        
-        buf[0][i] = out * 0.15;
+        buf[0][i] = SoftClip(out * 0.333);
         for (int channel = 1; channel < channelCount; channel++) {
             buf[channel][i] = buf[0][i];
         }
-        
     }
 }

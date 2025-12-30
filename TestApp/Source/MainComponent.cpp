@@ -1,7 +1,7 @@
 #include "MainComponent.h"
 
 
-MainComponent::MainComponent() : TestModuleComponent({new Project("PolyFM", new PolyFMCore())})
+MainComponent::MainComponent() : TestModuleComponent({new Project("PolyFM", new PolyAnalogCore())})
 {
     
 }

@@ -39,24 +39,25 @@ public:
     void preprare();
     float process();
     
-    
     void setPitchBend(float bend);
     void setModWheel(float value);
     void setPolyMode(EPolyMode newPolyMode);
     void setGlide(float glide);
     void setTune(float tune);
     
-    void setOperatorRatio(int operatorId, float ratio);
-    void setOperatorAmount(int operatorId, float amount);
-    void setOperatorMode(int operatorId, bool mode);
-    void setOperatorFixFreq(int operatorId, float fixFreq);
+    void setADSR(float attack, float decay, float sustain, float release);
+    void setWaveform(uint8_t waveformIndex, uint8_t oscIndex);
+    void setOctave(int8_t octave);
+    void setOscBTune(uint8_t tuneIndex);
+    void setOscBPW(float pw);
+    void setOscMix(float mix);
+    void setFilterMidiFreq(float freq);
+    void setFilterRes(float res);
+    void setFilterEnv(float env);
     
-    void setOperatorADSR(int operatorId, float attack, float decay, float sustain, float release);
-    void setFeedback(float feedbackAmount);
-    void setAlgorithm(int algorithmIndex);
-    void setBrightness(float brightness);
+    
     void setEnvParameters(float attack, float decay, float amount);
-
+    
 private:
     EPolyMode polyMode = Mono;
     vector<SynthVoice*> voices;

@@ -17,7 +17,6 @@
 		0FB144C16230168119C609BE /* SmoothValue.cpp */ = {isa = PBXBuildFile; fileRef = 7D98F05CFB6061D618F279C1; };
 		16743DF3C6631F8F30374252 /* tremolo.cpp */ = {isa = PBXBuildFile; fileRef = 656F8496843F6800172A5859; };
 		177939BB36AF356127E7BC94 /* overdrive.cpp */ = {isa = PBXBuildFile; fileRef = 89F10542C0A4F32147F2B7CD; };
-		1A279B03DD5D00CF6974A0CA /* PolyFMCore.cpp */ = {isa = PBXBuildFile; fileRef = 7A76783C4603255297B678D8; };
 		1FB5C483A6E1E230B773DEEF /* synthbassdrum.cpp */ = {isa = PBXBuildFile; fileRef = B035EDE027426DEE408C8DFB; };
 		21470D94AA94D9F512884293 /* include_juce_core.mm */ = {isa = PBXBuildFile; fileRef = 4C9751A4FCE1AF249CC0C697; };
 		21AF9C1D86BD1D6A254AA25C /* include_juce_audio_processors.mm */ = {isa = PBXBuildFile; fileRef = A3F21799213CFC74913912F3; };
@@ -31,7 +30,9 @@
 		478859D8E10EF6DF67D4F752 /* phasor.cpp */ = {isa = PBXBuildFile; fileRef = E81F717D472B684E6F7B634C; };
 		5021A8708C8F7CAEF89ACCB1 /* ParametersPage.cpp */ = {isa = PBXBuildFile; fileRef = CFD26DFE6D1ABD1DABBBA8AB; };
 		54E14EA948958FB874F2A074 /* Main.cpp */ = {isa = PBXBuildFile; fileRef = FA24ADC68F731805FFDC8069; };
+		593C02FCCB2FB146646C6803 /* PolyAnalogDSP.cpp */ = {isa = PBXBuildFile; fileRef = EA5DB5520B8166EE6CDEA701; };
 		5B26E3BCBA45C44D0FF554BA /* include_juce_audio_basics.mm */ = {isa = PBXBuildFile; fileRef = D650777130131C220C173964; };
+		5B77C966502A8860E236887D /* PolyAnalogCore.cpp */ = {isa = PBXBuildFile; fileRef = 50F37A252987F6908E092A55; };
 		5DB243EDA274A1FBD7D64A55 /* soap.cpp */ = {isa = PBXBuildFile; fileRef = F478C95EFD00F5798097B655; };
 		6052636F90246B9952F9828A /* crossfade.cpp */ = {isa = PBXBuildFile; fileRef = D6F7C49947D30B1ECF6B30E0; };
 		639CB0361CAFFB44D4E30E70 /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = 174B7BB19CBC549BFE36401F; settings = { ATTRIBUTES = (Weak, ); }; };
@@ -91,7 +92,6 @@
 		EADBDDCE0EEA000C70318C5C /* Accelerate.framework */ = {isa = PBXBuildFile; fileRef = B45AFD728180501E13FF6468; };
 		EFA4BB2A2AF558D5E52CC5D9 /* include_juce_graphics_Sheenbidi.c */ = {isa = PBXBuildFile; fileRef = CA4AE92925BE8D7788EFB164; };
 		F5CB880FE62296B5719B3B9F /* formantosc.cpp */ = {isa = PBXBuildFile; fileRef = 8B41281C780A1DB4446CCB06; };
-		F9DAFAD7D2CCA14C6F40D0A7 /* PolyFMDSP.cpp */ = {isa = PBXBuildFile; fileRef = 2D50FDF5401CE23B11B73286; };
 		FA5E1EF3A0F03BF3D455BCD2 /* variableshapeosc.cpp */ = {isa = PBXBuildFile; fileRef = 9192018F5076ACB02F0E74AB; };
 		FC820406F392329E4430232A /* KarplusString.cpp */ = {isa = PBXBuildFile; fileRef = 38EB21ADC04F43327CE444F5; };
 		FFAA263DDB1FC31189A99A57 /* chorus.cpp */ = {isa = PBXBuildFile; fileRef = 5F9BDCEDB9D15A681E63E32C; };
@@ -108,7 +108,6 @@
 		0A69F69FD5D28D75648702D9 /* oscillator.h */ /* oscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = oscillator.h; path = ../../../DaisySP/Source/Synthesis/oscillator.h; sourceTree = SOURCE_ROOT; };
 		0B37471B62A5A47FED84BB4D /* TestModuleComponent.h */ /* TestModuleComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TestModuleComponent.h; path = ../../../JuicyDaisy/TestModuleComponent.h; sourceTree = SOURCE_ROOT; };
 		0C6259637F2CFF0923455E5B /* dcblock.h */ /* dcblock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = dcblock.h; path = ../../../DaisySP/Source/Utility/dcblock.h; sourceTree = SOURCE_ROOT; };
-		0EDFBB794986826D906A1508 /* PolyFMCore.h */ /* PolyFMCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PolyFMCore.h; path = ../../../Source/PolyFMCore.h; sourceTree = SOURCE_ROOT; };
 		0EE2960032949AF01F728001 /* Macros.h */ /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Macros.h; path = ../../../DaisyYMNK/DSP/Macros.h; sourceTree = SOURCE_ROOT; };
 		0FEEC2C4214F08CBE00335CD /* grainlet.cpp */ /* grainlet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = grainlet.cpp; path = ../../../DaisySP/Source/Noise/grainlet.cpp; sourceTree = SOURCE_ROOT; };
 		1156D019DBCFB5EF805BE9B7 /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
@@ -135,9 +134,9 @@
 		2CCE685B947649AA62A21E77 /* synthbassdrum.h */ /* synthbassdrum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = synthbassdrum.h; path = ../../../DaisySP/Source/Drums/synthbassdrum.h; sourceTree = SOURCE_ROOT; };
 		2CDA21D51B55DA3525C78411 /* overdrive.h */ /* overdrive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = overdrive.h; path = ../../../DaisySP/Source/Effects/overdrive.h; sourceTree = SOURCE_ROOT; };
 		2D38FA48201A5916B0B99B8B /* particle.h */ /* particle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = particle.h; path = ../../../DaisySP/Source/Noise/particle.h; sourceTree = SOURCE_ROOT; };
-		2D50FDF5401CE23B11B73286 /* PolyFMDSP.cpp */ /* PolyFMDSP.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PolyFMDSP.cpp; path = ../../../Source/PolyFMDSP.cpp; sourceTree = SOURCE_ROOT; };
 		2F94AF3264A0F99C8EB9AD26 /* fm2.h */ /* fm2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fm2.h; path = ../../../DaisySP/Source/Synthesis/fm2.h; sourceTree = SOURCE_ROOT; };
 		31D880567C7CF653A9DC932A /* juce_audio_utils */ /* juce_audio_utils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_utils; path = ../../../JuicyDaisy/JUCE/modules/juce_audio_utils; sourceTree = SOURCE_ROOT; };
+		34BA6F4C2BB75E727BA65FEB /* PolyAnalogDSP.h */ /* PolyAnalogDSP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PolyAnalogDSP.h; path = ../../../Source/PolyAnalogDSP.h; sourceTree = SOURCE_ROOT; };
 		34EDE1BE90E8399AA512E646 /* ModuleCore.h */ /* ModuleCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleCore.h; path = ../../../DaisyYMNK/DSP/ModuleCore.h; sourceTree = SOURCE_ROOT; };
 		3567D69093AB9F9D0C96B6FF /* include_juce_gui_extra.mm */ /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
 		38EB21ADC04F43327CE444F5 /* KarplusString.cpp */ /* KarplusString.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KarplusString.cpp; path = ../../../DaisySP/Source/PhysicalModeling/KarplusString.cpp; sourceTree = SOURCE_ROOT; };
@@ -150,11 +149,13 @@
 		46416BA492F2BE9CAE145DB3 /* phasor.h */ /* phasor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = phasor.h; path = ../../../DaisySP/Source/Control/phasor.h; sourceTree = SOURCE_ROOT; };
 		49BB110607487E1C097A8993 /* DaisyYMNK.h */ /* DaisyYMNK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DaisyYMNK.h; path = ../../../DaisyYMNK/DaisyYMNK.h; sourceTree = SOURCE_ROOT; };
 		4A363246EF915E7282DF6E2F /* variablesawosc.h */ /* variablesawosc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = variablesawosc.h; path = ../../../DaisySP/Source/Synthesis/variablesawosc.h; sourceTree = SOURCE_ROOT; };
+		4BF3048218C574A3BA0BBB01 /* PolyAnalogCore.h */ /* PolyAnalogCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PolyAnalogCore.h; path = ../../../Source/PolyAnalogCore.h; sourceTree = SOURCE_ROOT; };
 		4C101778E84E1036009B9F57 /* analogbassdrum.h */ /* analogbassdrum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = analogbassdrum.h; path = ../../../DaisySP/Source/Drums/analogbassdrum.h; sourceTree = SOURCE_ROOT; };
 		4C9751A4FCE1AF249CC0C697 /* include_juce_core.mm */ /* include_juce_core.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_core.mm; path = ../../JuceLibraryCode/include_juce_core.mm; sourceTree = SOURCE_ROOT; };
 		4E98CBC9D1BF092E7297F585 /* smooth_random.h */ /* smooth_random.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = smooth_random.h; path = ../../../DaisySP/Source/Utility/smooth_random.h; sourceTree = SOURCE_ROOT; };
 		4ED16E10BFDD0F1C67C22422 /* CoreAudioKit.framework */ /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		4F43CA6C1F42D9F786EB1B2F /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		50F37A252987F6908E092A55 /* PolyAnalogCore.cpp */ /* PolyAnalogCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PolyAnalogCore.cpp; path = ../../../Source/PolyAnalogCore.cpp; sourceTree = SOURCE_ROOT; };
 		54F116D3BA3F6FFAC5E68FF4 /* modalvoice.h */ /* modalvoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = modalvoice.h; path = ../../../DaisySP/Source/PhysicalModeling/modalvoice.h; sourceTree = SOURCE_ROOT; };
 		57C38E1856C090F70C083F5A /* juce_audio_formats */ /* juce_audio_formats */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_formats; path = ../../../JuicyDaisy/JUCE/modules/juce_audio_formats; sourceTree = SOURCE_ROOT; };
 		5852EACDFBC7B930F0AEEE8E /* Metal.framework */ /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
@@ -178,7 +179,6 @@
 		77C6A2F62ED7CA12EDFDE46A /* oscillator.cpp */ /* oscillator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = oscillator.cpp; path = ../../../DaisySP/Source/Synthesis/oscillator.cpp; sourceTree = SOURCE_ROOT; };
 		78304F142EEED01EF90D7335 /* DiscRecording.framework */ /* DiscRecording.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = System/Library/Frameworks/DiscRecording.framework; sourceTree = SDKROOT; };
 		785307D910DE84ADC40BFB83 /* flanger.cpp */ /* flanger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = flanger.cpp; path = ../../../DaisySP/Source/Effects/flanger.cpp; sourceTree = SOURCE_ROOT; };
-		7A76783C4603255297B678D8 /* PolyFMCore.cpp */ /* PolyFMCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PolyFMCore.cpp; path = ../../../Source/PolyFMCore.cpp; sourceTree = SOURCE_ROOT; };
 		7B3648B21F29EDEC9A6A0275 /* include_juce_data_structures.mm */ /* include_juce_data_structures.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_data_structures.mm; path = ../../JuceLibraryCode/include_juce_data_structures.mm; sourceTree = SOURCE_ROOT; };
 		7B466A318531ACF3A84740F9 /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
 		7BF47F1D0718F5DBE8BE28E4 /* DSPKernel.cpp */ /* DSPKernel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DSPKernel.cpp; path = ../../../DaisyYMNK/DSP/DSPKernel.cpp; sourceTree = SOURCE_ROOT; };
@@ -211,7 +211,6 @@
 		A26AFEFFFFB7E0B4445BC71C /* MainComponent.h */ /* MainComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainComponent.h; path = ../../Source/MainComponent.h; sourceTree = SOURCE_ROOT; };
 		A3F21799213CFC74913912F3 /* include_juce_audio_processors.mm */ /* include_juce_audio_processors.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_processors.mm; path = ../../JuceLibraryCode/include_juce_audio_processors.mm; sourceTree = SOURCE_ROOT; };
 		A522479E42CD1420844B7103 /* resonator.h */ /* resonator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = resonator.h; path = ../../../DaisySP/Source/PhysicalModeling/resonator.h; sourceTree = SOURCE_ROOT; };
-		A7E85B499A3B28285689A3F9 /* PolyFMDSP.h */ /* PolyFMDSP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PolyFMDSP.h; path = ../../../Source/PolyFMDSP.h; sourceTree = SOURCE_ROOT; };
 		A86D50D5DFEB9E3D2BAFAABF /* onepole.h */ /* onepole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = onepole.h; path = ../../../DaisySP/Source/Filters/onepole.h; sourceTree = SOURCE_ROOT; };
 		AA529323DCD9EC166188BEB3 /* include_juce_gui_basics.mm */ /* include_juce_gui_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_basics.mm; path = ../../JuceLibraryCode/include_juce_gui_basics.mm; sourceTree = SOURCE_ROOT; };
 		ABFC7C6C71EE30310D2D5E0E /* formantosc.h */ /* formantosc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = formantosc.h; path = ../../../DaisySP/Source/Synthesis/formantosc.h; sourceTree = SOURCE_ROOT; };
@@ -231,6 +230,7 @@
 		C030A12F0E2814E10090F2AB /* analogsnaredrum.h */ /* analogsnaredrum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = analogsnaredrum.h; path = ../../../DaisySP/Source/Drums/analogsnaredrum.h; sourceTree = SOURCE_ROOT; };
 		C07D76D42C1A00FA5C73FD40 /* ProjectPage.cpp */ /* ProjectPage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProjectPage.cpp; path = ../../../JuicyDaisy/ProjectPage.cpp; sourceTree = SOURCE_ROOT; };
 		C089E6A75B9EB444BA01F92E /* Parameter.cpp */ /* Parameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Parameter.cpp; path = ../../../DaisyYMNK/DSP/Parameter.cpp; sourceTree = SOURCE_ROOT; };
+		C08F5D887F53C8AA6F201C64 /* BiquadFilter.h */ /* BiquadFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BiquadFilter.h; path = ../../../DaisyYMNK/DSP/Filters/BiquadFilter.h; sourceTree = SOURCE_ROOT; };
 		C319A8F27BE0F167967BC178 /* TestModuleComponent.cpp */ /* TestModuleComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TestModuleComponent.cpp; path = ../../../JuicyDaisy/TestModuleComponent.cpp; sourceTree = SOURCE_ROOT; };
 		C3DC2C1CBF459F312BD19D67 /* dcblock.cpp */ /* dcblock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dcblock.cpp; path = ../../../DaisySP/Source/Utility/dcblock.cpp; sourceTree = SOURCE_ROOT; };
 		C480B9D8E67CB7F4850DBB17 /* decimator.h */ /* decimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = decimator.h; path = ../../../DaisySP/Source/Effects/decimator.h; sourceTree = SOURCE_ROOT; };
@@ -264,8 +264,8 @@
 		DF590F0541996C4F69A89952 /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = ../../../JuicyDaisy/JUCE/modules/juce_gui_basics; sourceTree = SOURCE_ROOT; };
 		E128C21D7A2C1A856359FCFF /* AudioToolbox.framework */ /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E57766E1151EA87DBDF02B1A /* wavefolder.cpp */ /* wavefolder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wavefolder.cpp; path = ../../../DaisySP/Source/Effects/wavefolder.cpp; sourceTree = SOURCE_ROOT; };
-		E5F8A584BB4CAB990D349ED8 /* FmAlgorithm.h */ /* FmAlgorithm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FmAlgorithm.h; path = ../../../Source/FmAlgorithm.h; sourceTree = SOURCE_ROOT; };
 		E81F717D472B684E6F7B634C /* phasor.cpp */ /* phasor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = phasor.cpp; path = ../../../DaisySP/Source/Control/phasor.cpp; sourceTree = SOURCE_ROOT; };
+		EA5DB5520B8166EE6CDEA701 /* PolyAnalogDSP.cpp */ /* PolyAnalogDSP.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PolyAnalogDSP.cpp; path = ../../../Source/PolyAnalogDSP.cpp; sourceTree = SOURCE_ROOT; };
 		EED03410BE3949A94D1140F9 /* limiter.cpp */ /* limiter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = limiter.cpp; path = ../../../DaisySP/Source/Dynamics/limiter.cpp; sourceTree = SOURCE_ROOT; };
 		EEFB71DD74F4F57FEF79D8D9 /* crossfade.h */ /* crossfade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = crossfade.h; path = ../../../DaisySP/Source/Dynamics/crossfade.h; sourceTree = SOURCE_ROOT; };
 		F0CE20E346BDF545B416E21D /* dsp.h */ /* dsp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = dsp.h; path = ../../../DaisySP/Source/Utility/dsp.h; sourceTree = SOURCE_ROOT; };
@@ -311,6 +311,7 @@
 		003E4EB93C40D59D0D64B3B6 /* DSP */ = {
 			isa = PBXGroup;
 			children = (
+				BCB7CCA0FC3BFED8886864EC,
 				BECF8E7D9C3D5EF107CE45D8,
 				455D850F96BE2AC49CF47CF5,
 				7BF47F1D0718F5DBE8BE28E4,
@@ -426,11 +427,10 @@
 			children = (
 				11AC800AA0379D29307D2993,
 				D6F14F97E8C092871E4908DF,
-				E5F8A584BB4CAB990D349ED8,
-				7A76783C4603255297B678D8,
-				0EDFBB794986826D906A1508,
-				2D50FDF5401CE23B11B73286,
-				A7E85B499A3B28285689A3F9,
+				50F37A252987F6908E092A55,
+				4BF3048218C574A3BA0BBB01,
+				EA5DB5520B8166EE6CDEA701,
+				34BA6F4C2BB75E727BA65FEB,
 				230F54BC15F1806B54FD8A9C,
 				2A28698DF4C89DCF7DFC3E93,
 				17FA8F83A82ED6F2FABF6723,
@@ -484,7 +484,7 @@
 			name = Effects;
 			sourceTree = "<group>";
 		};
-		45BAB2EE0DC91C60B44561CF /* PolyFM */ = {
+		45BAB2EE0DC91C60B44561CF /* PolyAnalog */ = {
 			isa = PBXGroup;
 			children = (
 				8F66B7813749B6779EF4A6F6,
@@ -493,7 +493,7 @@
 				6953DA428DE5C45C08AA9598,
 				369EC90BAD0ED99A33DA65BF,
 			);
-			name = PolyFM;
+			name = PolyAnalog;
 			sourceTree = "<group>";
 		};
 		47DA4663812D4548CC473A7F /* Noise */ = {
@@ -613,6 +613,14 @@
 			name = Dynamics;
 			sourceTree = "<group>";
 		};
+		BCB7CCA0FC3BFED8886864EC /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				C08F5D887F53C8AA6F201C64,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
 		BCF3863C0AF5957B6119BEBB /* JUCE Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -693,7 +701,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		95A5BA044F7B3FC58848D4B6 /* PolyFM - App */ = {
+		95A5BA044F7B3FC58848D4B6 /* PolyAnalog - App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A1F5BB1548B0EFA04FCFD24;
 			buildPhases = (
@@ -705,8 +713,8 @@
 			);
 			dependencies = (
 			);
-			name = "PolyFM - App";
-			productName = PolyFM;
+			name = "PolyAnalog - App";
+			productName = PolyAnalog;
 			productReference = F99A0A6C65FE37B3DEB880E5;
 			productType = "com.apple.product-type.application";
 		};
@@ -828,8 +836,8 @@
 				79AF0087CE4B0E19C23DD8B9,
 				C7B0A68E273C2809EBF01F4A,
 				45EEF9B332989904FD10C5D8,
-				1A279B03DD5D00CF6974A0CA,
-				F9DAFAD7D2CCA14C6F40D0A7,
+				5B77C966502A8860E236887D,
+				593C02FCCB2FB146646C6803,
 				2D7615FFFA67147253A09180,
 				E1DC0B41F7213971C6184BF3,
 				5B26E3BCBA45C44D0FF554BA,
@@ -957,7 +965,7 @@
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../JuicyDaisy/JUCE/modules";
 				OTHER_CFLAGS = "-I$(PROJECT_DIR)/../../../JuicyDaisy -I$(PROJECT_DIR)/../../../ -I$(PROJECT_DIR)/../../../Source -I$(PROJECT_DIR)/../../../DaisySP/Source/Utility/  -I$(PROJECT_DIR)/../../../DaisySP/Source/";
 				OTHER_CPLUSPLUSFLAGS = "-I$(PROJECT_DIR)/../../../JuicyDaisy -I$(PROJECT_DIR)/../../../ -I$(PROJECT_DIR)/../../../Source -I$(PROJECT_DIR)/../../../DaisySP/Source/Utility/  -I$(PROJECT_DIR)/../../../DaisySP/Source/";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.PolyFM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.PolyAnalog;
 				PRODUCT_NAME = "PolyFM";
 				USE_HEADERMAP = NO;
 				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
@@ -1069,7 +1077,7 @@
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../JuicyDaisy/JUCE/modules";
 				OTHER_CFLAGS = "-I$(PROJECT_DIR)/../../../JuicyDaisy -I$(PROJECT_DIR)/../../../ -I$(PROJECT_DIR)/../../../Source -I$(PROJECT_DIR)/../../../DaisySP/Source/Utility/  -I$(PROJECT_DIR)/../../../DaisySP/Source/";
 				OTHER_CPLUSPLUSFLAGS = "-I$(PROJECT_DIR)/../../../JuicyDaisy -I$(PROJECT_DIR)/../../../ -I$(PROJECT_DIR)/../../../Source -I$(PROJECT_DIR)/../../../DaisySP/Source/Utility/  -I$(PROJECT_DIR)/../../../DaisySP/Source/";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.PolyFM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.PolyAnalog;
 				PRODUCT_NAME = "PolyFM";
 				USE_HEADERMAP = NO;
 				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
