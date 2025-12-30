@@ -12,14 +12,13 @@
 
 const uint8_t SynthVoice::wf[] = {Oscillator::WAVE_TRI, Oscillator::WAVE_POLYBLEP_SAW, Oscillator::WAVE_POLYBLEP_SQUARE };
 
-const int8_t SynthVoice::btune[] = {-24, -17, -12, -5, 0, 7, 12, 19, 24};
+const float SynthVoice::btune[] = {-24, -17, -12, -5, 0, 0.08, 0.2, 7, 12, 19, 24};
 
 void SynthVoice::init(double sampleRate) {
 
     this->sampleRate = sampleRate;
     
     pitch.setImmediate(60);
-    env.Init(sampleRate);
 
     adsr.Init(sampleRate);
     uint8_t k = oscCount;
@@ -30,11 +29,8 @@ void SynthVoice::init(double sampleRate) {
         oscs[k].SetWaveform(wf[0]);
         oscs[k].SetPw(0.5);
     }
-    
     filter.Init(sampleRate);
-    
     halfSr = ftom(sampleRate/1.95f);
-
 }
 
 void SynthVoice::setPitch(int pitch) {
@@ -43,7 +39,6 @@ void SynthVoice::setPitch(int pitch) {
 
 void SynthVoice::setGate(bool gate) {
     this->gate = gate;
-    //env.SetGate(gate);
 }
 
 void SynthVoice::setNoteOn(Note note) {
@@ -57,7 +52,6 @@ void SynthVoice::setNoteOn(Note note) {
     setPitch(note.pitch);
     adsr.Retrigger(false);
     setGate(true);
-    env.Retrig();
     noteTimeStamp = note.timeStamp;
 }
 
@@ -74,12 +68,6 @@ void SynthVoice::setADSR(float attack, float decay, float sustain, float release
    adsr.SetDecayTime(decay);
    adsr.SetSustainLevel(sustain);
    adsr.SetReleaseTime(release);
-}
-
-void SynthVoice::setEnvParameters(float attack, float decay, float amount) {
-    env.SetAttack(attack);
-    env.SetDecay(decay);
-    envAmount = (48 * amount - 24);
 }
 
 void SynthVoice::setWaveform(uint8_t waveformIndex, uint8_t oscIdx) {
@@ -115,16 +103,13 @@ void SynthVoice::setFilterEnv(float env) {
 }
 
 void SynthVoice::prepare() {
-
 }
 
 float SynthVoice::process() {
     
-    float envPitch = env.Process() * envAmount;
-    
     pitch.dezipperCheck(sampleRate * glide);
     
-    float mainPitch = pitch.getAndStep() + pitchMod + envPitch;
+    float mainPitch = pitch.getAndStep() + pitchMod;
     
     freq[0] = mtof(mainPitch + octave*12.f);
     freq[1] = mtof(mainPitch + tune);

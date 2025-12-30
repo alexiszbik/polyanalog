@@ -45,10 +45,14 @@ public:
         MuxKnob_16,
         
         KnobVolume,
+        KnobGlide,
+        KnobOscMix,
         
         ButtonSave,
+        ButtonPlayMode,
         ButtonPreviousPreset,
         ButtonNextPreset,
+        
         
         MidiLed
     };
@@ -74,8 +78,23 @@ public:
     void displayValuesOnScreen();
     
 private:
-    vector<int> parameterMap = {
-        PolyAnalogDSP::Volume
+    int parameterMap[16] = {
+        PolyAnalogDSP::OscWaveformA,
+        PolyAnalogDSP::OscOctaveA,
+        PolyAnalogDSP::OscWaveformB,
+        PolyAnalogDSP::OscTuneB,
+        PolyAnalogDSP::OscPwB,
+        PolyAnalogDSP::FilterCutoff,
+        PolyAnalogDSP::FilterRes,
+        PolyAnalogDSP::FilterEnv,
+        PolyAnalogDSP::Attack,
+        PolyAnalogDSP::Decay,
+        PolyAnalogDSP::Sustain,
+        PolyAnalogDSP::Release,
+        PolyAnalogDSP::LfoType,
+        PolyAnalogDSP::LfoDestination,
+        PolyAnalogDSP::LfoRate,
+        PolyAnalogDSP::LfoAmount
     };
 
     BoundedInt<0,15> currentPreset = 0;
@@ -89,5 +108,5 @@ private:
     
     bool needsResetDisplay = false;
     
-    PolyAnalogDSP polyFm;
+    PolyAnalogDSP polySynth;
 };

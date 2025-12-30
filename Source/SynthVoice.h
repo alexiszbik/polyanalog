@@ -39,9 +39,6 @@ public:
     void setFilterRes(float res);
     void setFilterEnv(float env);
     
-    
-    void setEnvParameters(float attack, float decay, float amount);
-    
     void setNoteOn(Note note);
     void setNoteOff();
     
@@ -62,10 +59,10 @@ private:
     
 public:
     static const uint8_t wfCount = 3;
-    static const uint8_t btuneCount = 9;
+    static const uint8_t btuneCount = 11;
     
     static const uint8_t wf[];
-    static const int8_t btune[];
+    static const float btune[];
     
     unsigned long noteTimeStamp; //TO REWRITE
     float pitchMod = 0; //TO REWRITE
@@ -91,9 +88,6 @@ private:
 
     SmoothValue pitch;
     bool gate = false;
-
-    AttackDecay env;
-    float envAmount = 0;
     
     static const uint8_t oscCount = 2;
     

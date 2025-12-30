@@ -140,7 +140,7 @@ void PolySynth::setPolyMode(EPolyMode newPolyMode) {
         polyMode = newPolyMode;
         for (int i = 0; i < VOICE_COUNT; i++)
         {
-            voices.at(i)->setNoteOff();
+            voices[i]->setNoteOff();
         }
     }
 }
@@ -191,13 +191,6 @@ void PolySynth::setADSR(float attack, float decay, float sustain, float release)
     for (auto v : voices)
     {
         v->setADSR(attack, decay, sustain, release);
-    }
-}
-
-void PolySynth::setEnvParameters(float attack, float decay, float amount) {
-    for (auto v : voices)
-    {
-        v->setEnvParameters(attack, decay, amount);
     }
 }
 

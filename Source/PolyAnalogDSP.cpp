@@ -37,18 +37,15 @@ PolyAnalogDSP::PolyAnalogDSP()
     {FilterRes,        "FilterRes"},
     {FilterEnv,        "FilterEnv"},
     
-    {Attack,        "Attack"},
+    {Attack,         "Attack"},
     {Decay,          "Decay"},
     {Sustain,        "Sustain"},
     {Release,        "Release"},
     
-    DECLARE_LFO(A,"A"),
-    DECLARE_LFO(B,"B"),
-    
-    {EnvDestination,    "EnvDestination",   false},
-    {EnvAttack,         "EnvAttack",        false},
-    {EnvDecay,          "EnvDecay",         false},
-    {EnvAmount,         "EnvAmount",        false},
+    {LfoType,          "LfoType"},
+    {LfoDestination,   "LfoDestination"},
+    {LfoRate,          "LfoRate"},
+    {LfoAmount,        "LfoAmount"}
     
 }){
 #if defined _SIMULATOR_
@@ -65,10 +62,7 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
 
     synth.init(sampleRate);
     
-    uint8_t k = lfoCount;
-    while (k--) {
-        lfo[k].init(sampleRate);
-    }
+    lfo.init(sampleRate);
 }
 
 void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
@@ -112,6 +106,14 @@ void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int da
     }
 }
 
+void PolyAnalogDSP::togglePlayMode() {
+    auto playModeParam = getParameter(PlayMode);
+    float fValue = playModeParam->getValue();
+    int iValue = valueMap(fValue, 0, 2);
+    iValue = (iValue + 1) % 3;
+    setParameterValue(PlayMode, iValue * 0.5f);
+}
+
 void PolyAnalogDSP::updateParameter(int index, float value) {
     auto param = static_cast<Parameters>(index);
     switch (param) {
@@ -140,10 +142,6 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
             synth.setFilterMidiFreq((value * 115.f) + 20.f);
             break;
         case FilterRes : {
-                constexpr float Qmin = 0.5f;
-                constexpr float Qmax = 6.0f;
-                float lnRatio = std::log(Qmax / Qmin); // calculé à la compile
-                
                 float qvalue = std::exp(value * lnRatio);
                 synth.setFilterRes(qvalue);
             }
@@ -151,29 +149,22 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
         case FilterEnv :
             synth.setFilterEnv(value);
             break;
-        case LfoDestinationA:
-            lfo[0].setDestinationValue(value);
+        case LfoDestination:
+            lfo.setDestinationValue(value);
             break;
-        case LfoDestinationB:
-            lfo[1].setDestinationValue(value);
-            break;
+
         default:
             break;
     }
 }
 
-int PolyAnalogDSP::getLfoParam(int lfoId, int aParam) {
-    static int lfoParamCount = (LfoAmountA - LfoTypeA) + 1;
-    return (lfoId * lfoParamCount) + aParam;
-}
-
-const char* PolyAnalogDSP::getLfoDestName(int lfoIdx) {
-    auto dest = lfo[lfoIdx].getDestination();
-    return lfo[lfoIdx].destinationNames[dest];
+const char* PolyAnalogDSP::getLfoDestName() {
+    auto dest = lfo.getDestination();
+    return lfo.destinationNames[dest];
 }
 
 float PolyAnalogDSP::getLfoBuffer(Lfo::LfoDest target, uint8_t frame, float multiplier) {
-    return lfo[0].getBuffer(target, frame, multiplier) + lfo[1].getBuffer(target, frame, multiplier);
+    return lfo.getBuffer(target, frame, multiplier);
 }
 
 void PolyAnalogDSP::process(float** buf, int frameCount) {
@@ -181,19 +172,9 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
     
     synth.setGlide(getValue(Glide));
     
-    uint8_t k = lfoCount;
-    while (k--) {
-        lfo[k].setRate(getValue(getLfoParam(k, LfoRateA)));
-        lfo[k].setAmount(getValue(getLfoParam(k, LfoAmountA)));
-        lfo[k].process(frameCount);
-    }
-    float envAttack = getValue(EnvAttack);
-    float envDecay = getValue(EnvDecay);
-    
-    float attack = valueMap(envAttack*envAttack, 0.0001f, 2.f);
-    float decay = valueMap(envDecay*envDecay, 0.0001f, 2.f);
-    
-    synth.setEnvParameters(attack, decay, getValue(EnvAmount));
+    lfo.setRate(getValue(LfoRate));
+    lfo.setAmount(getValue(LfoAmount));
+    lfo.process(frameCount);
     
     synth.setADSR(valueMapPow3(getValue(Attack), 0.002f, 6.f),
                   valueMapPow3(getValue(Decay), 0.002f, 2.f),

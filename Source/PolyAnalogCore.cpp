@@ -16,7 +16,7 @@ bool isBetweenParameterIndex(int x, int a, int b) {
 }
 
 PolyAnalogCore::PolyAnalogCore()
-: ModuleCore(&polyFm,
+: ModuleCore(&polySynth,
      {
         {MuxKnob_1,                 kKnob,      HIDPin(0,0),    "MuxKnob_1"},
         {MuxKnob_2,                 kKnob,      HIDPin(0,1),    "MuxKnob_2"},
@@ -36,10 +36,15 @@ PolyAnalogCore::PolyAnalogCore()
         {MuxKnob_16,                kKnob,      HIDPin(0,15),   "MuxKnob_16"},
     
         {KnobVolume,                kKnob,      16,             "Volume"},
+        {KnobGlide,                 kKnob,      17,             "Glide"},
+        {KnobOscMix,                kKnob,      18,             "Osc Mix"},
     
         {ButtonSave,                kButton,    5,              "Button Save"},
+        {ButtonPlayMode,            kButton,    6,              "Play Mode"},
         {ButtonPreviousPreset,      kButton,    8,              "Previous Preset"},
         {ButtonNextPreset,          kButton,    9,              "Next Preset"},
+    
+    
 
         {MidiLed,                   kLed,       10,             "Led"},
      }, (5 - 1)) //do something for midi channel who's not correct
@@ -101,12 +106,8 @@ void PolyAnalogCore::displayValuesOnScreen() {
     
     if (lastParam) {
         
-        if (lastParamIndex == PolyAnalogDSP::LfoDestinationA) {
-            const char* destName = polyFm.getLfoDestName(0);
-            displayManager->WriteLine(2, destName);
-            
-        } else if (lastParamIndex == PolyAnalogDSP::LfoDestinationB) {
-            const char* destName = polyFm.getLfoDestName(1);
+        if (lastParamIndex == PolyAnalogDSP::LfoDestination) {
+            const char* destName = polySynth.getLfoDestName();
             displayManager->WriteLine(2, destName);
             
         } else {
@@ -155,6 +156,10 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
             saveCurrentPreset();
             break;
             
+        case ButtonPlayMode:
+            polySynth.togglePlayMode();
+            break;
+            
         case ButtonPreviousPreset:
             changeCurrentPreset(false);
             break;
@@ -167,12 +172,14 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
             //Hmmm, this should never happen
             break;
             
+        case KnobVolume: dspKernel->setParameterValue(PolyAnalogDSP::Volume, value); break;
+        case KnobGlide: dspKernel->setParameterValue(PolyAnalogDSP::Glide, value); break;
+        case KnobOscMix: dspKernel->setParameterValue(PolyAnalogDSP::OscMix, value); break;
+            
         default:
-            /*if (isBetweenParameterIndex(index, MuxKnob_1, MuxKnob_16)) {
-                dspKernel->setParameterValue(currentOpMap->at(index - MuxKnob_1), value);
-            } else {
-                dspKernel->setParameterValue(parameterMap.at(index - MuxKnob_16 - 1), value);
-            }*/
+            if (isBetweenParameterIndex(index, MuxKnob_1, MuxKnob_16)) {
+                dspKernel->setParameterValue(parameterMap[index - MuxKnob_1], value);
+            }
             displayLastParameterOnScreen();
             
             break;

@@ -55,9 +55,6 @@ public:
     void setFilterRes(float res);
     void setFilterEnv(float env);
     
-    
-    void setEnvParameters(float attack, float decay, float amount);
-    
 private:
     EPolyMode polyMode = Mono;
     vector<SynthVoice*> voices;
