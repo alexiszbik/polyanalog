@@ -1,18 +1,14 @@
-# PolyFM
+# PolyAnalog
 
 ## Overview
 
-**PolyFM** is a 4-voice polyphonic FM synthesizer based on the **Daisy Seed** microcontroller.
-
-It features a **4-operator FM engine** with up to **11 different algorithms**, allowing a wide range of classic and experimental FM sounds.
+**PolyAnalog** is a 4-voice polyphonic Analog synthesizer based on the **Daisy Seed** microcontroller.
 
 ---
 
 ## Features
 
 - 4-voice polyphony  
-- 4-operator FM synthesis  
-- 11 FM algorithms  
 - MIDI input
 - 16 presets save & load  
 - OLED display (SSD1306 128×64)  
@@ -22,7 +18,7 @@ It features a **4-operator FM engine** with up to **11 different algorithms**, a
 
 ## Schematic
 
-![PolyFM schematic](schematic.png)
+Soon !  
 
 ---
 
@@ -39,7 +35,7 @@ It features a **4-operator FM engine** with up to **11 different algorithms**, a
 - 1× 220Ω resistor  
 - 1× 270Ω resistor  
 - 1× 100nF capacitor  
-- 5× Normally Open (NO) push buttons* 
+- 4× Normally Open (NO) push buttons* 
 - 1× OLED screen SSD1306 (128×64)  
 
 ---
