@@ -3,9 +3,9 @@ TARGET = PolyFM
 
 # Sources
 CPP_SOURCES = \
-PolyFM.cpp \
-Source/PolyFMCore.cpp \
-Source/PolyFMDSP.cpp \
+PolyAnalog.cpp \
+Source/PolyAnalogCore.cpp \
+Source/PolyAnalogDSP.cpp \
 Source/PolySynth.cpp \
 Source/SynthVoice.cpp \
 Source/Lfo.cpp \

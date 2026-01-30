@@ -36,15 +36,13 @@ PolyAnalogCore::PolyAnalogCore()
         {MuxKnob_16,                kKnob,      HIDPin(0,15),   "MuxKnob_16"},
     
         {KnobVolume,                kKnob,      16,             "Volume"},
-        {KnobGlide,                 kKnob,      17,             "Glide"},
-        {KnobOscMix,                kKnob,      18,             "Osc Mix"},
+        {KnobCutoff,                kKnob,      18,             "Cutoff"},
+        {KnobRes,                   kKnob,      17,             "Res"},
     
-        {ButtonSave,                kButton,    5,              "Button Save"},
-        {ButtonPlayMode,            kButton,    6,              "Play Mode"},
-        {ButtonPreviousPreset,      kButton,    8,              "Previous Preset"},
-        {ButtonNextPreset,          kButton,    9,              "Next Preset"},
-    
-    
+        {ButtonSave,                kButton,    6,              "Button Save"},
+        {ButtonPlayMode,            kButton,    5,              "Play Mode"},
+        {ButtonPreviousPreset,      kButton,    7,              "Previous Preset"},
+        {ButtonNextPreset,          kButton,    8,              "Next Preset"},
 
         {MidiLed,                   kLed,       10,             "Led"},
      }, (5 - 1)) //do something for midi channel who's not correct
@@ -172,9 +170,9 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
             //Hmmm, this should never happen
             break;
             
-        case KnobVolume: dspKernel->setParameterValue(PolyAnalogDSP::Volume, value); break;
-        case KnobGlide: dspKernel->setParameterValue(PolyAnalogDSP::Glide, value); break;
-        case KnobOscMix: dspKernel->setParameterValue(PolyAnalogDSP::OscMix, value); break;
+        case KnobVolume: dspKernel->setParameterValue(PolyAnalogDSP::Volume, value); displayLastParameterOnScreen(); break;
+        case KnobCutoff: dspKernel->setParameterValue(PolyAnalogDSP::FilterCutoff, value); displayLastParameterOnScreen();  break;
+        case KnobRes: dspKernel->setParameterValue(PolyAnalogDSP::FilterRes, value); displayLastParameterOnScreen();  break;
             
         default:
             if (isBetweenParameterIndex(index, MuxKnob_1, MuxKnob_16)) {

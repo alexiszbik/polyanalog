@@ -45,8 +45,8 @@ public:
         MuxKnob_16,
         
         KnobVolume,
-        KnobGlide,
-        KnobOscMix,
+        KnobCutoff,
+        KnobRes,
         
         ButtonSave,
         ButtonPlayMode,
@@ -84,8 +84,8 @@ private:
         PolyAnalogDSP::OscWaveformB,
         PolyAnalogDSP::OscTuneB,
         PolyAnalogDSP::OscPwB,
-        PolyAnalogDSP::FilterCutoff,
-        PolyAnalogDSP::FilterRes,
+        PolyAnalogDSP::OscMix,
+        PolyAnalogDSP::Glide,
         PolyAnalogDSP::FilterEnv,
         PolyAnalogDSP::Attack,
         PolyAnalogDSP::Decay,

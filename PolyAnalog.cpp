@@ -3,15 +3,15 @@
 
 #include "DaisyYMNK/DaisyYMNK.h"
 #include "DaisyYMNK/QSPI/PresetManager.h"
-#include "Source/PolyFMCore.h"
+#include "Source/PolyAnalogCore.h"
 
 using namespace daisy;
 using namespace daisysp;
 using namespace ydaisy;
 
 DaisySeed hw;
-PolyFMCore polyFM;
-DaisyBase db = DaisyBase(&hw, &polyFM);
+PolyAnalogCore polyAnalog;
+DaisyBase db = DaisyBase(&hw, &polyAnalog);
 
 PresetManager pm;
 DisplayManager *display = DisplayManager::GetInstance();
@@ -27,7 +27,7 @@ void InitHID()
 }
 
 void UpdateValues() {
-    polyFM.displayValuesOnScreen();
+    polyAnalog.displayValuesOnScreen();
 }
 
 int main(void)
@@ -35,7 +35,7 @@ int main(void)
     db.init(AudioCallback);
 
     display->Init(&hw);
-    display->WriteNow("YMNK", "PolyFM Synth");
+    display->WriteNow("YMNK", "PolyAnalog Synth");
 
     pm.Init(&hw);
 
