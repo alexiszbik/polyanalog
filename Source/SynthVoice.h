@@ -90,7 +90,7 @@ private:
     
     static const uint8_t oscCount = 2;
     
-    float freq[oscCount] = {0, 0};
+    float oscPitch[oscCount] = {0, 0};
     
     Adsr adsr;
     SynthOsc oscs[oscCount];

@@ -106,16 +106,16 @@ float SynthVoice::process() {
     
     float mainPitch = pitch.getAndStep() + pitchMod;
     
-    freq[0] = mtof(mainPitch + octave*12.f);
-    freq[1] = mtof(mainPitch + tune);
+    oscPitch[0] = mainPitch + octave*12.f;
+    oscPitch[1] = mainPitch + tune;
     
     float envOut = adsr.Process(gate);
     
     //oscs[1].SetPw(pw);
     
-    uint8_t k = oscCount;
+    uint8_t k = oscCount; 
     while(k--) {
-        oscs[k].setFreq(freq[k]);
+        oscs[k].setPitch(oscPitch[k]);
     }
 
     float oscMix = ydaisy::dryWet(oscs[0].process(), oscs[1].process(), mix);

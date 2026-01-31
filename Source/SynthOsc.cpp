@@ -24,17 +24,29 @@ void SynthOsc::init(double sampleRate) {
     oscs[1].SetPw(0.5);
 }
 
-void SynthOsc::setFreq(float freq) {
+void SynthOsc::setPitch(float pitch) {
+    this->pitch = pitch;
+    
     uint8_t k = count;
     while(k--) {
-        oscs[k].SetFreq(freq);
+        float factor = k == 1 ? 0.2f : -0.2f;
+        oscs[k].SetFreq(mtof(pitch + sawDetune*factor));
     }
 }
 
 void SynthOsc::setWaveform(float value) {
-    const float ranged = fmax((value-0.333f)*1.492537f, 0);
+    if (value < 0.3333f) {
+        oscs[1].SetWaveform(Oscillator::WAVE_POLYBLEP_SAW);
+    } else {
+        oscs[1].SetWaveform(Oscillator::WAVE_POLYBLEP_SQUARE);
+    }
+    const float base = fminf(value * 4.f, 1.f);
+    sawDetune = 1.f - base;
+    sawMix = sawDetune*0.5f;
+    sawDetune *= sawDetune;
+    const float ranged = fmaxf((value-0.333f)*1.492537f, 0);
     const float v = ranged*2.f;
-    oscMix = 1.f - fminf(v, 1.f);
+    oscMix = fminf(v, 1.f);
     oscMix *= oscMix;
     float pw = 0.5f - fmaxf(v - 1.f, 0.f) * 0.49f;
     oscs[1].SetPw(pw);
@@ -48,7 +60,7 @@ void SynthOsc::reset() {
 }
 
 float SynthOsc::process() {
-    return ydaisy::dryWet(oscs[0].Process(), oscs[1].Process(), oscMix);
+    return ydaisy::dryWet(oscs[1].Process(), oscs[0].Process(), fmaxf(oscMix, sawMix));
 }
 
 

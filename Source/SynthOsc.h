@@ -21,7 +21,7 @@ class SynthOsc {
 public:
     void init(double sampleRate);
     void setWaveform(float value);
-    void setFreq(float freq);
+    void setPitch(float pitch);
     
     float process();
     void reset();
@@ -30,5 +30,9 @@ private:
     static const uint8_t count = 2;
     Oscillator oscs[count];
     
+    float pitch = 60;
+    
     float oscMix = 0;
+    float sawDetune = 0;
+    float sawMix = 0;
 };
