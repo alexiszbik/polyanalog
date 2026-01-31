@@ -26,6 +26,8 @@ void SynthVoice::init(double sampleRate) {
     }
     filter.Init(sampleRate);
     halfSr = ftom(sampleRate/1.95f);
+    
+    filterFreqSmoother.Init(20, sampleRate);
 }
 
 void SynthVoice::setPitch(int pitch) {
@@ -124,7 +126,7 @@ float SynthVoice::process(float whiteNoiseIn, float filterMod) {
     float outMix = ydaisy::sqrtDryWet(whiteNoiseIn, oscMix, noiseMix);
     
     float fFreq = mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv + filterMod, 132.f));
-    
+    fFreq = filterFreqSmoother.Process(fFreq);
     filter.SetLowpass(fFreq, filterRes);
 
     return filter.Process(outMix) * envOut * envOut;

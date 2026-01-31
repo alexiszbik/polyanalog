@@ -21,6 +21,21 @@ using namespace std;
 using namespace daisysp;
 //using namespace ydaisy;
 
+class OnePoleSmoother {
+public:
+    void Init(float timeMs, float sr) {
+        float x = expf(-1.f / (timeMs * 0.001f * sr));
+        a = x;
+        b = 1.f - x;
+    }
+    float Process(float in) {
+        z = a * z + b * in;
+        return z;
+    }
+private:
+    float a, b, z = 0.f;
+};
+
 class SynthVoice {
 public:
     void init(double sampleRate);
@@ -94,6 +109,7 @@ private:
     float oscPitch[oscCount] = {0, 0};
     
     float noiseMix = 0;
+    OnePoleSmoother filterFreqSmoother;
     
     Adsr adsr;
     SynthOsc oscs[oscCount];
