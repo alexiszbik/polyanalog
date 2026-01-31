@@ -111,14 +111,12 @@ float SynthVoice::process() {
     
     float envOut = adsr.Process(gate);
     
-    //oscs[1].SetPw(pw);
-    
     uint8_t k = oscCount; 
     while(k--) {
         oscs[k].setPitch(oscPitch[k]);
     }
 
-    float oscMix = ydaisy::dryWet(oscs[0].process(), oscs[1].process(), mix);
+    float oscMix = ydaisy::sqrtDryWet(oscs[0].process(), oscs[1].process(), mix);
     
     float fFreq = mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv, 132.f));
     

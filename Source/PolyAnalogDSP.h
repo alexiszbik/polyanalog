@@ -86,7 +86,7 @@ private:
     
     unsigned long timeStamp = 0;
     static constexpr float Qmin = 0.5f;
-    static constexpr float Qmax = 6.0f;
-    float lnRatio = std::log(Qmax / Qmin); // calculé à la compile
+    static constexpr float Qmax = 8.0f;
+    float lnRatio = std::log(Qmax / Qmin);
 
 };
