@@ -36,6 +36,7 @@ public:
     void setOscBTune(uint8_t tuneIndex);
     void setOscBPW(float pw);
     void setOscMix(float mix);
+    void setNoiseMix(float noiseMix);
     void setFilterMidiFreq(float freq);
     void setFilterRes(float res);
     void setFilterEnv(float env);
@@ -43,7 +44,7 @@ public:
     void setNoteOn(Note note);
     void setNoteOff();
     
-    float process();
+    float process(float whiteNoiseIn);
     
     //TO REWRITE
     inline int currentPitch() noexcept {
@@ -91,6 +92,8 @@ private:
     static const uint8_t oscCount = 2;
     
     float oscPitch[oscCount] = {0, 0};
+    
+    float noiseMix = 0;
     
     Adsr adsr;
     SynthOsc oscs[oscCount];

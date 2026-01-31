@@ -90,7 +90,7 @@ private:
         PolyAnalogDSP::Attack,
         PolyAnalogDSP::Decay,
         PolyAnalogDSP::Sustain,
-        PolyAnalogDSP::Release,
+        PolyAnalogDSP::HighPass,
         PolyAnalogDSP::LfoType,
         PolyAnalogDSP::LfoDestination,
         PolyAnalogDSP::LfoRate,

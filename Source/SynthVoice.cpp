@@ -55,7 +55,7 @@ void SynthVoice::setNoteOff() {
 }
 
 void SynthVoice::setGlide(float glide) {
-    this->glide = glide;
+    this->glide = glide*glide;
 }
 
 void SynthVoice::setADSR(float attack, float decay, float sustain, float release) {
@@ -85,6 +85,10 @@ void SynthVoice::setOscMix(float mix) {
     this->mix = 1.f - (mix * mix);
 }
 
+void SynthVoice::setNoiseMix(float mix) {
+    this->noiseMix = mix;
+}
+
 void SynthVoice::setFilterMidiFreq(float freq) {
     this->filterMidiFreq = freq;
 }
@@ -100,7 +104,7 @@ void SynthVoice::setFilterEnv(float env) {
 void SynthVoice::prepare() {
 }
 
-float SynthVoice::process() {
+float SynthVoice::process(float whiteNoiseIn) {
     
     pitch.dezipperCheck(sampleRate * glide);
     
@@ -117,10 +121,11 @@ float SynthVoice::process() {
     }
 
     float oscMix = ydaisy::sqrtDryWet(oscs[0].process(), oscs[1].process(), mix);
+    float outMix = ydaisy::sqrtDryWet(whiteNoiseIn, oscMix, noiseMix);
     
     float fFreq = mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv, 132.f));
     
     filter.SetLowpass(fFreq, filterRes);
 
-    return filter.Process(oscMix) * envOut * envOut;
+    return filter.Process(outMix) * envOut * envOut;
 }

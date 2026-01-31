@@ -44,7 +44,8 @@ public:
         Attack,
         Decay,
         Sustain,
-        Release,
+        
+        HighPass,
         
         LfoType,
         LfoDestination,
@@ -78,6 +79,7 @@ private:
     
 private:
     PolySynth synth;
+    FastOnePole hpFilter;
     
     static constexpr uint8_t lfoCount = 2;
     const float multipliers[5] = { 0.001f, 0.01f, 0.1f, 1.f, 10.f };

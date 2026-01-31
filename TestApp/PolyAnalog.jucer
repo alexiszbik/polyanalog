@@ -12,6 +12,7 @@
       </GROUP>
       <GROUP id="{85E853C6-2AC9-9BC6-FAFF-5AD0B94AE8F2}" name="DSP">
         <GROUP id="{5B231753-09CD-6AD5-7705-FAEBE033A361}" name="Filters">
+          <FILE id="xnIaAz" name="FastOnePole.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Filters/FastOnePole.h"/>
           <FILE id="YCFhvY" name="BiquadFilter.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Filters/BiquadFilter.h"/>
         </GROUP>
         <GROUP id="{97D7E1C4-055D-815C-2770-ABC3C85BA847}" name="Env">

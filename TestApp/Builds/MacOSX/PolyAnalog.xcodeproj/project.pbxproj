@@ -200,6 +200,7 @@
 		9151AD3CCD536D457AF68316 /* tremolo.h */ /* tremolo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = tremolo.h; path = ../../../DaisySP/Source/Effects/tremolo.h; sourceTree = SOURCE_ROOT; };
 		9192018F5076ACB02F0E74AB /* variableshapeosc.cpp */ /* variableshapeosc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = variableshapeosc.cpp; path = ../../../DaisySP/Source/Synthesis/variableshapeosc.cpp; sourceTree = SOURCE_ROOT; };
 		9221085BD26A27B822436664 /* stringvoice.cpp */ /* stringvoice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stringvoice.cpp; path = ../../../DaisySP/Source/PhysicalModeling/stringvoice.cpp; sourceTree = SOURCE_ROOT; };
+		92270F5885AB769204FE7F44 /* FastOnePole.h */ /* FastOnePole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FastOnePole.h; path = ../../../DaisyYMNK/DSP/Filters/FastOnePole.h; sourceTree = SOURCE_ROOT; };
 		950004D1FC6901994266E8F7 /* Parameter.h */ /* Parameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parameter.h; path = ../../../DaisyYMNK/DSP/Parameter.h; sourceTree = SOURCE_ROOT; };
 		97BEC15BB1074FE002E5AC70 /* looper.h */ /* looper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = looper.h; path = ../../../DaisySP/Source/Utility/looper.h; sourceTree = SOURCE_ROOT; };
 		983818E211A42097EBBC71B1 /* modalvoice.cpp */ /* modalvoice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = modalvoice.cpp; path = ../../../DaisySP/Source/PhysicalModeling/modalvoice.cpp; sourceTree = SOURCE_ROOT; };
@@ -621,6 +622,7 @@
 		BCB7CCA0FC3BFED8886864EC /* Filters */ = {
 			isa = PBXGroup;
 			children = (
+				92270F5885AB769204FE7F44,
 				C08F5D887F53C8AA6F201C64,
 			);
 			name = Filters;

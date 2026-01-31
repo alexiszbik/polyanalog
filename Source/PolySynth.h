@@ -50,6 +50,7 @@ public:
     void setOctave(int8_t octave);
     void setOscBTune(uint8_t tuneIndex);
     void setOscMix(float mix);
+    void setNoiseMix(float mix);
     void setFilterMidiFreq(float freq);
     void setFilterRes(float res);
     void setFilterEnv(float env);
@@ -64,6 +65,7 @@ private:
     SmoothValue vibratoAmount;
     
     Oscillator modulation;
+    WhiteNoise whiteNoise;
     
     vector<Note> noteState;
     

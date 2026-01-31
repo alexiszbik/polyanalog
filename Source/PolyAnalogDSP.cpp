@@ -40,7 +40,7 @@ PolyAnalogDSP::PolyAnalogDSP()
     {Attack,         "Attack"},
     {Decay,          "Decay"},
     {Sustain,        "Sustain"},
-    {Release,        "Release"},
+    {HighPass,        "HighPass"},
     
     {LfoType,          "LfoType"},
     {LfoDestination,   "LfoDestination"},
@@ -63,6 +63,9 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
     synth.init(sampleRate);
     
     lfo.init(sampleRate);
+    
+    hpFilter.Init(sampleRate);
+    hpFilter.SetHighpass(10);
 }
 
 void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
@@ -133,13 +136,16 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
             synth.setOscBTune(valueMap(value, 0, SynthVoice::btuneCount - 1));
             break;
         case OscNoise :
-            //synth.setNoiseLevel(value);
+            synth.setNoiseMix(value);
             break;
         case OscMix :
             synth.setOscMix(value);
             break;
         case FilterCutoff :
-            synth.setFilterMidiFreq((value * 115.f) + 20.f);
+            synth.setFilterMidiFreq((value * 120.f) + 15.f);
+            break;
+        case HighPass :
+            hpFilter.SetHighpass(mtof((value * 120.f) + 15.f));
             break;
         case FilterRes : {
                 float qvalue = std::exp(value * lnRatio);
@@ -176,10 +182,12 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
     lfo.setAmount(getValue(LfoAmount));
     lfo.process(frameCount);
     
+    float decay = valueMapPow3(getValue(Decay), 0.002f, 12.f);
+    
     synth.setADSR(valueMapPow3(getValue(Attack), 0.002f, 6.f),
-                  valueMapPow3(getValue(Decay), 0.002f, 2.f),
+                  decay,
                   valueMap(getValue(Sustain), 0.f, 1.f),
-                  valueMapPow3(getValue(Release), 0.002, 16.f));
+                  decay);
     
     synth.preprare();
     
@@ -192,6 +200,8 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
         synth.setTune(getLfoBuffer(Lfo::LfoDest_Pitch, i, 24));
         
         float out = synth.process() * volume;
+        
+        out = hpFilter.Process(out);
        
         buf[0][i] = SoftClip(out * 0.333);
         for (int channel = 1; channel < channelCount; channel++) {

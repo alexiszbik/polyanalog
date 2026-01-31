@@ -31,6 +31,8 @@ void PolySynth::init(double sampleRate)  {
     }
     modulation.Init(sampleRate);
     modulation.SetFreq(8);
+    whiteNoise.Init();
+    whiteNoise.SetAmp(0.707f);
 }
 
 void PolySynth::setNote(bool isNoteOn, Note note) {
@@ -180,6 +182,13 @@ void PolySynth::setOscMix(float mix) {
     }
 }
 
+void PolySynth::setNoiseMix(float mix) {
+    for (auto v : voices)
+    {
+        v->setNoiseMix(mix);
+    }
+}
+
 void PolySynth::setADSR(float attack, float decay, float sustain, float release) {
     for (auto v : voices)
     {
@@ -231,7 +240,7 @@ float PolySynth::process() {
             float unisonMod = -0.015625 + (idx*(0.03125/(UNISON_VOICE_COUNT-1)));
             v->pitchMod += unisonMod;
         }
-        result += v->process();
+        result += v->process(whiteNoise.Process());
         idx++;
     }
     if (polyMode == Unison) {
