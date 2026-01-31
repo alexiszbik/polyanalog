@@ -248,7 +248,7 @@ float PolySynth::process() {
         result += v->process(whiteNoise.Process(), filterLfoMod);
         idx++;
     }
-    if (polyMode == Unison) {
+    if (polyMode != Mono) {
         result *= 0.707;
     }
     
