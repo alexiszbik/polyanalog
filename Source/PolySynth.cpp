@@ -62,14 +62,15 @@ void PolySynth::setNote(bool isNoteOn, Note note) {
             {
                 voices.at(i)->setNoteOn(note);
             }
-        } else {
-            for (int i = 0; i < voiceCount; i++)
+        } else { // Polyphonic part
+            //This is wrong
+            /*for (int i = 0; i < voiceCount; i++)
             {
                 if (voices.at(i)->currentPitch() == note.pitch) {
                     voices.at(i)->setNoteOn(note);
                     return;
                 }
-            }
+            }*/
             
             for (int i = 0; i < voiceCount; i++)
             {

@@ -182,7 +182,7 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
     lfo.setAmount(getValue(LfoAmount));
     lfo.process(frameCount);
     
-    float decay = valueMapPow3(getValue(Decay), 0.002f, 12.f);
+    float decay = valueMapPow3(getValue(Decay), 0.005f, 8.f);
     
     synth.setADSR(valueMapPow3(getValue(Attack), 0.002f, 6.f),
                   decay,

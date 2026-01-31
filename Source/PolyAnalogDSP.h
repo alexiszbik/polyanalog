@@ -73,8 +73,7 @@ protected:
     
 private:
     int getLfoParam(int lfoId, int aParam);
-    float opTimeValue(int operatorId, int aParam, bool applyTimeRatio, float min = 0.002f, float max = 2.f);
-    
+
     float getLfoBuffer(Lfo::LfoDest target, uint8_t frame, float multiplier = 1.f);
     
 private:
