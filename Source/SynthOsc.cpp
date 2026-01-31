@@ -45,7 +45,7 @@ void SynthOsc::setWaveform(float value) {
     const float v = ranged*2.f;
     oscMix = fminf(v, 1.f);
     oscMix *= oscMix;
-    float pw = 0.5f - fmaxf(v - 1.f, 0.f) * 0.49f;
+    float pw = 0.5f - fmaxf(v - 1.f, 0.f) * 0.47f;
     oscs[1].SetPw(pw);
 }
 
