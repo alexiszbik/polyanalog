@@ -79,12 +79,12 @@ public:
     
 private:
     int parameterMap[16] = {
+        PolyAnalogDSP::OscMix,
+        PolyAnalogDSP::OscWaveformB,
         PolyAnalogDSP::OscWaveformA,
         PolyAnalogDSP::OscOctaveA,
-        PolyAnalogDSP::OscWaveformB,
         PolyAnalogDSP::OscTuneB,
-        PolyAnalogDSP::OscPwB,
-        PolyAnalogDSP::OscMix,
+        PolyAnalogDSP::OscNoise,
         PolyAnalogDSP::Glide,
         PolyAnalogDSP::FilterEnv,
         PolyAnalogDSP::Attack,

@@ -33,8 +33,8 @@ public:
         
         OscWaveformB,
         OscTuneB,
-        OscPwB,
         
+        OscNoise,
         OscMix,
         
         FilterCutoff,

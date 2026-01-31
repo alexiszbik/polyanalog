@@ -173,13 +173,6 @@ void PolySynth::setOscBTune(uint8_t tuneIndex) {
     }
 }
 
-void PolySynth::setOscBPW(float pw) {
-    for (auto v : voices)
-    {
-        v->setOscBPW(pw);
-    }
-}
-
 void PolySynth::setOscMix(float mix) {
     for (auto v : voices)
     {

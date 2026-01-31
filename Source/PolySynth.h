@@ -49,7 +49,6 @@ public:
     void setWaveform(uint8_t waveformIndex, uint8_t oscIndex);
     void setOctave(int8_t octave);
     void setOscBTune(uint8_t tuneIndex);
-    void setOscBPW(float pw);
     void setOscMix(float mix);
     void setFilterMidiFreq(float freq);
     void setFilterRes(float res);

@@ -29,7 +29,7 @@ PolyAnalogDSP::PolyAnalogDSP()
     
     {OscWaveformB,    "OscWaveformB"},
     {OscTuneB,        "OscTuneB"},
-    {OscPwB,        "OscPWB"},
+    {OscNoise,        "OscNoise"},
     
     {OscMix,        "OscMix"},
     
@@ -132,8 +132,8 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
         case OscTuneB :
             synth.setOscBTune(valueMap(value, 0, SynthVoice::btuneCount - 1));
             break;
-        case OscPwB :
-            synth.setOscBPW(value);
+        case OscNoise :
+            //synth.setNoiseLevel(value);
             break;
         case OscMix :
             synth.setOscMix(value);
