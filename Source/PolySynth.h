@@ -46,7 +46,7 @@ public:
     void setTune(float tune);
     
     void setADSR(float attack, float decay, float sustain, float release);
-    void setWaveform(uint8_t waveformIndex, uint8_t oscIndex);
+    void setWaveform(uint8_t oscIndex, float value);
     void setOctave(int8_t octave);
     void setOscBTune(uint8_t tuneIndex);
     void setOscMix(float mix);

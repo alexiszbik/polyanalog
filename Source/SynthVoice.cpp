@@ -10,7 +10,6 @@
 
 #include "SynthVoice.h"
 
-const uint8_t SynthVoice::wf[] = {Oscillator::WAVE_TRI, Oscillator::WAVE_POLYBLEP_SAW, Oscillator::WAVE_POLYBLEP_SQUARE };
 
 const float SynthVoice::btune[] = {-24, -17, -12, -5, 0, 0.08, 0.2, 7, 12, 19, 24};
 
@@ -26,8 +25,7 @@ void SynthVoice::init(double sampleRate) {
         oscs[k].Init(sampleRate);
         oscs[k].SetAmp(1);
         
-        oscs[k].SetWaveform(wf[0]);
-        oscs[k].SetPw(0.5);
+        setWaveform(k, 0);
     }
     filter.Init(sampleRate);
     halfSr = ftom(sampleRate/1.95f);
@@ -70,8 +68,8 @@ void SynthVoice::setADSR(float attack, float decay, float sustain, float release
    adsr.SetReleaseTime(release);
 }
 
-void SynthVoice::setWaveform(uint8_t waveformIndex, uint8_t oscIdx) {
-    oscs[oscIdx].SetWaveform(wf[waveformIndex]);
+void SynthVoice::setWaveform(uint8_t oscIndex, float value) {
+    oscs[oscIndex].SetWaveform(value > 0.5 ? Oscillator::WAVE_POLYBLEP_SQUARE : Oscillator::WAVE_POLYBLEP_SAW);
 }
 
 void SynthVoice::setOctave(int8_t octave) {

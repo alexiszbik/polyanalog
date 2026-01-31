@@ -121,13 +121,13 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
             synth.setPolyMode(static_cast<PolySynth::EPolyMode>(valueMap(value, 0, 2)));
             break;
         case OscWaveformA :
-            synth.setWaveform(valueMap(value, 0, SynthVoice::wfCount - 1), 0);
+            synth.setWaveform(0, value);
             break;
         case OscOctaveA :
             synth.setOctave(valueMap(value, -2, 2));
             break;
         case OscWaveformB :
-            synth.setWaveform(valueMap(value, 0, SynthVoice::wfCount - 1), 1);
+            synth.setWaveform(1, value);
             break;
         case OscTuneB :
             synth.setOscBTune(valueMap(value, 0, SynthVoice::btuneCount - 1));

@@ -152,10 +152,10 @@ void PolySynth::setGlide(float glide) {
     }
 }
 
-void PolySynth::setWaveform(uint8_t waveformIndex, uint8_t oscIndex) {
+void PolySynth::setWaveform(uint8_t oscIndex, float value) {
     for (auto v : voices)
     {
-        v->setWaveform(waveformIndex, oscIndex);
+        v->setWaveform(oscIndex, value);
     }
 }
 

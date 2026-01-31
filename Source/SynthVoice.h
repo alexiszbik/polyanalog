@@ -30,7 +30,7 @@ public:
     
     void setADSR(float attack, float decay, float sustain, float release);
     
-    void setWaveform(uint8_t waveformIndex, uint8_t oscIdx);
+    void setWaveform(uint8_t oscIndex, float value);
     void setOctave(int8_t octave);
     void setOscBTune(uint8_t tuneIndex);
     void setOscBPW(float pw);
@@ -58,10 +58,8 @@ private:
     void setGate(bool gate);
     
 public:
-    static const uint8_t wfCount = 3;
     static const uint8_t btuneCount = 11;
     
-    static const uint8_t wf[];
     static const float btune[];
     
     unsigned long noteTimeStamp; //TO REWRITE
