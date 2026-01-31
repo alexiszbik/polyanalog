@@ -43,7 +43,9 @@ public:
     void setModWheel(float value);
     void setPolyMode(EPolyMode newPolyMode);
     void setGlide(float glide);
-    void setTune(float tune);
+    
+    void setPitchLfo(float tune);
+    void setFilterLfo(float f);
     
     void setADSR(float attack, float decay, float sustain, float release);
     void setWaveform(uint8_t oscIndex, float value);
@@ -59,7 +61,8 @@ private:
     EPolyMode polyMode = Mono;
     vector<SynthVoice*> voices;
     
-    float tune = 0;
+    float pitchLfoMod = 0;
+    float filterLfoMod = 0;
     
     SmoothValue bend;
     SmoothValue vibratoAmount;

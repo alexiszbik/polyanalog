@@ -44,7 +44,7 @@ public:
     void setNoteOn(Note note);
     void setNoteOff();
     
-    float process(float whiteNoiseIn);
+    float process(float whiteNoiseIn, float filterMod);
     
     //TO REWRITE
     inline int currentPitch() noexcept {

@@ -20,15 +20,13 @@ public:
     enum LfoDest {
         LfoDest_None = 0,
         LfoDest_Pitch,
-        LfoDest_Feedback,
-        LfoDest_Brightness,
-        LfoDest_TimeRatio,
+        LfoDest_FilterCutoff,
         
         LfoDest_Count
     };
     
-    const char* destinationNames[5] = {
-        "None", "Pitch", "Feedback", "Brightness", "Time Ratio"
+    const char* destinationNames[3] = {
+        "None", "Pitch", "FilterCutoff"
     };
     
     enum LfoType {

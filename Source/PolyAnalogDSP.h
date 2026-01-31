@@ -72,8 +72,6 @@ protected:
     virtual void updateParameter(int index, float value) override;
     
 private:
-    int getLfoParam(int lfoId, int aParam);
-
     float getLfoBuffer(Lfo::LfoDest target, uint8_t frame, float multiplier = 1.f);
     
 private:

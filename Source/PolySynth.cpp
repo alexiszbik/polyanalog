@@ -134,8 +134,12 @@ void PolySynth::setModWheel(float value) {
     this->vibratoAmount.setValue(value);
 }
 
-void PolySynth::setTune(float tune) {
-    this->tune = tune;
+void PolySynth::setPitchLfo(float tune) {
+    this->pitchLfoMod = tune;
+}
+
+void PolySynth::setFilterLfo(float f) {
+    this->filterLfoMod = f;
 }
 
 void PolySynth::setPolyMode(EPolyMode newPolyMode) {
@@ -231,7 +235,7 @@ float PolySynth::process() {
     
     bend.dezipperCheck(smoothGlobal);
     vibratoAmount.dezipperCheck(smoothGlobal);
-    pitchMod = tune + bend.getAndStep() + modulation.Process() * vibratoAmount.getAndStep();
+    pitchMod = pitchLfoMod + bend.getAndStep() + modulation.Process() * vibratoAmount.getAndStep();
 
     for (auto v : voices)
     {
@@ -241,7 +245,7 @@ float PolySynth::process() {
             float unisonMod = -0.015625 + (idx*(0.03125/(UNISON_VOICE_COUNT-1)));
             v->pitchMod += unisonMod;
         }
-        result += v->process(whiteNoise.Process());
+        result += v->process(whiteNoise.Process(), filterLfoMod);
         idx++;
     }
     if (polyMode == Unison) {

@@ -197,7 +197,8 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
         float volume = getValue(Volume); 
 
         //If we apply lfo to pitch
-        synth.setTune(getLfoBuffer(Lfo::LfoDest_Pitch, i, 24));
+        synth.setPitchLfo(getLfoBuffer(Lfo::LfoDest_Pitch, i, 24));
+        synth.setFilterLfo(getLfoBuffer(Lfo::LfoDest_FilterCutoff, i, 60));
         
         float out = synth.process() * volume;
         

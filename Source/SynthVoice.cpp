@@ -104,7 +104,7 @@ void SynthVoice::setFilterEnv(float env) {
 void SynthVoice::prepare() {
 }
 
-float SynthVoice::process(float whiteNoiseIn) {
+float SynthVoice::process(float whiteNoiseIn, float filterMod) {
     
     pitch.dezipperCheck(sampleRate * glide);
     
@@ -123,7 +123,7 @@ float SynthVoice::process(float whiteNoiseIn) {
     float oscMix = ydaisy::sqrtDryWet(oscs[0].process(), oscs[1].process(), mix);
     float outMix = ydaisy::sqrtDryWet(whiteNoiseIn, oscMix, noiseMix);
     
-    float fFreq = mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv, 132.f));
+    float fFreq = mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv + filterMod, 132.f));
     
     filter.SetLowpass(fFreq, filterRes);
 
