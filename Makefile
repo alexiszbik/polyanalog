@@ -8,6 +8,7 @@ Source/PolyAnalogCore.cpp \
 Source/PolyAnalogDSP.cpp \
 Source/PolySynth.cpp \
 Source/SynthVoice.cpp \
+Source/SynthOsc.cpp \
 Source/Lfo.cpp \
 DaisyYMNK/Base/DaisyBase.cpp \
 DaisyYMNK/Base/HID.cpp \

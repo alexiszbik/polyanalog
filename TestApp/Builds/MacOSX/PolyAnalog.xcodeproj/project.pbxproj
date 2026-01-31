@@ -52,6 +52,7 @@
 		8402393F10A51E18CE8B9EE2 /* grainlet.cpp */ = {isa = PBXBuildFile; fileRef = 0FEEC2C4214F08CBE00335CD; };
 		8487B18C4251D94A76924E4B /* vosim.cpp */ = {isa = PBXBuildFile; fileRef = 7048B022ACC4C692567E20F4; };
 		859EFF5D8F76A6EB8ED4A9FB /* MainComponent.cpp */ = {isa = PBXBuildFile; fileRef = 1D5BFA4912C6F517EA521151; };
+		86FA36A92B34243333DDE273 /* SynthOsc.cpp */ = {isa = PBXBuildFile; fileRef = FDD718DA0BAA4B1AEE811066; };
 		8759BBBFA4456A660C9CC842 /* AudioToolbox.framework */ = {isa = PBXBuildFile; fileRef = E128C21D7A2C1A856359FCFF; };
 		8D123F8442CAA01C4B154091 /* RecentFilesMenuTemplate.nib */ = {isa = PBXBuildFile; fileRef = 03223004C2D68C1FEF60FDCA; };
 		9318EB1D7EB58186B899B32D /* IOKit.framework */ = {isa = PBXBuildFile; fileRef = C50A90197B8D184D1D302873; };
@@ -189,6 +190,7 @@
 		885CBA1D9F0C3DA34AFC006A /* include_juce_audio_processors_ara.cpp */ /* include_juce_audio_processors_ara.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_ara.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_ara.cpp; sourceTree = SOURCE_ROOT; };
 		89F10542C0A4F32147F2B7CD /* overdrive.cpp */ /* overdrive.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overdrive.cpp; path = ../../../DaisySP/Source/Effects/overdrive.cpp; sourceTree = SOURCE_ROOT; };
 		8B41281C780A1DB4446CCB06 /* formantosc.cpp */ /* formantosc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formantosc.cpp; path = ../../../DaisySP/Source/Synthesis/formantosc.cpp; sourceTree = SOURCE_ROOT; };
+		8B5143DA92B88BA1DE9D0330 /* SynthOsc.h */ /* SynthOsc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SynthOsc.h; path = ../../../Source/SynthOsc.h; sourceTree = SOURCE_ROOT; };
 		8B648C1CEDEA54FD5C1CC51F /* svf.cpp */ /* svf.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svf.cpp; path = ../../../DaisySP/Source/Filters/svf.cpp; sourceTree = SOURCE_ROOT; };
 		8C99323ECD1ECD3410CF1D50 /* adenv.cpp */ /* adenv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = adenv.cpp; path = ../../../DaisySP/Source/Control/adenv.cpp; sourceTree = SOURCE_ROOT; };
 		8D2495927E00723134745697 /* InlineMath.h */ /* InlineMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InlineMath.h; path = ../../../DaisyYMNK/Common/InlineMath.h; sourceTree = SOURCE_ROOT; };
@@ -280,6 +282,7 @@
 		F99A0A6C65FE37B3DEB880E5 /* App */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolyFM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA24ADC68F731805FFDC8069 /* Main.cpp */ /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = SOURCE_ROOT; };
 		FD27A15B94AE20B4A0BD55FD /* decimator.cpp */ /* decimator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = decimator.cpp; path = ../../../DaisySP/Source/Effects/decimator.cpp; sourceTree = SOURCE_ROOT; };
+		FDD718DA0BAA4B1AEE811066 /* SynthOsc.cpp */ /* SynthOsc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SynthOsc.cpp; path = ../../../Source/SynthOsc.cpp; sourceTree = SOURCE_ROOT; };
 		FE4E7981A5145DD26D768A46 /* granularplayer.h */ /* granularplayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = granularplayer.h; path = ../../../DaisySP/Source/Sampling/granularplayer.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -433,6 +436,8 @@
 				34BA6F4C2BB75E727BA65FEB,
 				230F54BC15F1806B54FD8A9C,
 				2A28698DF4C89DCF7DFC3E93,
+				FDD718DA0BAA4B1AEE811066,
+				8B5143DA92B88BA1DE9D0330,
 				17FA8F83A82ED6F2FABF6723,
 				CB89EAEA0EA61B022262BC12,
 			);
@@ -839,6 +844,7 @@
 				5B77C966502A8860E236887D,
 				593C02FCCB2FB146646C6803,
 				2D7615FFFA67147253A09180,
+				86FA36A92B34243333DDE273,
 				E1DC0B41F7213971C6184BF3,
 				5B26E3BCBA45C44D0FF554BA,
 				31557FC1F63881C8C0102AB2,

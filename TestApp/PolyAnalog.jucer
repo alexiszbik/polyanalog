@@ -205,6 +205,8 @@
       <FILE id="vu2RGa" name="PolyAnalogDSP.h" compile="0" resource="0" file="../Source/PolyAnalogDSP.h"/>
       <FILE id="suwBIW" name="PolySynth.cpp" compile="1" resource="0" file="../Source/PolySynth.cpp"/>
       <FILE id="bQHqUp" name="PolySynth.h" compile="0" resource="0" file="../Source/PolySynth.h"/>
+      <FILE id="kvi4oH" name="SynthOsc.cpp" compile="1" resource="0" file="../Source/SynthOsc.cpp"/>
+      <FILE id="GeyKrw" name="SynthOsc.h" compile="0" resource="0" file="../Source/SynthOsc.h"/>
       <FILE id="bV6UtO" name="SynthVoice.cpp" compile="1" resource="0" file="../Source/SynthVoice.cpp"/>
       <FILE id="jdoD2i" name="SynthVoice.h" compile="0" resource="0" file="../Source/SynthVoice.h"/>
     </GROUP>

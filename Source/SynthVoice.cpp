@@ -22,10 +22,7 @@ void SynthVoice::init(double sampleRate) {
     adsr.Init(sampleRate);
     uint8_t k = oscCount;
     while(k--) {
-        oscs[k].Init(sampleRate);
-        oscs[k].SetAmp(1);
-        
-        setWaveform(k, 0);
+        oscs[k].init(sampleRate);
     }
     filter.Init(sampleRate);
     halfSr = ftom(sampleRate/1.95f);
@@ -43,7 +40,7 @@ void SynthVoice::setNoteOn(Note note) {
     if (adsr.IsRunning() == false) { //In order to avoid clicks we should verify any output operators
         uint8_t k = oscCount;
         while(k--) {
-            oscs[k].Reset();
+            oscs[k].reset();
         }
     }
     
@@ -69,7 +66,7 @@ void SynthVoice::setADSR(float attack, float decay, float sustain, float release
 }
 
 void SynthVoice::setWaveform(uint8_t oscIndex, float value) {
-    oscs[oscIndex].SetWaveform(value > 0.5 ? Oscillator::WAVE_POLYBLEP_SQUARE : Oscillator::WAVE_POLYBLEP_SAW);
+    oscs[oscIndex].setWaveform(value);
 }
 
 void SynthVoice::setOctave(int8_t octave) {
@@ -114,14 +111,14 @@ float SynthVoice::process() {
     
     float envOut = adsr.Process(gate);
     
-    oscs[1].SetPw(pw);
+    //oscs[1].SetPw(pw);
     
     uint8_t k = oscCount;
     while(k--) {
-        oscs[k].SetFreq(freq[k]);
+        oscs[k].setFreq(freq[k]);
     }
 
-    float oscMix = ydaisy::dryWet(oscs[0].Process(), oscs[1].Process(), mix);
+    float oscMix = ydaisy::dryWet(oscs[0].process(), oscs[1].process(), mix);
     
     float fFreq = mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv, 132.f));
     

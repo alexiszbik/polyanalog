@@ -12,6 +12,7 @@
 
 #include "DaisyYMNK/DSP/DSP.h"
 #include "DaisyYMNK/Common/Common.h"
+#include "SynthOsc.h"
 #include "daisysp.h"
 
 using namespace ydaisy;
@@ -92,7 +93,7 @@ private:
     float freq[oscCount] = {0, 0};
     
     Adsr adsr;
-    Oscillator oscs[oscCount];
+    SynthOsc oscs[oscCount];
     BiquadFilter filter;
  
 };
