@@ -88,7 +88,7 @@ private:
     Lfo lfo[lfoCount];
     
     unsigned long timeStamp = 0;
-    static constexpr float Qmin = 0.5f;
+    static constexpr float Qmin = 0.25f;
     static constexpr float Qmax = 8.0f;
     float lnRatio = std::log(Qmax / Qmin);
 

@@ -73,7 +73,7 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
     hpFilter.Init(sampleRate);
     hpFilter.SetHighpass(10);
     
-    lfo[0].setDestinationValue(0.25);
+    lfo[0].setDestinationValue(0.4);
     lfo[1].setDestinationValue(0.75);
 }
 
