@@ -10,6 +10,14 @@
 
 - 4-voice polyphony  
 - MIDI input
+- mono output
+- 2 VCO with SuperSaw, Saw, Square with pulse width modulation
+- -2 -> +2 octaves per VCO (second vco can also have fifth tuning and fine tuning around 0)
+- ASR envelope
+- Low pass filter with envelope and resonance
+- High pass
+- Volume 
+- 2 sinus LFOs (right now first one is wired on pitch, second on filter cutoff)
 - 16 presets save & load  
 - OLED display (SSD1306 128×64)  
 - Hands-on control with potentiometers and push buttons  
@@ -18,7 +26,7 @@
 
 ## Schematic
 
-Soon !  
+![PolyAnalog schematic](schematic.png)
 
 ---
 
