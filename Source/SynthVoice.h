@@ -89,7 +89,6 @@ private:
     int8_t octave;
     
     double sampleRate;
-    float halfSr;
     
     long glideFrameLength = 0;
     

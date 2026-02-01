@@ -42,10 +42,15 @@ PolyAnalogDSP::PolyAnalogDSP()
     {Sustain,        "Sustain"},
     {HighPass,        "HighPass"},
     
-    {LfoType,          "LfoType"},
-    {LfoDestination,   "LfoDestination"},
-    {LfoRate,          "LfoRate"},
-    {LfoAmount,        "LfoAmount"}
+    {LfoTypeA,          "LfoTypeA"},
+    {LfoDestinationA,   "LfoDestinationA"},
+    {LfoRateA,          "LfoRateA"},
+    {LfoAmountA,        "LfoAmountA"},
+    
+    {LfoTypeB,          "LfoTypeB"},
+    {LfoDestinationB,   "LfoDestinationB"},
+    {LfoRateB,          "LfoRateB"},
+    {LfoAmountB,        "LfoAmountB"}
     
 }){
 #if defined _SIMULATOR_
@@ -62,10 +67,14 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
 
     synth.init(sampleRate);
     
-    lfo.init(sampleRate);
+    lfo[0].init(sampleRate);
+    lfo[1].init(sampleRate);
     
     hpFilter.Init(sampleRate);
     hpFilter.SetHighpass(10);
+    
+    lfo[0].setDestinationValue(0.25);
+    lfo[1].setDestinationValue(0.75);
 }
 
 void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
@@ -155,8 +164,11 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
         case FilterEnv :
             synth.setFilterEnv(value);
             break;
-        case LfoDestination:
-            lfo.setDestinationValue(value);
+        case LfoDestinationA:
+            lfo[0].setDestinationValue(value);
+            break;
+        case LfoDestinationB:
+            lfo[1].setDestinationValue(value);
             break;
 
         default:
@@ -164,23 +176,27 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
     }
 }
 
-const char* PolyAnalogDSP::getLfoDestName() {
-    auto dest = lfo.getDestination();
-    return lfo.destinationNames[dest];
+const char* PolyAnalogDSP::getLfoDestName(int lfoIdx) {
+    auto dest = lfo[lfoIdx].getDestination();
+    return lfo[lfoIdx].destinationNames[dest];
 }
 
-float PolyAnalogDSP::getLfoBuffer(Lfo::LfoDest target, uint8_t frame, float multiplier) {
-    return lfo.getBuffer(target, frame, multiplier);
+float PolyAnalogDSP::getLfoBuffer(int lfoIdx, Lfo::LfoDest target, uint8_t frame, float multiplier) {
+    return lfo[lfoIdx].getBuffer(target, frame, multiplier);
 }
 
 void PolyAnalogDSP::process(float** buf, int frameCount) {
     DSPKernel::process(buf, frameCount);
-    
+    //TODO : move everything to updateParameter function
     synth.setGlide(getValue(Glide));
     
-    lfo.setRate(getValue(LfoRate));
-    lfo.setAmount(getValue(LfoAmount));
-    lfo.process(frameCount);
+    lfo[0].setRate(getValue(LfoRateA));
+    lfo[0].setAmount(getValue(LfoAmountA));
+    lfo[0].process(frameCount);
+    
+    lfo[1].setRate(getValue(LfoRateB));
+    lfo[1].setAmount(getValue(LfoAmountB));
+    lfo[1].process(frameCount);
     
     float decay = valueMapPow3(getValue(Decay), 0.005f, 8.f);
     
@@ -196,9 +212,8 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
         
         float volume = getValue(Volume); 
 
-        //If we apply lfo to pitch
-        synth.setPitchLfo(getLfoBuffer(Lfo::LfoDest_Pitch, i, 24));
-        synth.setFilterLfo(getLfoBuffer(Lfo::LfoDest_FilterCutoff, i, 50));
+        synth.setPitchLfo(getLfoBuffer(0, Lfo::LfoDest_Pitch, i) + getLfoBuffer(1, Lfo::LfoDest_Pitch, i));
+        synth.setFilterLfo(getLfoBuffer(0, Lfo::LfoDest_FilterCutoff, i) + getLfoBuffer(1, Lfo::LfoDest_FilterCutoff, i));
         
         float out = synth.process() * volume;
         

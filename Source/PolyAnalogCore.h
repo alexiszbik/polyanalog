@@ -91,10 +91,10 @@ private:
         PolyAnalogDSP::Decay,
         PolyAnalogDSP::Sustain,
         PolyAnalogDSP::Attack,
-        PolyAnalogDSP::LfoType,
-        PolyAnalogDSP::LfoDestination,
-        PolyAnalogDSP::LfoRate,
-        PolyAnalogDSP::LfoAmount
+        PolyAnalogDSP::LfoAmountB,
+        PolyAnalogDSP::LfoRateB,
+        PolyAnalogDSP::LfoAmountA,
+        PolyAnalogDSP::LfoRateA
     };
 
     BoundedInt<0,15> currentPreset = 0;

@@ -104,8 +104,8 @@ void PolyAnalogCore::displayValuesOnScreen() {
     
     if (lastParam) {
         
-        if (lastParamIndex == PolyAnalogDSP::LfoDestination) {
-            const char* destName = polySynth.getLfoDestName();
+        if (lastParamIndex == PolyAnalogDSP::LfoDestinationA) {
+            const char* destName = polySynth.getLfoDestName(0);
             displayManager->WriteLine(2, destName);
             
         } else {

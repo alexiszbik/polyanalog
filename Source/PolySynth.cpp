@@ -135,11 +135,11 @@ void PolySynth::setModWheel(float value) {
 }
 
 void PolySynth::setPitchLfo(float tune) {
-    this->pitchLfoMod = tune;
+    this->pitchLfoMod = tune * 24.f;
 }
 
 void PolySynth::setFilterLfo(float f) {
-    this->filterLfoMod = f;
+    this->filterLfoMod = f * 50.f;
 }
 
 void PolySynth::setPolyMode(EPolyMode newPolyMode) {

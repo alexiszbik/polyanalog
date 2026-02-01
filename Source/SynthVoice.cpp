@@ -25,7 +25,6 @@ void SynthVoice::init(double sampleRate) {
         oscs[k].init(sampleRate);
     }
     filter.Init(sampleRate);
-    halfSr = ftom(sampleRate/1.95f);
     
     filterFreqSmoother.Init(20, sampleRate);
 }
@@ -120,8 +119,9 @@ float SynthVoice::process(float whiteNoiseIn, float filterMod) {
     float oscMix = ydaisy::sqrtDryWet(oscs[0].process(), oscs[1].process(), mix);
     float outMix = ydaisy::sqrtDryWet(whiteNoiseIn, oscMix, noiseMix);
     
-    float fFreq = fast_mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv + filterMod, 132.f));
-    fFreq = filterFreqSmoother.Process(fFreq);
+    float smoothMod = filterFreqSmoother.Process(filterMod);
+    
+    float fFreq = fast_mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv + smoothMod, 132.f));
     filter.SetLowpass(fFreq, filterRes);
 
     return filter.Process(outMix) * envOut * envOut;

@@ -21,6 +21,12 @@ using namespace ydaisy;
 
 #define MIDI_CC_START 10
 
+#define LFO_PARAM(_name) \
+LfoType##_name, \
+LfoDestination##_name, \
+LfoRate##_name, \
+LfoAmount##_name
+
 class PolyAnalogDSP : public DSPKernel {
 public:
     enum Parameters {
@@ -47,10 +53,8 @@ public:
         
         HighPass,
         
-        LfoType,
-        LfoDestination,
-        LfoRate,
-        LfoAmount,
+        LFO_PARAM(A),
+        LFO_PARAM(B),
 
         Count
     };
@@ -63,8 +67,8 @@ public:
     virtual void init(int channelCount, double sampleRate) override;
     virtual void process(float** buf, int frameCount) override;
     virtual void processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) override;
-    
-    const char* getLfoDestName();
+
+    const char* getLfoDestName(int lfoIdx);
     
     void togglePlayMode();
     
@@ -72,7 +76,7 @@ protected:
     virtual void updateParameter(int index, float value) override;
     
 private:
-    float getLfoBuffer(Lfo::LfoDest target, uint8_t frame, float multiplier = 1.f);
+    float getLfoBuffer(int lfoIdx, Lfo::LfoDest target, uint8_t frame, float multiplier = 1.f);
     
 private:
     PolySynth synth;
@@ -81,7 +85,7 @@ private:
     static constexpr uint8_t lfoCount = 2;
     const float multipliers[5] = { 0.001f, 0.01f, 0.1f, 1.f, 10.f };
     
-    Lfo lfo;
+    Lfo lfo[lfoCount];
     
     unsigned long timeStamp = 0;
     static constexpr float Qmin = 0.5f;
