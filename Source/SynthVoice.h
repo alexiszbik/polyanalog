@@ -91,7 +91,7 @@ private:
     double sampleRate;
     float halfSr;
     
-    float glide = 0;
+    long glideFrameLength = 0;
     
     float tune = 0;
     float pw = 0.5;
@@ -105,8 +105,6 @@ private:
     bool gate = false;
     
     static const uint8_t oscCount = 2;
-    
-    float oscPitch[oscCount] = {0, 0};
     
     float noiseMix = 0;
     OnePoleSmoother filterFreqSmoother;

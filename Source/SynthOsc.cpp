@@ -14,6 +14,7 @@ void SynthOsc::init(double sampleRate) {
     uint8_t k = count;
     while(k--) {
         oscs[k].Init(sampleRate);
+        halfSr = sampleRate * 0.49;
         oscs[k].SetAmp(1);
         
         setWaveform(0.f);
@@ -27,7 +28,7 @@ void SynthOsc::setPitch(float pitch) {
     while(k--) {
         float factor = k == 1 ? 0.2f : -0.2f;
         float freq = fast_mtof(pitch + sawDetune*factor);
-        oscs[k].SetFreq(freq);
+        oscs[k].SetFreq(fminf(freq, halfSr));
     }
 }
 

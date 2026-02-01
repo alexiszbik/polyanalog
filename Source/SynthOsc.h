@@ -30,10 +30,11 @@ private:
     static const uint8_t count = 2;
     Oscillator oscs[count];
     
-    const static uint8_t sawWavf = Oscillator::WAVE_SAW;
-    const static uint8_t sqrWavf = Oscillator::WAVE_SQUARE;
+    const static uint8_t sawWavf = Oscillator::WAVE_POLYBLEP_SAW;
+    const static uint8_t sqrWavf = Oscillator::WAVE_POLYBLEP_SQUARE;
     
     float oscMix = 0.f;
     float sawDetune = 0.f;
     float sawMix = 0.f;
+    float halfSr = 0.f;
 };

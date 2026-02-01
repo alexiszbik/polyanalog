@@ -145,7 +145,7 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
             synth.setFilterMidiFreq((value * 120.f) + 15.f);
             break;
         case HighPass :
-            hpFilter.SetHighpass(mtof((value * 120.f) + 15.f));
+            hpFilter.SetHighpass(fast_mtof((value * 120.f) + 15.f));
             break;
         case FilterRes : {
                 float qvalue = std::exp(value * lnRatio);
