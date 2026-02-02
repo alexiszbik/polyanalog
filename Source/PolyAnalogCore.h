@@ -48,8 +48,8 @@ public:
         KnobCutoff,
         KnobRes,
         
+        ButtonShift,
         ButtonSave,
-        ButtonPlayMode,
         ButtonPreviousPreset,
         ButtonNextPreset,
         
@@ -72,7 +72,7 @@ private:
     void changeCurrentPreset(bool increment);
     void saveCurrentPreset();
     
-    void displayLastParameterOnScreen();
+    void displayParameterOnScreen(unsigned int index);
     
 public:
     void displayValuesOnScreen();
@@ -109,4 +109,6 @@ private:
     bool needsResetDisplay = false;
     
     PolyAnalogDSP polySynth;
+
+    bool shiftState = false;
 };

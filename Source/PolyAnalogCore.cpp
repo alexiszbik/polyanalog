@@ -39,8 +39,8 @@ PolyAnalogCore::PolyAnalogCore()
         {KnobCutoff,                kKnob,      18,             "Cutoff"},
         {KnobRes,                   kKnob,      17,             "Res"},
     
+        {ButtonShift,               kSwitch,    5,              "Shift"},
         {ButtonSave,                kButton,    6,              "Button Save"},
-        {ButtonPlayMode,            kButton,    5,              "Play Mode"},
         {ButtonPreviousPreset,      kButton,    7,              "Previous Preset"},
         {ButtonNextPreset,          kButton,    8,              "Next Preset"},
 
@@ -97,11 +97,9 @@ void PolyAnalogCore::saveCurrentPreset() {
 }
 
 void PolyAnalogCore::displayValuesOnScreen() {
-    
     if (!needsToUpdateValue) {
         return;
     }
-    
     if (lastParam) {
         
         if (lastParamIndex == PolyAnalogDSP::LfoDestinationA) {
@@ -121,9 +119,8 @@ void PolyAnalogCore::displayValuesOnScreen() {
 }
 
 //Well we should make a loop again
-void PolyAnalogCore::displayLastParameterOnScreen() {
-    lastParamIndex = dspKernel->getLastChangedParameterIndex();
-    Parameter* lastChanged = dspKernel->getParameter(lastParamIndex);
+void PolyAnalogCore::displayParameterOnScreen(unsigned int index) {
+    Parameter* lastChanged = dspKernel->getParameter(index);
     
     if (lastChanged && lastChanged != lastParam) {
         const char* name = lastChanged->getName();
@@ -132,7 +129,6 @@ void PolyAnalogCore::displayLastParameterOnScreen() {
     }
     
     needsToUpdateValue = true;
-
 }
 
 void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
@@ -149,36 +145,52 @@ void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int d
 void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
 
     switch (index) {
-            
-        case ButtonSave:
-            saveCurrentPreset();
+
+        case ButtonShift:
+            //polySynth.togglePlayMode();
+            shiftState = (bool)value;
             break;
             
-        case ButtonPlayMode:
-            polySynth.togglePlayMode();
+        case ButtonSave: {
+            if (shiftState) {
+                saveCurrentPreset();
+            } else {
+                polySynth.togglePlayMode();
+                displayParameterOnScreen(PolyAnalogDSP::PlayMode);
+            }
+        }
             break;
             
-        case ButtonPreviousPreset:
-            changeCurrentPreset(false);
+        case ButtonPreviousPreset: {
+            if (shiftState) {
+                changeCurrentPreset(false);
+            } else {
+                displayParameterOnScreen(PolyAnalogDSP::PlayMode);
+            }
+        }
             break;
             
-        case ButtonNextPreset:
-            changeCurrentPreset(true);
+        case ButtonNextPreset: {
+            if (shiftState) {
+                changeCurrentPreset(true);
+            } else {
+                displayParameterOnScreen(PolyAnalogDSP::PlayMode);
+            }
+        }
             break;
             
         case MidiLed:
             //Hmmm, this should never happen
             break;
             
-        case KnobVolume: dspKernel->setParameterValue(PolyAnalogDSP::Volume, value); displayLastParameterOnScreen(); break;
-        case KnobCutoff: dspKernel->setParameterValue(PolyAnalogDSP::FilterCutoff, value); displayLastParameterOnScreen();  break;
-        case KnobRes: dspKernel->setParameterValue(PolyAnalogDSP::FilterRes, value); displayLastParameterOnScreen();  break;
+        case KnobVolume: dspKernel->setParameterValue(PolyAnalogDSP::Volume, value); break;
+        case KnobCutoff: dspKernel->setParameterValue(PolyAnalogDSP::FilterCutoff, value); break;
+        case KnobRes: dspKernel->setParameterValue(PolyAnalogDSP::FilterRes, value); break;
             
         default:
             if (isBetweenParameterIndex(index, MuxKnob_1, MuxKnob_16)) {
                 dspKernel->setParameterValue(parameterMap[index - MuxKnob_1], value);
             }
-            displayLastParameterOnScreen();
             
             break;
     }
