@@ -101,20 +101,17 @@ void PolyAnalogCore::displayValuesOnScreen() {
         return;
     }
     if (lastParam) {
-        
         if (lastParamIndex == PolyAnalogDSP::LfoDestinationA) {
             const char* destName = polySynth.getLfoDestName(0);
             displayManager->WriteLine(2, destName);
             
         } else {
-        
             float value = lastParam->getUIValue();
             floatToCString2(value, numCharBuffer);
             
             displayManager->WriteLine(2, numCharBuffer);
         }
     }
-    
     needsToUpdateValue = false;
 }
 
@@ -147,7 +144,6 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
     switch (index) {
 
         case ButtonShift:
-            //polySynth.togglePlayMode();
             shiftState = (bool)value;
             break;
             

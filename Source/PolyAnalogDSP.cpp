@@ -118,7 +118,7 @@ void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int da
     }
 }
 
-void PolyAnalogDSP::togglePlayMode(bool up) {
+void PolyAnalogDSP::togglePlayMode() {
     auto playModeParam = getParameter(PlayMode);
     float fValue = playModeParam->getValue();
     int iValue = valueMap(fValue, 0, 2);
