@@ -12,10 +12,10 @@
 
 
 #define DECLARE_LFO(_name, _label) \
-{LfoType##_name,        _label " Lfo Type",        false}, \
-{LfoDestination##_name, _label " Lfo Destination", false}, \
-{LfoRate##_name,        _label " Lfo Rate",        false}, \
-{LfoAmount##_name,      _label " Lfo Amount",      false}
+{LfoType##_name,        _label " Lfo Type"}, \
+{LfoDestination##_name, _label " Lfo Destination"}, \
+{LfoRate##_name,        _label " Lfo Rate"}, \
+{LfoAmount##_name,      _label " Lfo Amount"}
 
 PolyAnalogDSP::PolyAnalogDSP()
 : DSPKernel({
@@ -73,8 +73,9 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
     hpFilter.Init(sampleRate);
     hpFilter.SetHighpass(10);
     
-    lfo[0].setDestinationValue(0.4);
-    lfo[1].setDestinationValue(0.75);
+    //It could be nice to initialize every parameters at first launch
+    setParameterValue(LfoDestinationA, 0.4f);
+    setParameterValue(LfoDestinationB, 0.75f);
 }
 
 void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
