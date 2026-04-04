@@ -127,6 +127,17 @@ void PolyAnalogDSP::togglePlayMode() {
     setParameterValue(PlayMode, iValue * 0.5f);
 }
 
+void PolyAnalogDSP::toggleLfoDestination(int lfoIndex) {
+    auto parameterEnum = lfoIndex == 0 ? LfoDestinationA : LfoDestinationB;
+    Parameter* parameter = getParameter(parameterEnum);
+    
+    float fValue = parameter->getValue();
+    int iValue = valueMap(fValue, 0, 2);
+    iValue = ((iValue + 1) + 3) % 3;
+    
+    setParameterValue(parameterEnum, iValue * 0.5f);
+}
+
 void PolyAnalogDSP::updateParameter(int index, float value) {
     auto param = static_cast<Parameters>(index);
     switch (param) {
@@ -180,6 +191,10 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
 const char* PolyAnalogDSP::getLfoDestName(int lfoIdx) {
     auto dest = lfo[lfoIdx].getDestination();
     return lfo[lfoIdx].destinationNames[dest];
+}
+
+const char* PolyAnalogDSP::getPlayModeName() {
+    return synth.getPolyModeName();
 }
 
 float PolyAnalogDSP::getLfoBuffer(int lfoIdx, Lfo::LfoDest target, uint8_t frame, float multiplier) {

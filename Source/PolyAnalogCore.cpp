@@ -40,9 +40,9 @@ PolyAnalogCore::PolyAnalogCore()
         {KnobRes,                   kKnob,      17,             "Res"},
     
         {ButtonShift,               kSwitch,    5,              "Shift"},
-        {ButtonSave,                kButton,    6,              "Button Save"},
-        {ButtonPreviousPreset,      kButton,    7,              "Previous Preset"},
-        {ButtonNextPreset,          kButton,    8,              "Next Preset"},
+        {ButtonOK,                kButton,    6,              "Button Save"},
+        {ButtonPrevious,      kButton,    7,              "Previous Preset"},
+        {ButtonNext,          kButton,    8,              "Next Preset"},
 
         {MidiLed,                   kLed,       10,             "Led"},
      }, (5 - 1)) //do something for midi channel who's not correct
@@ -97,22 +97,18 @@ void PolyAnalogCore::saveCurrentPreset() {
 }
 
 void PolyAnalogCore::displayValuesOnScreen() {
-    if (!needsToUpdateValue) {
+    //We will make this later ...
+    /*if (!needsToUpdateValue) {
         return;
     }
     if (lastParam) {
-        if (lastParamIndex == PolyAnalogDSP::LfoDestinationA) {
-            const char* destName = polySynth.getLfoDestName(0);
-            displayManager->WriteLine(2, destName);
-            
-        } else {
-            float value = lastParam->getUIValue();
-            floatToCString2(value, numCharBuffer);
-            
-            displayManager->WriteLine(2, numCharBuffer);
-        }
-    }
-    needsToUpdateValue = false;
+        float value = lastParam->getUIValue();
+        floatToCString2(value, numCharBuffer);
+        
+        displayManager->WriteLine(2, numCharBuffer);
+    
+    needsToUpdateValue = false;*/
+    return;
 }
 
 //Well we should make a loop again
@@ -123,6 +119,17 @@ void PolyAnalogCore::displayParameterOnScreen(unsigned int index) {
         const char* name = lastChanged->getName();
         lastParam = lastChanged;
         displayManager->WriteLine(1, name);
+    }
+    
+    if (index == PolyAnalogDSP::LfoDestinationA) {
+        const char* destName = polySynth.getLfoDestName(0);
+        displayManager->WriteLine(2, destName);
+    } else if (index == PolyAnalogDSP::LfoDestinationB) {
+        const char* destName = polySynth.getLfoDestName(1);
+        displayManager->WriteLine(2, destName);
+    } else if (index == PolyAnalogDSP::PlayMode) {
+        const char* destName = polySynth.getPlayModeName();
+        displayManager->WriteLine(2, destName);
     }
     
     needsToUpdateValue = true;
@@ -147,30 +154,45 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
             shiftState = (bool)value;
             break;
             
-        case ButtonSave: {
+        case ButtonOK: {
             if (shiftState) {
                 saveCurrentPreset();
             } else {
-                polySynth.togglePlayMode();
-                displayParameterOnScreen(PolyAnalogDSP::PlayMode);
+                switch (intParameterMap[currentIntParameterIndex]) {
+                    case PolyAnalogDSP::PlayMode:
+                        polySynth.togglePlayMode();
+                        break;
+                    case PolyAnalogDSP::LfoDestinationA:
+                        polySynth.toggleLfoDestination(0);
+                        break;
+                    case PolyAnalogDSP::LfoDestinationB:
+                        polySynth.toggleLfoDestination(1);
+                        break;
+                        
+                    default:
+                        break;
+                }
+                displayParameterOnScreen(intParameterMap[currentIntParameterIndex]);
             }
         }
             break;
             
-        case ButtonPreviousPreset: {
+        case ButtonPrevious: {
             if (shiftState) {
                 changeCurrentPreset(false);
             } else {
-                displayParameterOnScreen(PolyAnalogDSP::PlayMode);
+                currentIntParameterIndex = ((currentIntParameterIndex - 1) + intParameterCount) % intParameterCount;
+                displayParameterOnScreen(intParameterMap[currentIntParameterIndex]);
             }
         }
             break;
             
-        case ButtonNextPreset: {
+        case ButtonNext: {
             if (shiftState) {
                 changeCurrentPreset(true);
             } else {
-                displayParameterOnScreen(PolyAnalogDSP::PlayMode);
+                currentIntParameterIndex = ((currentIntParameterIndex + 1) + intParameterCount) % intParameterCount;
+                displayParameterOnScreen(intParameterMap[currentIntParameterIndex]);
             }
         }
             break;

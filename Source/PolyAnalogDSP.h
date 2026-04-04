@@ -69,8 +69,10 @@ public:
     virtual void processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) override;
 
     const char* getLfoDestName(int lfoIdx);
+    const char* getPlayModeName();
     
     void togglePlayMode();
+    void toggleLfoDestination(int lfoIndex);
     
 protected:
     virtual void updateParameter(int index, float value) override;

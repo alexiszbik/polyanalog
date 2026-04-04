@@ -42,6 +42,7 @@ public:
     void setPitchBend(float bend);
     void setModWheel(float value);
     void setPolyMode(EPolyMode newPolyMode);
+    const char* getPolyModeName();
     void setGlide(float glide);
     
     void setPitchLfo(float tune);

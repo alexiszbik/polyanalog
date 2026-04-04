@@ -152,6 +152,22 @@ void PolySynth::setPolyMode(EPolyMode newPolyMode) {
     }
 }
 
+const char* PolySynth::getPolyModeName() {
+    switch (polyMode) {
+        case Mono:
+            return "Mono";
+            
+        case Unison:
+            return "Unison";
+            
+        case Poly:
+            return "Poly";
+            
+        default:
+            return ""; //Shouldn't happen
+    }
+}
+
 void PolySynth::setGlide(float glide) {
     for (auto v : voices)
     {

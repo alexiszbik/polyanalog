@@ -49,9 +49,9 @@ public:
         KnobRes,
         
         ButtonShift,
-        ButtonSave,
-        ButtonPreviousPreset,
-        ButtonNextPreset,
+        ButtonOK,
+        ButtonPrevious,
+        ButtonNext,
         
         
         MidiLed
@@ -96,6 +96,15 @@ private:
         PolyAnalogDSP::LfoAmountA,
         PolyAnalogDSP::LfoRateA
     };
+    
+    static const int intParameterCount = 3;
+    int intParameterMap[intParameterCount] = {
+        PolyAnalogDSP::PlayMode,
+        PolyAnalogDSP::LfoDestinationA,
+        PolyAnalogDSP::LfoDestinationB
+    };
+    
+    int currentIntParameterIndex = 0;
 
     BoundedInt<0,15> currentPreset = 0;
     
