@@ -71,8 +71,10 @@ private:
     void lockAllKnobs();
     void changeCurrentPreset(bool increment);
     void saveCurrentPreset();
+    void switchToSaveMode();
     
-    void displayParameterOnScreen(unsigned int index);
+    void displayParameterOnScreen();
+    void displaySaveIndex();
     
 public:
     void displayValuesOnScreen();
@@ -107,9 +109,10 @@ private:
     int currentIntParameterIndex = 0;
 
     BoundedInt<0,15> currentPreset = 0;
+    BoundedInt<0,15> indexToSaveNewPreset = 0;
     
     char numCharBuffer[4];
-    char fullNumCharBuffer[20];
+    //char fullNumCharBuffer[20];
     
     ydaisy::Parameter* lastParam = nullptr;
     int lastParamIndex = 0;
@@ -120,4 +123,5 @@ private:
     PolyAnalogDSP polySynth;
 
     bool shiftState = false;
+    bool saveMode = false;
 };

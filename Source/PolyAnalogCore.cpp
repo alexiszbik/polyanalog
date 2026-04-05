@@ -17,35 +17,35 @@ bool isBetweenParameterIndex(int x, int a, int b) {
 
 PolyAnalogCore::PolyAnalogCore()
 : ModuleCore(&polySynth,
-     {
-        {MuxKnob_1,                 kKnob,      HIDPin(0,0),    "MuxKnob_1"},
-        {MuxKnob_2,                 kKnob,      HIDPin(0,1),    "MuxKnob_2"},
-        {MuxKnob_3,                 kKnob,      HIDPin(0,2),    "MuxKnob_3"},
-        {MuxKnob_4,                 kKnob,      HIDPin(0,3),    "MuxKnob_4"},
-        {MuxKnob_5,                 kKnob,      HIDPin(0,4),    "MuxKnob_5"},
-        {MuxKnob_6,                 kKnob,      HIDPin(0,5),    "MuxKnob_6"},
-        {MuxKnob_7,                 kKnob,      HIDPin(0,6),    "MuxKnob_7"},
-        {MuxKnob_8,                 kKnob,      HIDPin(0,7),    "MuxKnob_8"},
-        {MuxKnob_9,                 kKnob,      HIDPin(0,8),    "MuxKnob_9"},
-        {MuxKnob_10,                kKnob,      HIDPin(0,9),    "MuxKnob_10"},
-        {MuxKnob_11,                kKnob,      HIDPin(0,10),   "MuxKnob_11"},
-        {MuxKnob_12,                kKnob,      HIDPin(0,11),   "MuxKnob_12"},
-        {MuxKnob_13,                kKnob,      HIDPin(0,12),   "MuxKnob_13"},
-        {MuxKnob_14,                kKnob,      HIDPin(0,13),   "MuxKnob_14"},
-        {MuxKnob_15,                kKnob,      HIDPin(0,14),   "MuxKnob_15"},
-        {MuxKnob_16,                kKnob,      HIDPin(0,15),   "MuxKnob_16"},
+             {
+    {MuxKnob_1,                 kKnob,      HIDPin(0,0),    "MuxKnob_1"},
+    {MuxKnob_2,                 kKnob,      HIDPin(0,1),    "MuxKnob_2"},
+    {MuxKnob_3,                 kKnob,      HIDPin(0,2),    "MuxKnob_3"},
+    {MuxKnob_4,                 kKnob,      HIDPin(0,3),    "MuxKnob_4"},
+    {MuxKnob_5,                 kKnob,      HIDPin(0,4),    "MuxKnob_5"},
+    {MuxKnob_6,                 kKnob,      HIDPin(0,5),    "MuxKnob_6"},
+    {MuxKnob_7,                 kKnob,      HIDPin(0,6),    "MuxKnob_7"},
+    {MuxKnob_8,                 kKnob,      HIDPin(0,7),    "MuxKnob_8"},
+    {MuxKnob_9,                 kKnob,      HIDPin(0,8),    "MuxKnob_9"},
+    {MuxKnob_10,                kKnob,      HIDPin(0,9),    "MuxKnob_10"},
+    {MuxKnob_11,                kKnob,      HIDPin(0,10),   "MuxKnob_11"},
+    {MuxKnob_12,                kKnob,      HIDPin(0,11),   "MuxKnob_12"},
+    {MuxKnob_13,                kKnob,      HIDPin(0,12),   "MuxKnob_13"},
+    {MuxKnob_14,                kKnob,      HIDPin(0,13),   "MuxKnob_14"},
+    {MuxKnob_15,                kKnob,      HIDPin(0,14),   "MuxKnob_15"},
+    {MuxKnob_16,                kKnob,      HIDPin(0,15),   "MuxKnob_16"},
     
-        {KnobVolume,                kKnob,      16,             "Volume"},
-        {KnobCutoff,                kKnob,      18,             "Cutoff"},
-        {KnobRes,                   kKnob,      17,             "Res"},
+    {KnobVolume,                kKnob,      16,             "Volume"},
+    {KnobCutoff,                kKnob,      18,             "Cutoff"},
+    {KnobRes,                   kKnob,      17,             "Res"},
     
-        {ButtonShift,               kSwitch,    5,              "Shift"},
-        {ButtonOK,                kButton,    6,              "Button Save"},
-        {ButtonPrevious,      kButton,    7,              "Previous Preset"},
-        {ButtonNext,          kButton,    8,              "Next Preset"},
-
-        {MidiLed,                   kLed,       10,             "Led"},
-     }, (5 - 1)) //do something for midi channel who's not correct
+    {ButtonShift,               kSwitch,    5,              "Shift"},
+    {ButtonOK,                kButton,    6,              "Button Save"},
+    {ButtonPrevious,      kButton,    7,              "Previous Preset"},
+    {ButtonNext,          kButton,    8,              "Next Preset"},
+    
+    {MidiLed,                   kLed,       10,             "Led"},
+}, (5 - 1)) //do something for midi channel who's not correct
 {
     lockAllKnobs();
     
@@ -87,13 +87,33 @@ void PolyAnalogCore::saveCurrentPreset() {
         pData[k++] = param->getUIValue();
     }
 
-    bool result = presetManager->Save(pData, k, currentPreset.get());
+    int presetIndex = indexToSaveNewPreset.get();
+    bool result = presetManager->Save(pData, k, presetIndex);
+    
+    intToCString2(presetIndex, numCharBuffer);
     if (result) {
         displayManager->Write("Save Success!");
+        displayManager->WriteLine(1, numCharBuffer);
+        currentPreset = indexToSaveNewPreset;
     } else {
         displayManager->Write("Save Failed!");
     }
     needsResetDisplay = true;
+    saveMode = false;
+}
+
+void PolyAnalogCore::switchToSaveMode() {
+    displayManager->Write("Save ?");
+    displaySaveIndex();
+    indexToSaveNewPreset = currentPreset;
+    saveMode = true;
+}
+
+void PolyAnalogCore::displaySaveIndex() {
+    int presetIndex = indexToSaveNewPreset.get();
+
+    intToCString2(presetIndex, numCharBuffer);
+    displayManager->WriteLine(1, numCharBuffer);
 }
 
 void PolyAnalogCore::displayValuesOnScreen() {
@@ -112,24 +132,22 @@ void PolyAnalogCore::displayValuesOnScreen() {
 }
 
 //Well we should make a loop again
-void PolyAnalogCore::displayParameterOnScreen(unsigned int index) {
-    Parameter* lastChanged = dspKernel->getParameter(index);
+void PolyAnalogCore::displayParameterOnScreen() {
+    int index = intParameterMap[currentIntParameterIndex];
+    Parameter* param = dspKernel->getParameter(index);
     
-    if (lastChanged && lastChanged != lastParam) {
-        const char* name = lastChanged->getName();
-        lastParam = lastChanged;
-        displayManager->WriteLine(1, name);
-    }
+    const char* name = param->getName();
+    displayManager->WriteLine(0, name);
     
     if (index == PolyAnalogDSP::LfoDestinationA) {
         const char* destName = polySynth.getLfoDestName(0);
-        displayManager->WriteLine(2, destName);
+        displayManager->WriteLine(1, destName);
     } else if (index == PolyAnalogDSP::LfoDestinationB) {
         const char* destName = polySynth.getLfoDestName(1);
-        displayManager->WriteLine(2, destName);
+        displayManager->WriteLine(1, destName);
     } else if (index == PolyAnalogDSP::PlayMode) {
         const char* destName = polySynth.getPlayModeName();
-        displayManager->WriteLine(2, destName);
+        displayManager->WriteLine(1, destName);
     }
     
     needsToUpdateValue = true;
@@ -151,12 +169,19 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
     switch (index) {
 
         case ButtonShift:
-            shiftState = (bool)value;
+            if (saveMode && value == 1) {
+                saveMode = false;
+                displayParameterOnScreen();
+            } else {
+                shiftState = (bool)value;
+            }
             break;
             
         case ButtonOK: {
-            if (shiftState) {
+            if (saveMode) {
                 saveCurrentPreset();
+            } else if (shiftState) {
+                switchToSaveMode();
             } else {
                 switch (intParameterMap[currentIntParameterIndex]) {
                     case PolyAnalogDSP::PlayMode:
@@ -172,27 +197,33 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
                     default:
                         break;
                 }
-                displayParameterOnScreen(intParameterMap[currentIntParameterIndex]);
+                displayParameterOnScreen();
             }
         }
             break;
             
         case ButtonPrevious: {
-            if (shiftState) {
+            if (saveMode) {
+                indexToSaveNewPreset.decrement();
+                displaySaveIndex();
+            } else if (shiftState) {
                 changeCurrentPreset(false);
             } else {
                 currentIntParameterIndex = ((currentIntParameterIndex - 1) + intParameterCount) % intParameterCount;
-                displayParameterOnScreen(intParameterMap[currentIntParameterIndex]);
+                displayParameterOnScreen();
             }
         }
             break;
             
         case ButtonNext: {
-            if (shiftState) {
+            if (saveMode) {
+                indexToSaveNewPreset.increment();
+                displaySaveIndex();
+            } else if (shiftState) {
                 changeCurrentPreset(true);
             } else {
                 currentIntParameterIndex = ((currentIntParameterIndex + 1) + intParameterCount) % intParameterCount;
-                displayParameterOnScreen(intParameterMap[currentIntParameterIndex]);
+                displayParameterOnScreen();
             }
         }
             break;
