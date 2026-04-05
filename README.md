@@ -17,10 +17,9 @@
 - Low pass filter with envelope and resonance
 - High pass
 - Volume 
-- 2 sinus LFOs (right now first one is wired on pitch, second on filter cutoff)
+- 2 LFOs with destionation choice
 - 16 presets save & load  
 - OLED display (SSD1306 128×64)  
-- Hands-on control with potentiometers and push buttons  
 
 ---
 
