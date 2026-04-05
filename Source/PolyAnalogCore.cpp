@@ -112,7 +112,7 @@ void PolyAnalogCore::switchToSaveMode() {
 void PolyAnalogCore::displaySaveIndex() {
     int presetIndex = indexToSaveNewPreset.get();
 
-    intToCString2(presetIndex, numCharBuffer);
+    intToCString2(presetIndex, numCharBuffer, "Preset: ");
     displayManager->WriteLine(1, numCharBuffer);
 }
 
