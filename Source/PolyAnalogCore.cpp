@@ -104,8 +104,8 @@ void PolyAnalogCore::saveCurrentPreset() {
 
 void PolyAnalogCore::switchToSaveMode() {
     displayManager->Write("Save ?");
-    displaySaveIndex();
     indexToSaveNewPreset = currentPreset;
+    displaySaveIndex();
     saveMode = true;
 }
 
