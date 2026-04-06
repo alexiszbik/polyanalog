@@ -71,7 +71,12 @@ void PolyAnalogCore::changeCurrentPreset(bool increment) {
     } else {
         currentPreset.decrement();
     }
+    loadPresetAtIndex(currentPreset.get());
     
+}
+
+void PolyAnalogCore::loadPresetAtIndex(int presetIndex) {
+    currentPreset = presetIndex;
     const float* dataToLoad = presetManager->Load(currentPreset.get());
     if (dataToLoad) {
         loadPreset(dataToLoad);
@@ -143,16 +148,23 @@ void PolyAnalogCore::updateScreen() {
     
     const char* name = param->getName();
     displayManager->WriteLine(1, name);
-    
-    if (index == PolyAnalogDSP::LfoDestinationA) {
-        const char* destName = polySynth.getLfoDestName(0);
-        displayManager->WriteLine(2, destName);
-    } else if (index == PolyAnalogDSP::LfoDestinationB) {
-        const char* destName = polySynth.getLfoDestName(1);
-        displayManager->WriteLine(2, destName);
-    } else if (index == PolyAnalogDSP::PlayMode) {
-        const char* destName = polySynth.getPlayModeName();
-        displayManager->WriteLine(2, destName);
+
+    const char* line2 = nullptr;
+    switch (index) {
+        case PolyAnalogDSP::LfoDestinationA:
+            line2 = polySynth.getLfoDestName(0);
+            break;
+        case PolyAnalogDSP::LfoDestinationB:
+            line2 = polySynth.getLfoDestName(1);
+            break;
+        case PolyAnalogDSP::PlayMode:
+            line2 = polySynth.getPlayModeName();
+            break;
+        default:
+            break;
+    }
+    if (line2) {
+        displayManager->WriteLine(2, line2);
     }
 }
 
@@ -163,6 +175,17 @@ void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int d
             setHIDValue(MidiLed, 1);
         } else if (messageType == kNoteOff) {
             setHIDValue(MidiLed, 0);
+        }
+        
+        switch (messageType) {
+            case MIDIMessageType::kProgramChange : {
+                int program = dataA % MAX_PRESETS;
+                loadPresetAtIndex(program);
+            }
+                break;
+            
+            default:
+                break;
         }
     }
 }
