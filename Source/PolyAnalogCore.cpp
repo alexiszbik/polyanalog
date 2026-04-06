@@ -195,8 +195,6 @@ void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int d
 }
 
 bool PolyAnalogCore::unlockCondition(unsigned int index, float value, HIDState* hidState) {
-    (void)hidState;
-
     PolyAnalogDSP::Parameters pEnum;
     switch (index) {
         case KnobVolume:
@@ -215,7 +213,7 @@ bool PolyAnalogCore::unlockCondition(unsigned int index, float value, HIDState* 
 
     constexpr float kCatchEpsilon = 0.15f;
     float targetValue = polySynth.getUIValue(static_cast<int>(pEnum));
-    return std::fabs(value - targetValue) <= kCatchEpsilon;
+    return std::fabs(value - targetValue) <= kCatchEpsilon && ModuleCore::unlockCondition(index, value, hidState);
 }
 
 void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
