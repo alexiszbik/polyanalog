@@ -16,6 +16,19 @@ bool isBetweenParameterIndex(int x, int a, int b) {
     return x >= a && x <= b;
 }
 
+PolyAnalogDSP::Parameters PolyAnalogCore::dspParamForKnobIndex(unsigned int index) const noexcept {
+    switch (index) {
+        case KnobVolume:
+            return PolyAnalogDSP::Volume;
+        case KnobCutoff:
+            return PolyAnalogDSP::FilterCutoff;
+        case KnobRes:
+            return PolyAnalogDSP::FilterRes;
+        default:
+            return static_cast<PolyAnalogDSP::Parameters>(parameterMap[index - MuxKnob_1]);
+    }
+}
+
 PolyAnalogCore::PolyAnalogCore()
 : ModuleCore(&polySynth,
              {
@@ -195,25 +208,21 @@ void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int d
 }
 
 bool PolyAnalogCore::unlockCondition(unsigned int index, float value, HIDState* hidState) {
-    PolyAnalogDSP::Parameters pEnum;
-    switch (index) {
-        case KnobVolume:
-            pEnum = PolyAnalogDSP::Volume;
-            break;
-        case KnobCutoff:
-            pEnum = PolyAnalogDSP::FilterCutoff;
-            break;
-        case KnobRes:
-            pEnum = PolyAnalogDSP::FilterRes;
-            break;
-        default:
-            pEnum = (PolyAnalogDSP::Parameters)parameterMap[index - MuxKnob_1];
-            break;
+    PolyAnalogDSP::Parameters pEnum = dspParamForKnobIndex(index);
+    if (pEnum == PolyAnalogDSP::FilterEnv ||
+        pEnum == PolyAnalogDSP::FilterCutoff ||
+        pEnum == PolyAnalogDSP::Volume ||
+        pEnum == PolyAnalogDSP::FilterRes ||
+        pEnum == PolyAnalogDSP::HighPass ||
+        pEnum == PolyAnalogDSP::OscNoise ||
+        pEnum == PolyAnalogDSP::OscMix) {
+        
+        constexpr float kCatchEpsilon = 0.15f;
+        float targetValue = polySynth.getUIValue(static_cast<int>(pEnum));
+        return std::fabs(value - targetValue) <= kCatchEpsilon;
+    } else {
+        return ModuleCore::unlockCondition(index, value, hidState);
     }
-
-    constexpr float kCatchEpsilon = 0.15f;
-    float targetValue = polySynth.getUIValue(static_cast<int>(pEnum));
-    return std::fabs(value - targetValue) <= kCatchEpsilon && ModuleCore::unlockCondition(index, value, hidState);
 }
 
 void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
@@ -284,15 +293,16 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
             //Hmmm, this should never happen
             break;
             
-        case KnobVolume: dspKernel->setParameterValue(PolyAnalogDSP::Volume, value); break;
-        case KnobCutoff: dspKernel->setParameterValue(PolyAnalogDSP::FilterCutoff, value); break;
-        case KnobRes: dspKernel->setParameterValue(PolyAnalogDSP::FilterRes, value); break;
-            
+        case KnobVolume:
+        case KnobCutoff:
+        case KnobRes:
+            dspKernel->setParameterValue(dspParamForKnobIndex(index), value);
+            break;
+
         default:
             if (isBetweenParameterIndex(index, MuxKnob_1, MuxKnob_16)) {
-                dspKernel->setParameterValue(parameterMap[index - MuxKnob_1], value);
+                dspKernel->setParameterValue(dspParamForKnobIndex(index), value);
             }
-            
             break;
     }
 }

@@ -86,6 +86,9 @@ private:
     void switchToSaveMode();
     
     void displaySaveIndex();
+
+    /// Dedicated + mux knob HID index → DSP parameter (single switch, no heap).
+    PolyAnalogDSP::Parameters dspParamForKnobIndex(unsigned int index) const noexcept;
     
 public:
     void displayValuesOnScreen();
