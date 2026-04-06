@@ -13,28 +13,9 @@
 #include "DaisyYMNK/DSP/DSP.h"
 #include "DaisyYMNK/Common/Common.h"
 #include "SynthOsc.h"
-#include "daisysp.h"
 
 using namespace ydaisy;
 using namespace std;
-
-using namespace daisysp;
-//using namespace ydaisy;
-
-class OnePoleSmoother {
-public:
-    void Init(float timeMs, float sr) {
-        float x = expf(-1.f / (timeMs * 0.001f * sr));
-        a = x;
-        b = 1.f - x;
-    }
-    float Process(float in) {
-        z = a * z + b * in;
-        return z;
-    }
-private:
-    float a, b, z = 0.f;
-};
 
 class SynthVoice {
 public:
@@ -58,6 +39,7 @@ public:
     
     void setNoteOn(Note note);
     void setNoteOff();
+    void kill();
     
     float process(float whiteNoiseIn, float filterMod);
     
@@ -108,7 +90,7 @@ private:
     float noiseMix = 0;
     OnePoleSmoother filterFreqSmoother;
     
-    Adsr adsr;
+    SynthEnv adsr;
     SynthOsc oscs[oscCount];
     BiquadFilter filter;
  

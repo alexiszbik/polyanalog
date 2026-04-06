@@ -14,6 +14,7 @@ DaisyYMNK/Base/DaisyBase.cpp \
 DaisyYMNK/Base/HID.cpp \
 DaisyYMNK/Display/DisplayManager.cpp \
 DaisyYMNK/DSP/SmoothValue.cpp \
+DaisyYMNK/DSP/Env/SynthEnv.cpp \
 DaisyYMNK/DSP/ModuleCore.cpp \
 DaisyYMNK/DSP/Parameter.cpp \
 DaisyYMNK/DSP/DSPKernel.cpp \

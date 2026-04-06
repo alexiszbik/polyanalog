@@ -45,7 +45,7 @@ void Lfo::setAmount(float amount) {
 }
 
 void Lfo::setRate(float rate) {
-    float mappedRate = ydaisy::valueMap(rate*rate*rate, 0.01f, 25.f);
+    float mappedRate = ydaisy::valueMap(rate*rate*rate, 0.02f, 25.f);
     osc.SetFreq(mappedRate);
 }
 

@@ -13,10 +13,13 @@
       <GROUP id="{85E853C6-2AC9-9BC6-FAFF-5AD0B94AE8F2}" name="DSP">
         <GROUP id="{5B231753-09CD-6AD5-7705-FAEBE033A361}" name="Filters">
           <FILE id="xnIaAz" name="FastOnePole.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Filters/FastOnePole.h"/>
+          <FILE id="Qm8kP3" name="OnePoleSmoother.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Filters/OnePoleSmoother.h"/>
           <FILE id="YCFhvY" name="BiquadFilter.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Filters/BiquadFilter.h"/>
         </GROUP>
         <GROUP id="{97D7E1C4-055D-815C-2770-ABC3C85BA847}" name="Env">
           <FILE id="kV64tO" name="AttackDecay.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Env/AttackDecay.h"/>
+          <FILE id="Sn7xE2" name="SynthEnv.cpp" compile="1" resource="0" file="../DaisyYMNK/DSP/Env/SynthEnv.cpp"/>
+          <FILE id="Pm4kQ8" name="SynthEnv.h" compile="0" resource="0" file="../DaisyYMNK/DSP/Env/SynthEnv.h"/>
         </GROUP>
         <FILE id="wT8O3Z" name="DSP.h" compile="0" resource="0" file="../DaisyYMNK/DSP/DSP.h"/>
         <FILE id="ggUsia" name="DSPKernel.cpp" compile="1" resource="0" file="../DaisyYMNK/DSP/DSPKernel.cpp"/>

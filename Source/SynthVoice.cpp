@@ -55,6 +55,11 @@ void SynthVoice::setNoteOff() {
     setGate(false);
 }
 
+void SynthVoice::kill() {
+    setGate(false);
+    adsr.Kill();
+}
+
 void SynthVoice::setGlide(float glide) {
     this->glideFrameLength = (glide*glide)*sampleRate;
 }

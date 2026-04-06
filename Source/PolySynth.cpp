@@ -148,6 +148,7 @@ void PolySynth::setPolyMode(EPolyMode newPolyMode) {
         for (int i = 0; i < VOICE_COUNT; i++)
         {
             voices[i]->setNoteOff();
+            voices[i]->kill();
         }
     }
 }
