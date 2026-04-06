@@ -10,6 +10,7 @@
 
 #include "PolyAnalogCore.h"
 #include "DaisyYMNK/Helpers/StrConverters.h"
+#include <cmath>
 
 bool isBetweenParameterIndex(int x, int a, int b) {
     return x >= a && x <= b;
@@ -47,11 +48,11 @@ PolyAnalogCore::PolyAnalogCore()
     {MidiLed,                   kLed,       10,             "Led"},
 }, (5 - 1)) //do something for midi channel who's not correct
 {
-    lockAllKnobs();
+    //lockAllKnobs();
 }
 
 void PolyAnalogCore::lockAllKnobs() {
-    for (auto knob = (int)MuxKnob_1; knob <= (int)KnobVolume; knob++) {
+    for (auto knob = (int)MuxKnob_1; knob <= (int)KnobRes; knob++) {
         lockHID(knob);
     }
 }
@@ -191,6 +192,30 @@ void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int d
                 break;
         }
     }
+}
+
+bool PolyAnalogCore::unlockCondition(unsigned int index, float value, HIDState* hidState) {
+    (void)hidState;
+
+    PolyAnalogDSP::Parameters pEnum;
+    switch (index) {
+        case KnobVolume:
+            pEnum = PolyAnalogDSP::Volume;
+            break;
+        case KnobCutoff:
+            pEnum = PolyAnalogDSP::FilterCutoff;
+            break;
+        case KnobRes:
+            pEnum = PolyAnalogDSP::FilterRes;
+            break;
+        default:
+            pEnum = (PolyAnalogDSP::Parameters)parameterMap[index - MuxKnob_1];
+            break;
+    }
+
+    constexpr float kCatchEpsilon = 0.25f;
+    float targetValue = polySynth.getUIValue(static_cast<int>(pEnum));
+    return std::fabs(value - targetValue) <= kCatchEpsilon;
 }
 
 void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {

@@ -73,6 +73,7 @@ public:
     void updateScreen();
 
     virtual void processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) override;
+    virtual bool unlockCondition(unsigned int index, float value, HIDState* hidState) override;
     
 protected:
     void updateHIDValue(unsigned int index, float value) override;
