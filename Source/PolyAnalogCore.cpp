@@ -213,7 +213,7 @@ bool PolyAnalogCore::unlockCondition(unsigned int index, float value, HIDState* 
             break;
     }
 
-    constexpr float kCatchEpsilon = 0.25f;
+    constexpr float kCatchEpsilon = 0.15f;
     float targetValue = polySynth.getUIValue(static_cast<int>(pEnum));
     return std::fabs(value - targetValue) <= kCatchEpsilon;
 }

@@ -63,32 +63,34 @@ void PolySynth::setNote(bool isNoteOn, Note note) {
                 voices.at(i)->setNoteOn(note);
             }
         } else { // Polyphonic part
-            //This is wrong
-            /*for (int i = 0; i < voiceCount; i++)
-            {
-                if (voices.at(i)->currentPitch() == note.pitch) {
-                    voices.at(i)->setNoteOn(note);
-                    return;
+            int order[VOICE_COUNT];
+            for (int k = 0; k < voiceCount; k++) {
+                order[k] = k;
+            }
+            std::sort(order, order + voiceCount, [&](int a, int b) {
+                unsigned long ta = voices.at(a)->noteTimeStamp;
+                unsigned long tb = voices.at(b)->noteTimeStamp;
+                if (ta != tb) {
+                    return ta < tb;
                 }
-            }*/
-            
-            for (int i = 0; i < voiceCount; i++)
-            {
+                return a < b;
+            });
+
+            for (int j = 0; j < voiceCount; j++) {
+                int i = order[j];
                 if (!voices.at(i)->isPlaying()) {
                     voices.at(i)->setNoteOn(note);
                     return;
                 }
             }
-            
-            SynthVoice* oldest = voices.front();
-            for (int i = 0; i < voiceCount; i++)
-            {
-                if (voices.at(i)->noteTimeStamp < oldest->noteTimeStamp) {
-                    oldest = voices.at(i);
+            for (int j = 0; j < voiceCount; j++) {
+                int i = order[j];
+                if (!voices.at(i)->isPressed()) {
+                    voices.at(i)->setNoteOn(note);
+                    return;
                 }
             }
-            
-            oldest->setNoteOn(note);
+            voices.at(order[0])->setNoteOn(note);
         }
     } else {
         auto nIt = noteState.begin();

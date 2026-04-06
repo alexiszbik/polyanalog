@@ -16,6 +16,7 @@ const float SynthVoice::btune[] = {-24, -17, -12, -5, 0, 0.08, 0.2, 7, 12, 19, 2
 void SynthVoice::init(double sampleRate) {
 
     this->sampleRate = sampleRate;
+    noteTimeStamp = 0;
     
     pitch.setImmediate(60);
 

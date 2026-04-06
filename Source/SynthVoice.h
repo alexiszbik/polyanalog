@@ -52,6 +52,10 @@ public:
         return gate || adsr.IsRunning();
     }
     
+    inline bool isPressed() noexcept {
+        return gate;
+    }
+    
 private:
     void setPitch(int pitch);
     void setGate(bool gate);
