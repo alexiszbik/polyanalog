@@ -74,6 +74,8 @@ public:
     void togglePlayMode();
     void toggleLfoDestination(int lfoIndex);
     
+    void kill();
+    
 protected:
     virtual void updateParameter(int index, float value) override;
     

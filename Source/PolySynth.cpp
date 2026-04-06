@@ -153,6 +153,14 @@ void PolySynth::setPolyMode(EPolyMode newPolyMode) {
     }
 }
 
+void PolySynth::kill() {
+    for (int i = 0; i < VOICE_COUNT; i++)
+    {
+        voices[i]->setNoteOff();
+        voices[i]->kill();
+    }
+}
+
 const char* PolySynth::getPolyModeName() {
     switch (polyMode) {
         case Mono:

@@ -80,6 +80,7 @@ void PolyAnalogCore::loadPresetAtIndex(int presetIndex) {
     const float* dataToLoad = presetManager->Load(currentPreset.get());
     if (dataToLoad) {
         loadPreset(dataToLoad);
+        polySynth.kill();
     }
     updateScreen();
 }

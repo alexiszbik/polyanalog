@@ -39,6 +39,8 @@ public:
     void preprare();
     float process();
     
+    void kill();
+    
     void setPitchBend(float bend);
     void setModWheel(float value);
     void setPolyMode(EPolyMode newPolyMode);

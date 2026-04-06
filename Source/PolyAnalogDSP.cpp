@@ -119,6 +119,10 @@ void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int da
     }
 }
 
+void PolyAnalogDSP::kill() {
+    synth.kill();
+}
+
 void PolyAnalogDSP::togglePlayMode() {
     auto playModeParam = getParameter(PlayMode);
     float fValue = playModeParam->getValue();
