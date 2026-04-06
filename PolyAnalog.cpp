@@ -16,6 +16,18 @@ DaisyBase db = DaisyBase(&hw, &polyAnalog);
 PresetManager pm;
 DisplayManager *display = DisplayManager::GetInstance();
 
+OneShotMs screenResetAfterSave;
+
+void PolyAnalogRefreshScreen()
+{
+    polyAnalog.updateScreen();
+}
+
+void OnWillNeedToResetScreen()
+{
+    screenResetAfterSave.Start(1000, PolyAnalogRefreshScreen);
+}
+
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
     db.process(out, size);
@@ -49,12 +61,14 @@ int main(void)
     //Is it the best solution ? Maybe ?
 
     polyAnalog.ready();
+    polyAnalog.setWillNeedToResetScreenHandler(OnWillNeedToResetScreen);
 
     //EveryMs displayValuesUpdater (125, UpdateValues);
 
     for(;;)
     {
         db.listen();
+        screenResetAfterSave.Update();
         //displayValuesUpdater.Update();
         display->Update();
     }

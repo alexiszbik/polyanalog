@@ -95,11 +95,13 @@ void PolyAnalogCore::saveCurrentPreset() {
     int presetIndex = indexToSaveNewPreset.get();
     bool result = presetManager->Save(pData, k, presetIndex);
     
-    intToCString2(presetIndex, numCharBuffer);
+    intToCString2(presetIndex, numCharBuffer, "Preset: ");
     if (result) {
         displayManager->Write("Save Success!");
         displayManager->WriteLine(1, numCharBuffer);
         currentPreset = indexToSaveNewPreset;
+        if (willNeedToResetScreenHandler_)
+            willNeedToResetScreenHandler_();
     } else {
         displayManager->Write("Save Failed!");
     }
@@ -108,7 +110,7 @@ void PolyAnalogCore::saveCurrentPreset() {
 }
 
 void PolyAnalogCore::switchToSaveMode() {
-    displayManager->WriteLine(0, "Save ?");
+    displayManager->Write("Save ?");
     indexToSaveNewPreset = currentPreset;
     displaySaveIndex();
     saveMode = true;

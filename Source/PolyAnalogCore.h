@@ -26,6 +26,8 @@ PolyAnalogDSP::Release##_name
 
 class PolyAnalogCore : public ModuleCore {
 public:
+    using WillNeedToResetScreenHandler = void (*)();
+
     enum {
         MuxKnob_1 = 0,
         MuxKnob_2,
@@ -63,6 +65,13 @@ public:
     void loadPreset(const float* values);
     void ready();
 
+    void setWillNeedToResetScreenHandler(WillNeedToResetScreenHandler handler)
+    {
+        willNeedToResetScreenHandler_ = handler;
+    }
+
+    void updateScreen();
+
     virtual void processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) override;
     
 protected:
@@ -75,7 +84,6 @@ private:
     void saveCurrentPreset();
     void switchToSaveMode();
     
-    void updateScreen();
     void displaySaveIndex();
     
 public:
@@ -122,4 +130,6 @@ private:
 
     bool shiftState = false;
     bool saveMode = false;
+
+    WillNeedToResetScreenHandler willNeedToResetScreenHandler_ = nullptr;
 };
