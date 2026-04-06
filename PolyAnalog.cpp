@@ -48,6 +48,8 @@ int main(void)
     blocker.Run(1000, InitHID); //Wait for HID to init
     //Is it the best solution ? Maybe ?
 
+    polyAnalog.ready();
+
     //EveryMs displayValuesUpdater (125, UpdateValues);
 
     for(;;)

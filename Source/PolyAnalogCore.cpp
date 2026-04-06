@@ -48,8 +48,6 @@ PolyAnalogCore::PolyAnalogCore()
 }, (5 - 1)) //do something for midi channel who's not correct
 {
     lockAllKnobs();
-    
-    needsResetDisplay = true;
 }
 
 void PolyAnalogCore::lockAllKnobs() {
@@ -63,6 +61,10 @@ void PolyAnalogCore::loadPreset(const float* values) {
     lockAllKnobs();
 }
 
+void PolyAnalogCore::ready() {
+    updateScreen();
+}
+
 void PolyAnalogCore::changeCurrentPreset(bool increment) {
     if (increment) {
         currentPreset.increment();
@@ -74,9 +76,7 @@ void PolyAnalogCore::changeCurrentPreset(bool increment) {
     if (dataToLoad) {
         loadPreset(dataToLoad);
     }
-    intToCString2(currentPreset.get(), numCharBuffer);
-    displayManager->Write("Load Preset", numCharBuffer);
-    needsResetDisplay = true;
+    updateScreen();
 }
 
 void PolyAnalogCore::saveCurrentPreset() {
@@ -98,12 +98,12 @@ void PolyAnalogCore::saveCurrentPreset() {
     } else {
         displayManager->Write("Save Failed!");
     }
-    needsResetDisplay = true;
+    
     saveMode = false;
 }
 
 void PolyAnalogCore::switchToSaveMode() {
-    displayManager->Write("Save ?");
+    displayManager->WriteLine(0, "Save ?");
     indexToSaveNewPreset = currentPreset;
     displaySaveIndex();
     saveMode = true;
@@ -132,25 +132,28 @@ void PolyAnalogCore::displayValuesOnScreen() {
 }
 
 //Well we should make a loop again
-void PolyAnalogCore::displayParameterOnScreen() {
+void PolyAnalogCore::updateScreen() {
+    int presetIndex = currentPreset.get();
+
+    intToCString2(presetIndex, numCharBuffer, "Preset: ");
+    displayManager->WriteLine(0, numCharBuffer);
+    
     int index = intParameterMap[currentIntParameterIndex];
     Parameter* param = dspKernel->getParameter(index);
     
     const char* name = param->getName();
-    displayManager->WriteLine(0, name);
+    displayManager->WriteLine(1, name);
     
     if (index == PolyAnalogDSP::LfoDestinationA) {
         const char* destName = polySynth.getLfoDestName(0);
-        displayManager->WriteLine(1, destName);
+        displayManager->WriteLine(2, destName);
     } else if (index == PolyAnalogDSP::LfoDestinationB) {
         const char* destName = polySynth.getLfoDestName(1);
-        displayManager->WriteLine(1, destName);
+        displayManager->WriteLine(2, destName);
     } else if (index == PolyAnalogDSP::PlayMode) {
         const char* destName = polySynth.getPlayModeName();
-        displayManager->WriteLine(1, destName);
+        displayManager->WriteLine(2, destName);
     }
-    
-    needsToUpdateValue = true;
 }
 
 void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
@@ -171,7 +174,7 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
         case ButtonShift:
             if (saveMode && value == 1) {
                 saveMode = false;
-                displayParameterOnScreen();
+                updateScreen();
             } else {
                 shiftState = (bool)value;
             }
@@ -197,7 +200,7 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
                     default:
                         break;
                 }
-                displayParameterOnScreen();
+                updateScreen();
             }
         }
             break;
@@ -210,7 +213,7 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
                 changeCurrentPreset(false);
             } else {
                 currentIntParameterIndex = ((currentIntParameterIndex - 1) + intParameterCount) % intParameterCount;
-                displayParameterOnScreen();
+                updateScreen();
             }
         }
             break;
@@ -223,7 +226,7 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
                 changeCurrentPreset(true);
             } else {
                 currentIntParameterIndex = ((currentIntParameterIndex + 1) + intParameterCount) % intParameterCount;
-                displayParameterOnScreen();
+                updateScreen();
             }
         }
             break;

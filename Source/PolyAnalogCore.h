@@ -61,6 +61,7 @@ public:
 
     int getCurrentPage();
     void loadPreset(const float* values);
+    void ready();
 
     virtual void processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) override;
     
@@ -73,7 +74,7 @@ private:
     void saveCurrentPreset();
     void switchToSaveMode();
     
-    void displayParameterOnScreen();
+    void updateScreen();
     void displaySaveIndex();
     
 public:
@@ -116,9 +117,6 @@ private:
     
     ydaisy::Parameter* lastParam = nullptr;
     int lastParamIndex = 0;
-    bool needsToUpdateValue = false;
-    
-    bool needsResetDisplay = false;
     
     PolyAnalogDSP polySynth;
 
