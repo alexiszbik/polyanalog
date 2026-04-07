@@ -79,7 +79,7 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
 }
 
 void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {
-    DSPKernel::processMIDI(messageType, channel, dataA, dataB);
+    //DSPKernel::processMIDI(messageType, channel, dataA, dataB);
     
     switch (messageType) {
         case MIDIMessageType::kNoteOn : {
@@ -96,7 +96,7 @@ void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int da
             } else {
                 int parameterIndex = dataA - MIDI_CC_START;
                 if (parameterIndex >= 0 && parameterIndex < getParameterCount()) {
-                    setParameterValue(parameterIndex,dataB);
+                    setParameterValue(parameterIndex, dataB/127.f);
                 }
             }
         }
