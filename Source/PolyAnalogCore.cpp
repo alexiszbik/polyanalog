@@ -67,6 +67,9 @@ PolyAnalogCore::PolyAnalogCore()
 void PolyAnalogCore::lockAllKnobs() {
     for (auto knob = (int)MuxKnob_1; knob <= (int)KnobRes; knob++) {
         lockHID(knob);
+        hidState.at(knob).lockKnobPos = -1.f;
+        hidState.at(knob).lockPresetValue = dspKernel->getUIValue(static_cast<int>(dspParamForKnobIndex(knob)));
+        hidState.at(knob).lastValue = -1.f;
     }
 }
 
@@ -142,15 +145,15 @@ void PolyAnalogCore::displayValuesOnScreen() {
     //We will make this later ...
     /*if (!needsToUpdateValue) {
         return;
-    }
+    }*/
     if (lastParam) {
         float value = lastParam->getUIValue();
         floatToCString2(value, numCharBuffer);
         
         displayManager->WriteLine(2, numCharBuffer);
-    
-    needsToUpdateValue = false;*/
-    return;
+    }
+    //needsToUpdateValue = false;
+    //return;
 }
 
 //Well we should make a loop again
@@ -204,24 +207,6 @@ void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int d
             default:
                 break;
         }
-    }
-}
-
-bool PolyAnalogCore::unlockCondition(unsigned int index, float value, HIDState* hidState) {
-    PolyAnalogDSP::Parameters pEnum = dspParamForKnobIndex(index);
-    if (pEnum == PolyAnalogDSP::FilterEnv ||
-        pEnum == PolyAnalogDSP::FilterCutoff ||
-        pEnum == PolyAnalogDSP::Volume ||
-        pEnum == PolyAnalogDSP::FilterRes ||
-        pEnum == PolyAnalogDSP::HighPass ||
-        pEnum == PolyAnalogDSP::OscNoise ||
-        pEnum == PolyAnalogDSP::OscMix) {
-        
-        constexpr float kCatchEpsilon = 0.15f;
-        float targetValue = polySynth.getUIValue(static_cast<int>(pEnum));
-        return std::fabs(value - targetValue) <= kCatchEpsilon;
-    } else {
-        return ModuleCore::unlockCondition(index, value, hidState);
     }
 }
 

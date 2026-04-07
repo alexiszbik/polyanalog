@@ -73,8 +73,7 @@ public:
     void updateScreen();
 
     virtual void processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) override;
-    virtual bool unlockCondition(unsigned int index, float value, HIDState* hidState) override;
-    
+
 protected:
     void updateHIDValue(unsigned int index, float value) override;
     
@@ -89,7 +88,7 @@ private:
 
     /// Dedicated + mux knob HID index → DSP parameter (single switch, no heap).
     PolyAnalogDSP::Parameters dspParamForKnobIndex(unsigned int index) const noexcept;
-    
+
 public:
     void displayValuesOnScreen();
     
