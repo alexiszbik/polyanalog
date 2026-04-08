@@ -25,10 +25,6 @@
 
 ## MIDI CC Mapping
 
-Current behavior in `PolyAnalogDSP::processMIDI`:
-- `CC1` controls Mod Wheel (`synth.setModWheel`).
-- `CC10` to `CC33` map to internal parameter indices (`parameterIndex = CC - 10`).
-
 | CC | Target |
 |---:|---|
 | 1 | Mod Wheel |
