@@ -17,9 +17,11 @@
 - Low pass filter with envelope and resonance
 - High pass
 - Volume 
-- 2 LFOs with destionation choice
+- 2 LFOs with destination choice
 - 16 presets save & load  
-- OLED display (SSD1306 128×64)  
+- OLED display (SSD1306 128×64)
+
+The synth is locked on MIDI Channel 5, this might be editable in the future.
 
 ---
 
