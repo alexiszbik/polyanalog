@@ -61,6 +61,18 @@ The synth is locked on MIDI Channel 5, this might be editable in the future.
 
 ---
 
+## Knob Soft Takeover
+
+After loading a preset, knobs are "caught" to avoid jumps.
+
+- Turning a knob does not jump immediately to its physical position.
+- While locked, movement is applied with a ratio between current knob travel and stored preset value (progressive catch-up).
+- It unlocks when you pass through the stored preset value.
+- It also unlocks if you turn all the way down or all the way up.
+- Once unlocked, it behaves normally again.
+
+---
+
 ## Schematic
 
 ![PolyAnalog schematic](schematic.png)
