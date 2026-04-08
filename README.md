@@ -23,6 +23,42 @@
 
 ---
 
+## MIDI CC Mapping
+
+Current behavior in `PolyAnalogDSP::processMIDI`:
+- `CC1` controls Mod Wheel (`synth.setModWheel`).
+- `CC10` to `CC33` map to internal parameter indices (`parameterIndex = CC - 10`).
+
+| CC | Target |
+|---:|---|
+| 1 | Mod Wheel |
+| 10 | PlayMode |
+| 11 | Glide |
+| 12 | Volume |
+| 13 | OscWaveformA |
+| 14 | OscOctaveA |
+| 15 | OscWaveformB |
+| 16 | OscTuneB |
+| 17 | OscNoise |
+| 18 | OscMix |
+| 19 | FilterCutoff |
+| 20 | FilterRes |
+| 21 | FilterEnv |
+| 22 | Attack |
+| 23 | Decay |
+| 24 | Sustain |
+| 25 | HighPass |
+| 26 | LfoTypeA |
+| 27 | LfoDestinationA |
+| 28 | LfoRateA |
+| 29 | LfoAmountA |
+| 30 | LfoTypeB |
+| 31 | LfoDestinationB |
+| 32 | LfoRateB |
+| 33 | LfoAmountB |
+
+---
+
 ## Schematic
 
 ![PolyAnalog schematic](schematic.png)
