@@ -8,18 +8,22 @@
 
 ## Features
 
-- 4-voice polyphony  
+- 4-voices polyphony  
 - MIDI input
-- mono output
+- mono audio output
 - 2 VCO with SuperSaw, Saw, Square with pulse width modulation
+- Mix between the 2 VCO
 - -2 -> +2 octaves per VCO (second vco can also have fifth tuning and fine tuning around 0)
+- Glide
+- White Noise
 - ASR envelope
 - Low pass filter with envelope and resonance
-- High pass
+- global High pass
 - Volume 
 - 2 LFOs with destination choice
-- 16 presets save & load  
+- 16 presets save & load, compatible with Program Change  
 - OLED display (SSD1306 128×64)
+- mod wheel for vibration, and pitch-bend with 2 semitones (might be editable in the future)
 
 The synth is locked on MIDI Channel 5, this might be editable in the future.
 
