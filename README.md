@@ -102,7 +102,7 @@ After loading a preset, knobs are "caught" to avoid jumps.
 First, clone this repository **including all submodules**:
 
 ```bash
-git clone --recurse-submodules https://github.com/alexiszbik/PolyFM.git
+git clone --recurse-submodules https://github.com/alexiszbik/polyanalog.git
 ```
 
 To flash the Daisy Seed, please refer to the official Daisy documentation:
