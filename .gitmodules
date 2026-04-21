@@ -9,7 +9,7 @@
 	url = https://github.com/electro-smith/libDaisy.git
 [submodule "DaisyYMNK"]
 	path = DaisyYMNK
-	url = git@github.com:alexiszbik/DaisyYMNK.git
+	url = https://github.com/alexiszbik/DaisyYMNK.git
 [submodule "JuicyDaisy"]
 	path = JuicyDaisy
-	url = git@github.com:alexiszbik/JuicyDaisy.git
+	url = https://github.com/alexiszbik/JuicyDaisy.git
