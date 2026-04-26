@@ -27,7 +27,7 @@ void SynthOsc::setPitch(float pitch) {
     uint8_t k = count;
     while(k--) {
         float factor = k == 1 ? 0.2f : -0.2f;
-        float freq = fast_mtof(pitch + sawDetune*factor);
+        float freq = fast_mtof(pitch + pitchOffset + sawDetune*factor);
         oscs[k].SetFreq(fminf(freq, halfSr));
     }
 }

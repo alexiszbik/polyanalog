@@ -37,4 +37,7 @@ private:
     float sawDetune = 0.f;
     float sawMix = 0.f;
     float halfSr = 0.f;
+    
+    const float pitchOffset = 12.f; //I found it very useful to put a pitch offset, but you can bypass it
+    // this will be a specific parameter later !
 };

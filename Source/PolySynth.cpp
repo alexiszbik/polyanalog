@@ -278,6 +278,8 @@ float PolySynth::process() {
     if (polyMode != Mono) {
         result *= 0.707;
     }
+
+    result = SoftClip(result * 0.25);
     
     return result;
 }
