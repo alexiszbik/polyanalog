@@ -38,15 +38,28 @@ void SynthOsc::setWaveform(float value) {
     } else {
         oscs[1].SetWaveform(sqrWavf);
     }
-    const float base = fminf(value * 4.f, 1.f);
+    float base = value * 4.f;
+    if (base > 1.f) {
+        base = 1.f;
+    }
     sawDetune = 1.f - base;
     sawMix = sawDetune*0.5f;
     sawDetune *= sawDetune;
-    const float ranged = fmaxf((value-0.333f)*1.492537f, 0.f);
+    float ranged = (value - 0.333f) * 1.492537f;
+    if (ranged < 0.f) {
+        ranged = 0.f;
+    }
     const float v = ranged*2.f;
-    oscMix = fminf(v, 1.f);
+    oscMix = v;
+    if (oscMix > 1.f) {
+        oscMix = 1.f;
+    }
     oscMix *= oscMix;
-    float pw = 0.5f - fmaxf(v - 1.f, 0.f) * 0.47f;
+    float pulseAmount = v - 1.f;
+    if (pulseAmount < 0.f) {
+        pulseAmount = 0.f;
+    }
+    float pw = 0.5f - pulseAmount * 0.47f;
     oscs[1].SetPw(pw);
 }
 

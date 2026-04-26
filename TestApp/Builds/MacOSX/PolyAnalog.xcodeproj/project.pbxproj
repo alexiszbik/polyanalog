@@ -45,6 +45,7 @@
 		778426C7B838A644877349C4 /* oscillator.cpp */ = {isa = PBXBuildFile; fileRef = 77C6A2F62ED7CA12EDFDE46A; };
 		79AF0087CE4B0E19C23DD8B9 /* dcblock.cpp */ = {isa = PBXBuildFile; fileRef = C3DC2C1CBF459F312BD19D67; };
 		7B5F4FF624EF2FCD4AE96D0A /* include_juce_core_CompilationTime.cpp */ = {isa = PBXBuildFile; fileRef = F214A697D065AAA621041BAA; };
+		7C3741347A535BB31D71201A /* SynthEnv.cpp */ = {isa = PBXBuildFile; fileRef = E11FDF167957709F9C3D3D8F; };
 		7CBCF9935ED8F2D2D412243A /* ProjectPage.cpp */ = {isa = PBXBuildFile; fileRef = C07D76D42C1A00FA5C73FD40; };
 		7FE15AD7D17EC92A8A3D23D0 /* adenv.cpp */ = {isa = PBXBuildFile; fileRef = 8C99323ECD1ECD3410CF1D50; };
 		803EEDFBCFF07AFB3BB9AC24 /* fm2.cpp */ = {isa = PBXBuildFile; fileRef = BEF4B61C782FA6109B309243; };
@@ -96,7 +97,6 @@
 		FA5E1EF3A0F03BF3D455BCD2 /* variableshapeosc.cpp */ = {isa = PBXBuildFile; fileRef = 9192018F5076ACB02F0E74AB; };
 		FC820406F392329E4430232A /* KarplusString.cpp */ = {isa = PBXBuildFile; fileRef = 38EB21ADC04F43327CE444F5; };
 		FFAA263DDB1FC31189A99A57 /* chorus.cpp */ = {isa = PBXBuildFile; fileRef = 5F9BDCEDB9D15A681E63E32C; };
-		A1F2E3D4C5B6A7980F1E2D3C4 /* SynthEnv.cpp */ = {isa = PBXBuildFile; fileRef = B2E3F4D5C6B7A8F901E2D3C4; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,8 +165,6 @@
 		5F62F9D0A7E10E9C5392CFCC /* stringvoice.h */ /* stringvoice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = stringvoice.h; path = ../../../DaisySP/Source/PhysicalModeling/stringvoice.h; sourceTree = SOURCE_ROOT; };
 		5F9BDCEDB9D15A681E63E32C /* chorus.cpp */ /* chorus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = chorus.cpp; path = ../../../DaisySP/Source/Effects/chorus.cpp; sourceTree = SOURCE_ROOT; };
 		5FC97268EDD00E84C810DA28 /* AttackDecay.h */ /* AttackDecay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AttackDecay.h; path = ../../../DaisyYMNK/DSP/Env/AttackDecay.h; sourceTree = SOURCE_ROOT; };
-		B2E3F4D5C6B7A8F901E2D3C4 /* SynthEnv.cpp */ /* SynthEnv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SynthEnv.cpp; path = ../../../DaisyYMNK/DSP/Env/SynthEnv.cpp; sourceTree = SOURCE_ROOT; };
-		C3F4E5D6C7B8A9F012E3D4C5 /* SynthEnv.h */ /* SynthEnv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SynthEnv.h; path = ../../../DaisyYMNK/DSP/Env/SynthEnv.h; sourceTree = SOURCE_ROOT; };
 		62D4CB9661BF045C5E0DD112 /* analogbassdrum.cpp */ /* analogbassdrum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = analogbassdrum.cpp; path = ../../../DaisySP/Source/Drums/analogbassdrum.cpp; sourceTree = SOURCE_ROOT; };
 		64C96B7D1D64BEC529D28482 /* ModulePage.cpp */ /* ModulePage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModulePage.cpp; path = ../../../JuicyDaisy/ModulePage.cpp; sourceTree = SOURCE_ROOT; };
 		656F8496843F6800172A5859 /* tremolo.cpp */ /* tremolo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tremolo.cpp; path = ../../../DaisySP/Source/Effects/tremolo.cpp; sourceTree = SOURCE_ROOT; };
@@ -192,6 +190,7 @@
 		87AD220327D4061130F7A7A9 /* metro.h */ /* metro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = metro.h; path = ../../../DaisySP/Source/Utility/metro.h; sourceTree = SOURCE_ROOT; };
 		885CBA1D9F0C3DA34AFC006A /* include_juce_audio_processors_ara.cpp */ /* include_juce_audio_processors_ara.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_ara.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_ara.cpp; sourceTree = SOURCE_ROOT; };
 		89F10542C0A4F32147F2B7CD /* overdrive.cpp */ /* overdrive.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overdrive.cpp; path = ../../../DaisySP/Source/Effects/overdrive.cpp; sourceTree = SOURCE_ROOT; };
+		8A405D3CA020B025F857D637 /* OnePoleSmoother.h */ /* OnePoleSmoother.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OnePoleSmoother.h; path = ../../../DaisyYMNK/DSP/Filters/OnePoleSmoother.h; sourceTree = SOURCE_ROOT; };
 		8B41281C780A1DB4446CCB06 /* formantosc.cpp */ /* formantosc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formantosc.cpp; path = ../../../DaisySP/Source/Synthesis/formantosc.cpp; sourceTree = SOURCE_ROOT; };
 		8B5143DA92B88BA1DE9D0330 /* SynthOsc.h */ /* SynthOsc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SynthOsc.h; path = ../../../Source/SynthOsc.h; sourceTree = SOURCE_ROOT; };
 		8B648C1CEDEA54FD5C1CC51F /* svf.cpp */ /* svf.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svf.cpp; path = ../../../DaisySP/Source/Filters/svf.cpp; sourceTree = SOURCE_ROOT; };
@@ -204,7 +203,6 @@
 		9192018F5076ACB02F0E74AB /* variableshapeosc.cpp */ /* variableshapeosc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = variableshapeosc.cpp; path = ../../../DaisySP/Source/Synthesis/variableshapeosc.cpp; sourceTree = SOURCE_ROOT; };
 		9221085BD26A27B822436664 /* stringvoice.cpp */ /* stringvoice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = stringvoice.cpp; path = ../../../DaisySP/Source/PhysicalModeling/stringvoice.cpp; sourceTree = SOURCE_ROOT; };
 		92270F5885AB769204FE7F44 /* FastOnePole.h */ /* FastOnePole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FastOnePole.h; path = ../../../DaisyYMNK/DSP/Filters/FastOnePole.h; sourceTree = SOURCE_ROOT; };
-		D5E6F7A8B9C0D1E2F3A4B5C6 /* OnePoleSmoother.h */ /* OnePoleSmoother.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OnePoleSmoother.h; path = ../../../DaisyYMNK/DSP/Filters/OnePoleSmoother.h; sourceTree = SOURCE_ROOT; };
 		950004D1FC6901994266E8F7 /* Parameter.h */ /* Parameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parameter.h; path = ../../../DaisyYMNK/DSP/Parameter.h; sourceTree = SOURCE_ROOT; };
 		97BEC15BB1074FE002E5AC70 /* looper.h */ /* looper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = looper.h; path = ../../../DaisySP/Source/Utility/looper.h; sourceTree = SOURCE_ROOT; };
 		983818E211A42097EBBC71B1 /* modalvoice.cpp */ /* modalvoice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = modalvoice.cpp; path = ../../../DaisySP/Source/PhysicalModeling/modalvoice.cpp; sourceTree = SOURCE_ROOT; };
@@ -269,6 +267,7 @@
 		DF19B1250D47E5EB0BE75709 /* Common.h */ /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Common.h; path = ../../../DaisyYMNK/Common/Common.h; sourceTree = SOURCE_ROOT; };
 		DF4EDCC6847AAB1A413B8B48 /* include_juce_audio_devices.mm */ /* include_juce_audio_devices.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_devices.mm; path = ../../JuceLibraryCode/include_juce_audio_devices.mm; sourceTree = SOURCE_ROOT; };
 		DF590F0541996C4F69A89952 /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = ../../../JuicyDaisy/JUCE/modules/juce_gui_basics; sourceTree = SOURCE_ROOT; };
+		E11FDF167957709F9C3D3D8F /* SynthEnv.cpp */ /* SynthEnv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SynthEnv.cpp; path = ../../../DaisyYMNK/DSP/Env/SynthEnv.cpp; sourceTree = SOURCE_ROOT; };
 		E128C21D7A2C1A856359FCFF /* AudioToolbox.framework */ /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E57766E1151EA87DBDF02B1A /* wavefolder.cpp */ /* wavefolder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = wavefolder.cpp; path = ../../../DaisySP/Source/Effects/wavefolder.cpp; sourceTree = SOURCE_ROOT; };
 		E81F717D472B684E6F7B634C /* phasor.cpp */ /* phasor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = phasor.cpp; path = ../../../DaisySP/Source/Control/phasor.cpp; sourceTree = SOURCE_ROOT; };
@@ -277,6 +276,7 @@
 		EEFB71DD74F4F57FEF79D8D9 /* crossfade.h */ /* crossfade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = crossfade.h; path = ../../../DaisySP/Source/Dynamics/crossfade.h; sourceTree = SOURCE_ROOT; };
 		F0CE20E346BDF545B416E21D /* dsp.h */ /* dsp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = dsp.h; path = ../../../DaisySP/Source/Utility/dsp.h; sourceTree = SOURCE_ROOT; };
 		F214A697D065AAA621041BAA /* include_juce_core_CompilationTime.cpp */ /* include_juce_core_CompilationTime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_core_CompilationTime.cpp; path = ../../JuceLibraryCode/include_juce_core_CompilationTime.cpp; sourceTree = SOURCE_ROOT; };
+		F321A744EE1F19E3CF6B01AB /* SynthEnv.h */ /* SynthEnv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SynthEnv.h; path = ../../../DaisyYMNK/DSP/Env/SynthEnv.h; sourceTree = SOURCE_ROOT; };
 		F39B0CCDDF2EE0EE6E9FF1FA /* clockednoise.cpp */ /* clockednoise.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clockednoise.cpp; path = ../../../DaisySP/Source/Noise/clockednoise.cpp; sourceTree = SOURCE_ROOT; };
 		F46CE67778E1363F5E766E44 /* phaser.cpp */ /* phaser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = phaser.cpp; path = ../../../DaisySP/Source/Effects/phaser.cpp; sourceTree = SOURCE_ROOT; };
 		F478C95EFD00F5798097B655 /* soap.cpp */ /* soap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = soap.cpp; path = ../../../DaisySP/Source/Filters/soap.cpp; sourceTree = SOURCE_ROOT; };
@@ -627,7 +627,7 @@
 			isa = PBXGroup;
 			children = (
 				92270F5885AB769204FE7F44,
-				D5E6F7A8B9C0D1E2F3A4B5C6,
+				8A405D3CA020B025F857D637,
 				C08F5D887F53C8AA6F201C64,
 			);
 			name = Filters;
@@ -655,8 +655,8 @@
 			isa = PBXGroup;
 			children = (
 				5FC97268EDD00E84C810DA28,
-				B2E3F4D5C6B7A8F901E2D3C4,
-				C3F4E5D6C7B8A9F012E3D4C5,
+				E11FDF167957709F9C3D3D8F,
+				F321A744EE1F19E3CF6B01AB,
 			);
 			name = Env;
 			sourceTree = "<group>";
@@ -798,8 +798,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C3741347A535BB31D71201A,
 				75BA64A2AB57AECBE94B351C,
-				A1F2E3D4C5B6A7980F1E2D3C4,
 				BA3C60399FF4B7F0AB16181A,
 				CDB3F0AA458115C10D38EC88,
 				0FB144C16230168119C609BE,
@@ -941,7 +941,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_DEBUG=1",
 					"DEBUG=1",
-					"JUCE_PROJUCER_VERSION=0x8000a",
+					"JUCE_PROJUCER_VERSION=0x8000c",
 					"JUCE_MODULE_AVAILABLE_juce_audio_basics=1",
 					"JUCE_MODULE_AVAILABLE_juce_audio_devices=1",
 					"JUCE_MODULE_AVAILABLE_juce_audio_formats=1",
@@ -1052,7 +1052,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_NDEBUG=1",
 					"NDEBUG=1",
-					"JUCE_PROJUCER_VERSION=0x8000a",
+					"JUCE_PROJUCER_VERSION=0x8000c",
 					"JUCE_MODULE_AVAILABLE_juce_audio_basics=1",
 					"JUCE_MODULE_AVAILABLE_juce_audio_devices=1",
 					"JUCE_MODULE_AVAILABLE_juce_audio_formats=1",

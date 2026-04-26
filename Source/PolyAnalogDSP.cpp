@@ -239,7 +239,7 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
         
         out = hpFilter.Process(out);
        
-        buf[0][i] = SoftClip(out * 0.333);
+        buf[0][i] = out;//SoftClip(out * 0.25);
         for (int channel = 1; channel < channelCount; channel++) {
             buf[channel][i] = buf[0][i];
         }

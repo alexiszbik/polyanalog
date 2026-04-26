@@ -89,7 +89,7 @@ void SynthVoice::setOscBPW(float pw) {
 }
 
 void SynthVoice::setOscMix(float mix) {
-    this->mix = 1.f - (mix * mix);
+    this->mix = (1.f - (mix * mix));
 }
 
 void SynthVoice::setNoiseMix(float mix) {
