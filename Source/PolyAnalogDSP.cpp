@@ -225,7 +225,7 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
                   valueMap(getValue(Sustain), 0.f, 1.f),
                   decay);
     
-    synth.preprare();
+    synth.prepare();
     
     for (int i = 0; i < frameCount; i++) {
         //updateParameters(); // useless only for smoothed parameters

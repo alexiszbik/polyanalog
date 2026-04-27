@@ -247,7 +247,7 @@ void PolySynth::setFilterEnv(float env) {
     }
 }
 
-void PolySynth::preprare() {
+void PolySynth::prepare() {
     for (auto v : voices)
     {
         v->prepare();

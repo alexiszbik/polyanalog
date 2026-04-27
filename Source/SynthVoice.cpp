@@ -127,7 +127,10 @@ float SynthVoice::process(float whiteNoiseIn, float filterMod) {
     
     float smoothMod = filterFreqSmoother.Process(filterMod);
     
-    float fFreq = fast_mtof(fminf(filterMidiFreq + envOut*90.f*filterEnv + smoothMod, 132.f));
+    float midiFreq = filterMidiFreq + envOut*90.f*filterEnv + smoothMod;
+    if (midiFreq > 132.f) midiFreq = 132.f;
+    
+    float fFreq = fast_mtof(midiFreq);
     filter.SetLowpass(fFreq, filterRes);
 
     return filter.Process(outMix) * envOut * envOut;

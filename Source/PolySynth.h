@@ -36,7 +36,7 @@ public:
     void init(double sampleRate);
     void setNote(bool isNoteOn, Note note);
     
-    void preprare();
+    void prepare();
     float process();
     
     void kill();
