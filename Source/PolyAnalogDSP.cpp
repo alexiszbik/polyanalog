@@ -50,13 +50,16 @@ PolyAnalogDSP::PolyAnalogDSP()
     {LfoTypeB,          "LfoTypeB"},
     {LfoDestinationB,   "LfoDestinationB"},
     {LfoRateB,          "LfoRateB"},
-    {LfoAmountB,        "LfoAmountB"}
+    {LfoAmountB,        "LfoAmountB"},
+    
+    {GlobalOctave,        "GlobalOctave"}
     
 }){
 #if defined _SIMULATOR_
     std::cout << getParameterCount() << " parameters" << std::endl;
     
 #endif
+    setParameterValue(GlobalOctave, 0.5);
 }
 
 PolyAnalogDSP::~PolyAnalogDSP() {
@@ -142,6 +145,22 @@ void PolyAnalogDSP::toggleLfoDestination(int lfoIndex) {
     setParameterValue(parameterEnum, iValue * 0.5f);
 }
 
+void PolyAnalogDSP::toggleGlobalOctave() {
+    
+    auto octaveParam = getParameter(GlobalOctave);
+    float fValue = octaveParam->getValue();
+    int iValue = valueMap(fValue, -2, 2);
+    iValue = iValue + 1;
+    if (iValue > 2) iValue = -2;
+    if (iValue < -2) iValue = 2;
+    
+    setParameterValue(GlobalOctave, (iValue + 2) * 0.25f);
+    /*
+    globalOctaveValue.increment();
+    synth.setGlobalOctave(globalOctaveValue.get());
+    setParameterValue(parameterEnum, iValue * 0.5f);*/
+}
+
 void PolyAnalogDSP::updateParameter(int index, float value) {
     auto param = static_cast<Parameters>(index);
     switch (param) {
@@ -186,6 +205,9 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
         case LfoDestinationB:
             lfo[1].setDestinationValue(value);
             break;
+        case GlobalOctave:
+            synth.setGlobalOctave(valueMap(value, -2, 2));
+            break;
 
         default:
             break;
@@ -199,6 +221,13 @@ const char* PolyAnalogDSP::getLfoDestName(int lfoIdx) {
 
 const char* PolyAnalogDSP::getPlayModeName() {
     return synth.getPolyModeName();
+}
+
+int PolyAnalogDSP::getGlobalOctave() {
+    auto octaveParam = getParameter(GlobalOctave);
+    float fValue = octaveParam->getValue();
+    int iValue = valueMap(fValue, -2, 2);
+    return iValue;
 }
 
 float PolyAnalogDSP::getLfoBuffer(int lfoIdx, Lfo::LfoDest target, uint8_t frame, float multiplier) {

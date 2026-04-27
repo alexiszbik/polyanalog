@@ -30,6 +30,11 @@ void SynthVoice::init(double sampleRate) {
     filterFreqSmoother.Init(20, sampleRate);
 }
 
+void SynthVoice::setGlobalOctave(int octaveOffset) {
+    oscs[0].setGlobalOctave(octaveOffset);
+    oscs[1].setGlobalOctave(octaveOffset);
+}
+
 void SynthVoice::setPitch(int pitch) {
     this->pitch.setValue((float)pitch);
 }

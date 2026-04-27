@@ -171,6 +171,7 @@ void PolyAnalogCore::updateScreen() {
     displayManager->WriteLine(1, name);
 
     const char* line2 = nullptr;
+    
     switch (index) {
         case PolyAnalogDSP::LfoDestinationA:
             line2 = polySynth.getLfoDestName(0);
@@ -180,6 +181,10 @@ void PolyAnalogCore::updateScreen() {
             break;
         case PolyAnalogDSP::PlayMode:
             line2 = polySynth.getPlayModeName();
+            break;
+        case PolyAnalogDSP::GlobalOctave:
+            intToCString2(polySynth.getGlobalOctave(), numCharBuffer);
+            line2 = numCharBuffer;
             break;
         default:
             break;
@@ -241,6 +246,9 @@ void PolyAnalogCore::updateHIDValue(unsigned int index, float value) {
                         break;
                     case PolyAnalogDSP::LfoDestinationB:
                         polySynth.toggleLfoDestination(1);
+                        break;
+                    case PolyAnalogDSP::GlobalOctave:
+                        polySynth.toggleGlobalOctave();
                         break;
                         
                     default:

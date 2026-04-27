@@ -23,6 +23,10 @@ void SynthOsc::init(double sampleRate) {
     oscs[0].SetWaveform(sawWavf);
 }
 
+void SynthOsc::setGlobalOctave(int octave) {
+    pitchOffset = octave*12.f;
+}
+
 void SynthOsc::setPitch(float pitch) {
     uint8_t k = count;
     while(k--) {

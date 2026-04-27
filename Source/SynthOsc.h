@@ -22,6 +22,7 @@ public:
     void init(double sampleRate);
     void setWaveform(float value);
     void setPitch(float pitch);
+    void setGlobalOctave(int octave);
     
     float process();
     void reset();
@@ -38,6 +39,6 @@ private:
     float sawMix = 0.f;
     float halfSr = 0.f;
     
-    const float pitchOffset = 12.f; //I found it very useful to put a pitch offset, but you can bypass it
-    // this will be a specific parameter later !
+    float pitchOffset = 0.f;
+    
 };

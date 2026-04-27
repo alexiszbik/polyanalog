@@ -50,6 +50,8 @@ public:
     void setPitchLfo(float tune);
     void setFilterLfo(float f);
     
+    void setGlobalOctave(int octave);
+    
     void setADSR(float attack, float decay, float sustain, float release);
     void setWaveform(uint8_t oscIndex, float value);
     void setOctave(int8_t octave);

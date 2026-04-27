@@ -112,11 +112,12 @@ private:
         PolyAnalogDSP::LfoRateA
     };
     
-    static const int intParameterCount = 3;
+    static const int intParameterCount = 4;
     int intParameterMap[intParameterCount] = {
         PolyAnalogDSP::PlayMode,
         PolyAnalogDSP::LfoDestinationA,
-        PolyAnalogDSP::LfoDestinationB
+        PolyAnalogDSP::LfoDestinationB,
+        PolyAnalogDSP::GlobalOctave,
     };
     
     int currentIntParameterIndex = 0;

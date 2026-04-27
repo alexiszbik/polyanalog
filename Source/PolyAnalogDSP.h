@@ -11,6 +11,8 @@
 #pragma once
 
 #include "DaisyYMNK/DSP/DSP.h"
+#include "DaisyYMNK/Helpers/BoundedInt.h"
+
 #include "PolySynth.h"
 #include "Lfo.h"
 
@@ -55,6 +57,8 @@ public:
         
         LFO_PARAM(A),
         LFO_PARAM(B),
+        
+        GlobalOctave,
 
         Count
     };
@@ -70,9 +74,11 @@ public:
 
     const char* getLfoDestName(int lfoIdx);
     const char* getPlayModeName();
+    int getGlobalOctave();
     
     void togglePlayMode();
     void toggleLfoDestination(int lfoIndex);
+    void toggleGlobalOctave();
     
     void kill();
     

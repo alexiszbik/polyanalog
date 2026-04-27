@@ -128,6 +128,13 @@ void PolySynth::setNote(bool isNoteOn, Note note) {
     }
 }
 
+void PolySynth::setGlobalOctave(int octave) {
+    for (int i = 0; i < VOICE_COUNT; i++)
+    {
+        voices[i]->setGlobalOctave(octave);
+    }
+}
+
 void PolySynth::setPitchBend(float bend) {
     this->bend.setValue(bend);
 }

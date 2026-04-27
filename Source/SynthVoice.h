@@ -25,6 +25,8 @@ public:
     
     void setGlide(float glide);
     
+    void setGlobalOctave(int octaveOffset);
+    
     void setADSR(float attack, float decay, float sustain, float release);
     
     void setWaveform(uint8_t oscIndex, float value);
@@ -97,5 +99,6 @@ private:
     SynthEnv adsr;
     SynthOsc oscs[oscCount];
     BiquadFilter filter;
+
  
 };
