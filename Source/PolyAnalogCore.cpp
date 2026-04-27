@@ -161,7 +161,7 @@ void PolyAnalogCore::displayValuesOnScreen() {
 void PolyAnalogCore::updateScreen() {
     int presetIndex = currentPreset.get();
 
-    intToCString2(presetIndex, numCharBuffer, "Preset: ");
+    intToCString2(presetIndex + 1, numCharBuffer, "Preset: ");
     displayManager->WriteLine(0, numCharBuffer);
     
     int index = intParameterMap[currentIntParameterIndex];
