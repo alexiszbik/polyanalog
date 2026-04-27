@@ -123,6 +123,7 @@ private:
 
     BoundedInt<0,MAX_PRESETS-1> currentPreset = 0;
     BoundedInt<0,MAX_PRESETS-1> indexToSaveNewPreset = 0;
+    bool noPresetLoadedYet = true;
     
     char numCharBuffer[4];
     //char fullNumCharBuffer[20];

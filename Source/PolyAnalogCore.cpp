@@ -99,6 +99,7 @@ void PolyAnalogCore::loadPresetAtIndex(int presetIndex) {
         loadPreset(dataToLoad);
         polySynth.kill();
     }
+    noPresetLoadedYet = false;
     updateScreen();
 }
 
@@ -113,7 +114,7 @@ void PolyAnalogCore::saveCurrentPreset() {
     int presetIndex = indexToSaveNewPreset.get();
     bool result = presetManager->Save(pData, k, presetIndex);
     
-    intToCString2(presetIndex, numCharBuffer, "Preset: ");
+    intToCString2(presetIndex + 1, numCharBuffer, "Preset: ");
     if (result) {
         displayManager->Write("Save Success!");
         displayManager->WriteLine(1, numCharBuffer);
@@ -137,7 +138,7 @@ void PolyAnalogCore::switchToSaveMode() {
 void PolyAnalogCore::displaySaveIndex() {
     int presetIndex = indexToSaveNewPreset.get();
 
-    intToCString2(presetIndex, numCharBuffer, "Preset: ");
+    intToCString2(presetIndex + 1, numCharBuffer, "Preset: ");
     displayManager->WriteLine(1, numCharBuffer);
 }
 
@@ -200,7 +201,9 @@ void PolyAnalogCore::processMIDI(MIDIMessageType messageType, int channel, int d
         switch (messageType) {
             case MIDIMessageType::kProgramChange : {
                 int program = dataA % MAX_PRESETS;
-                loadPresetAtIndex(program);
+                if (currentPreset.get() != program || noPresetLoadedYet) {
+                    loadPresetAtIndex(program);
+                }
             }
                 break;
             
