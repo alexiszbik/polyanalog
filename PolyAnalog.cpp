@@ -44,7 +44,7 @@ void UpdateValues() {
 
 int main(void)
 {
-    db.init(AudioCallback, 128);
+    db.init(AudioCallback, 48);
 
     display->Init(&hw);
     display->WriteNow("YMNK", "PolyAnalog Synth");

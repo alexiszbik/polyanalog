@@ -59,7 +59,7 @@ PolyAnalogDSP::PolyAnalogDSP()
     std::cout << getParameterCount() << " parameters" << std::endl;
     
 #endif
-    setParameterValue(GlobalOctave, 0.5);
+
 }
 
 PolyAnalogDSP::~PolyAnalogDSP() {
@@ -79,6 +79,8 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
     //It could be nice to initialize every parameters at first launch
     setParameterValue(LfoDestinationA, 0.4f);
     setParameterValue(LfoDestinationB, 0.75f);
+
+    setParameterValue(GlobalOctave, 0.5);
 }
 
 void PolyAnalogDSP::processMIDI(MIDIMessageType messageType, int channel, int dataA, int dataB) {

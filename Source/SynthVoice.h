@@ -100,5 +100,5 @@ private:
     SynthOsc oscs[oscCount];
     BiquadFilter filter;
 
- 
+    int updateFilterCounter = 0;
 };
