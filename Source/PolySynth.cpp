@@ -286,7 +286,8 @@ float PolySynth::process() {
         result *= 0.707;
     }
 
-    result = SoftClip(result * 0.25);
+    //result = result * 0.65; //SoftClip(result * 0.501);
+    result = result * 0.65;
     
     return result;
 }

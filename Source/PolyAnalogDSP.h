@@ -101,5 +101,7 @@ private:
     static constexpr float Qmin = 0.25f;
     static constexpr float Qmax = 8.0f;
     float lnRatio = std::log(Qmax / Qmin);
+    
+    Limiter limiter;
 
 };

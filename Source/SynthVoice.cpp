@@ -106,6 +106,8 @@ void SynthVoice::setFilterMidiFreq(float freq) {
 }
 
 void SynthVoice::setFilterRes(float res) {
+    
+    
     this->filterRes = res;
 }
 
@@ -142,5 +144,7 @@ float SynthVoice::process(float whiteNoiseIn, float filterMod) {
     updateFilterCounter++;
     if (updateFilterCounter > 4) updateFilterCounter = 0;
 
-    return filter.Process(outMix) * envOut * envOut;
+    float outVoice = filter.Process(outMix) * envOut * envOut;
+
+    return outVoice;
 }

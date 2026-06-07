@@ -76,6 +76,8 @@ void PolyAnalogDSP::init(int channelCount, double sampleRate) {
     hpFilter.Init(sampleRate);
     hpFilter.SetHighpass(10);
     
+    limiter.Init();
+    
     //It could be nice to initialize every parameters at first launch
     setParameterValue(LfoDestinationA, 0.4f);
     setParameterValue(LfoDestinationB, 0.75f);
@@ -194,8 +196,12 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
             hpFilter.SetHighpass(fast_mtof((value * 120.f) + 15.f));
             break;
         case FilterRes : {
-                float qvalue = std::exp(value * lnRatio);
-                synth.setFilterRes(qvalue);
+            
+                //float qvalue = std::exp(value * lnRatio);
+                value = -3.0 + (value * 17);
+                double Q = powf(10.0, 0.05 * value);
+            
+                synth.setFilterRes(Q);
             }
             break;
         case FilterEnv :
@@ -271,8 +277,11 @@ void PolyAnalogDSP::process(float** buf, int frameCount) {
         out = hpFilter.Process(out);
        
         buf[0][i] = out;//SoftClip(out * 0.25);
+        
         for (int channel = 1; channel < channelCount; channel++) {
             buf[channel][i] = buf[0][i];
         }
     }
+    
+    limiter.ProcessBlock(buf[0], frameCount, 1);
 }

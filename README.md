@@ -58,6 +58,7 @@ The synth is locked on MIDI Channel 5, this might be editable in the future.
 | 31 | LfoDestinationB |
 | 32 | LfoRateB |
 | 33 | LfoAmountB |
+| 34 | GlobalOctave |
 
 ---
 
