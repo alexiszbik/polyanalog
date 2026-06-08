@@ -200,6 +200,7 @@ void PolyAnalogDSP::updateParameter(int index, float value) {
                 //float qvalue = std::exp(value * lnRatio);
                 value = -3.0 + (value * 17);
                 double Q = powf(10.0, 0.05 * value);
+           
             
                 synth.setFilterRes(Q);
             }

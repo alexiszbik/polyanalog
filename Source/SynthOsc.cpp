@@ -76,7 +76,8 @@ void SynthOsc::reset() {
 }
 
 float SynthOsc::process() {
-    return ydaisy::sqrtDryWet(oscs[1].Process(), oscs[0].Process(), fmaxf(oscMix, sawMix));
+    float mix = daisysp::fmax(oscMix, sawMix);
+    return ydaisy::sqrtDryWet(oscs[1].Process(), oscs[0].Process(), mix);
 }
 
 
